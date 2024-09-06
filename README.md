@@ -24,7 +24,17 @@ It executes the function only if the Result is successful (i.e., not failed). If
 If the Result is successful, it executes the function and returns the resulting Result.
 
 ```csharp
-public async Task<Result<int>> OnSuccess(int x)
+public async Task<Result<int>> OnSuccessAsync(int x)
 ...
-Result.Ok(1).BindAsync(OnSuccess);
+Result.Ok(1).BindAsync(OnSuccessAsync);
+```
+
+### Finally
+
+Executes a function after a Result, regardless of its success or failure.
+
+```csharp
+public async Task<int> OnBothAsync(Result arg)
+...
+Result.Ok().FinallyAsync(OnBothAsync);
 ```

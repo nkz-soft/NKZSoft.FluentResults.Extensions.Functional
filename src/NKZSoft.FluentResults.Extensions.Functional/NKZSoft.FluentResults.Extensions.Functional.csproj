@@ -11,4 +11,24 @@
   <ItemGroup>
     <InternalsVisibleTo Include="NKZSoft.FluentResults.Extensions.Functional.Tests" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="**\*.Task.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Task', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.ValueTask', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.Task.Right.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Right', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.Task.Left.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Left', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.Right.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Right', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.Left.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Left', '.cs'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

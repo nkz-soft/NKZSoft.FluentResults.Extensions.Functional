@@ -5,29 +5,32 @@ public class BindTests : BindTestsBase
     [Fact]
     public void BindReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = Result.Fail(ErrorMessage).IternalBind(Success);
+        var output = Result.Fail(ErrorMessage)
+            .IternalBind(OkFunc);
         AssertFailure(output);
     }
 
     [Fact]
     public void BindSelectsNewResult()
     {
-        var output = Result.Ok().IternalBind(Success);
+        var output = Result.Ok()
+            .IternalBind(OkFunc);
         AssertSuccess(output);
     }
 
     [Fact]
     public void BindTReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = Result.Fail<string>(ErrorMessage)
-            .IternalBind(SuccessT);
+        var output = Result.Fail<TValue>(ErrorMessage)
+            .IternalBind(OkTFunc);
         AssertFailure(output);
     }
 
     [Fact]
     public void BindTSelectsNewResult()
     {
-        var output = SuccessT(Value).IternalBind(SuccessT);
+        var output = Result.Ok(TValue.Value)
+            .IternalBind(OkTFunc);
         AssertSuccess(output);
     }
 }

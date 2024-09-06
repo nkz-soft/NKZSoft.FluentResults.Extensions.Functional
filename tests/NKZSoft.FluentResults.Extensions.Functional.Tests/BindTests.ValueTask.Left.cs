@@ -5,28 +5,28 @@ public class BindTestsValueTaskLeft : BindTestsBase
     [Fact]
     public async Task BindValueTaskLeftReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = await BindTestsBase.ValueTaskFailure().BindAsync(Success);
+        var output = await ValueTaskFailResultAsync().BindAsync(OkFunc);
         AssertFailure(output);
     }
 
     [Fact]
     public async Task BindValueTaskLeftSelectsNewResult()
     {
-        var output = await ValueTaskSuccess().BindAsync(Success);
+        var output = await ValueTaskOkResultTAsync().BindAsync(OkTFunc);
         AssertSuccess(output);
     }
 
     [Fact]
     public async Task BindValueTaskLeftTReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = await BindTestsBase.ValueTaskFailureT<string>().BindAsync(SuccessT);
+        var output = await ValueTaskFailResultTAsync().BindAsync(OkTFunc);
         AssertFailure(output);
     }
 
     [Fact]
     public async Task BindValueTaskLeftTSelectsNewResult()
     {
-        var output = await ValueTaskSuccessT(Value).BindAsync(SuccessT);
+        var output = await ValueTaskOkResultTAsync().BindAsync(OkTFunc);
         AssertSuccess(output);
     }
 }
