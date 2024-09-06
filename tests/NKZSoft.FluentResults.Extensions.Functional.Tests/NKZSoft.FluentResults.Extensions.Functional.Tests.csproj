@@ -15,9 +15,30 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\NKZSoft.FluentResults.Extensions.Functional\NKZSoft.FluentResults.Extensions.Functional.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Update="**\*.Base.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Base', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.Task.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Task', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.ValueTask', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.Task.Right.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Right', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.Task.Left.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Left', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.Right.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Right', '.cs'))</DependentUpon>
+    </Compile>
+    <Compile Update="**\*.ValueTask.Left.cs">
+      <DependentUpon>$([System.String]::Copy(%(Filename)).Replace('.Left', '.cs'))</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

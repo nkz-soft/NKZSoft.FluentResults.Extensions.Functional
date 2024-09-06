@@ -5,28 +5,28 @@ public class BindTestsTask : BindTestsBase
     [Fact]
     public async Task BindTaskReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = await BindTestsBase.TaskFailure().BindAsync(TaskSuccess);
+        var output = await TaskFailResultAsync().BindAsync(TaskOkFuncAsync);
         AssertFailure(output);
     }
 
     [Fact]
     public async Task BindTaskSelectsNewResult()
     {
-        var output = await TaskSuccess().BindAsync(TaskSuccess);
+        var output = await Common.TestBase.TaskOkResultAsync().BindAsync(TaskOkFuncAsync);
         AssertSuccess(output);
     }
 
     [Fact]
     public async Task BindTaskTReturnsFailureAndDoesNotExecuteFunc()
     {
-        var output = await BindTestsBase.TaskFailureT<string>().BindAsync(TaskSuccessT);
+        var output = await TaskFailResultTAsync().BindAsync(TaskOkTFuncAsync);
         AssertFailure(output);
     }
 
     [Fact]
     public async Task BindTaskTSelectsNewResult()
     {
-        var output = await TaskSuccessT(Value).BindAsync(TaskSuccessT);
+        var output = await TaskOkResultTAsync().BindAsync(TaskOkTFuncAsync);
         AssertSuccess(output);
     }
 }
