@@ -7,6 +7,10 @@
 It is a library that extends the popular [FluentResults](https://github.com/altmann/FluentResults) library and helps you write code in a more functional way.
 The project was inspired by [Functional Extensions for C#](https://github.com/vkhorikov/CSharpFunctionalExtensions).
 
+### ⭐ Give a star
+
+If you're using this repository for your learning, samples or your project, please give a star. Thanks :+1:
+
 ## Installation
 
 Available on [NuGet](https://www.nuget.org/packages/NKZSoft.FluentResults.Extensions.Functional/)
@@ -37,4 +41,13 @@ Executes a function after a Result, regardless of its success or failure.
 public async Task<int> OnBothAsync(Result arg)
 ...
 Result.Ok().FinallyAsync(OnBothAsync);
+```
+### Tap
+
+Executes an action if the result is successful and return the original result.
+
+```csharp
+public async Task OnActionAsync()
+...
+Result.Ok().Tap(OnActionAsync);
 ```

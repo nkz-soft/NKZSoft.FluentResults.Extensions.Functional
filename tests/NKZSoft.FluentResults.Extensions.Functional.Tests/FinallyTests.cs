@@ -1,6 +1,6 @@
 ﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
-public class FinallyTests : FinallyTestsBase
+public sealed class FinallyTests : FinallyTestsBase
 {
     [Theory]
     [InlineData(true)]

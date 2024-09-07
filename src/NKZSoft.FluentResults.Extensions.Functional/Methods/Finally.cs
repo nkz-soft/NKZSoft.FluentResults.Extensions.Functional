@@ -10,7 +10,10 @@ public static partial class ResultExtensions
     /// <param name="func">The function to execute after the Result.</param>
     /// <returns>The result of the executed function.</returns>
     public static T Finally<T>(this Result result, Func<Result, T> func)
-        => func(result);
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return func(result);
+    }
 
     /// <summary>
     /// Executes a function after a Result, regardless of its success or failure.
@@ -21,5 +24,8 @@ public static partial class ResultExtensions
     /// <param name="func">The function to execute after the Result.</param>
     /// <returns>The result of the executed function.</returns>
     public static T Finally<T, TValue>(this Result<TValue> result, Func<Result<TValue>, T> func)
-        => func(result);
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return func(result);
+    }
 }

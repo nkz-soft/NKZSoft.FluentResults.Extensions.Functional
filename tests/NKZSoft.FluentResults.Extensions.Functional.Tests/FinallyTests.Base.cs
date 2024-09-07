@@ -2,7 +2,7 @@
 
 using Common;
 
-public class FinallyTestsBase : TestBase
+public abstract class FinallyTestsBase : TestBase
 {
     protected TValue TValueResultFunc(Result arg)
     {

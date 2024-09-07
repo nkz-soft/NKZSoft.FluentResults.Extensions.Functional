@@ -10,8 +10,11 @@ public static partial class ResultExtensions
     /// <param name="result">The Result to execute the function after.</param>
     /// <param name="func">The function to execute after the Result. This function takes the Result as an argument and returns a ValueTask.</param>
     /// <returns>A ValueTask that represents the result of the executed function.</returns>
-    public static ValueTask<T> FinallyAsync<T>(this Result result, Func<Result, ValueTask<T>> func) =>
-        func(result);
+    public static ValueTask<T> FinallyAsync<T>(this Result result, Func<Result, ValueTask<T>> func)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return func(result);
+    }
 
     /// <summary>
     /// Executes a function after a Result, regardless of its success or failure,
@@ -23,6 +26,9 @@ public static partial class ResultExtensions
     /// <param name="func">The function to execute after the Result. This function takes the Result as an argument and returns a ValueTask.</param>
     /// <returns>A ValueTask that represents the result of the executed function.</returns>
     public static ValueTask<T> FinallyAsync<T, TValue>(this Result<TValue> result,
-        Func<Result<TValue>, ValueTask<T>> func) =>
-        func(result);
+        Func<Result<TValue>, ValueTask<T>> func)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return func(result);
+    }
 }

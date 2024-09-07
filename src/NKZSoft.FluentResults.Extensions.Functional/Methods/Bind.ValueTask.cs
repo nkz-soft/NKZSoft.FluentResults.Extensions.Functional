@@ -10,6 +10,8 @@ public static partial class ResultExtensions
     /// <returns>A task representing the asynchronous operation. The task result contains the result of the function.</returns>
     public static async ValueTask<Result> BindAsync(this ValueTask<Result> resultTask, Func<ValueTask<Result>> func)
     {
+        ArgumentNullException.ThrowIfNull(func);
+
         var result = await resultTask.ConfigureAwait(false);
         return await result.BindAsync(func).ConfigureAwait(false);
     }
@@ -23,6 +25,8 @@ public static partial class ResultExtensions
     /// <returns>A task representing the asynchronous operation. The task result contains the result of the function.</returns>
     public static async ValueTask<Result<TValue>> BindAsync<TValue>(this ValueTask<Result<TValue>> resultTask, Func<TValue, ValueTask<Result<TValue>>> func)
     {
+        ArgumentNullException.ThrowIfNull(func);
+
         var result = await resultTask.ConfigureAwait(false);
         return await result.BindAsync(func).ConfigureAwait(false);
     }
