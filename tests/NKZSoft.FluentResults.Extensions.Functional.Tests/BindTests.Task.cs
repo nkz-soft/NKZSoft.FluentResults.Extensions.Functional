@@ -1,6 +1,6 @@
 namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
-public class BindTestsTask : BindTestsBase
+public sealed class BindTestsTask : BindTestsBase
 {
     [Fact]
     public async Task BindTaskReturnsFailureAndDoesNotExecuteFunc()

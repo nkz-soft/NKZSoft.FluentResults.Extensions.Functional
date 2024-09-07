@@ -10,8 +10,11 @@ public static partial class ResultExtensions
     /// <param name="result">The current Result.</param>
     /// <param name="func">The function to bind to the current Result.</param>
     /// <returns>A Task of Result.</returns>
-    public static ValueTask<Result> BindAsync(this Result result, Func<ValueTask<Result>> func) =>
-        result.IsFailed ? ValueTask.FromResult(Result.Fail(result.Errors)) : func();
+    public static ValueTask<Result> BindAsync(this Result result, Func<ValueTask<Result>> func)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return result.IsFailed ? ValueTask.FromResult(Result.Fail(result.Errors)) : func();
+    }
 
     /// <summary>
     /// Binds a result to a function that returns a new result asynchronously.
@@ -20,6 +23,9 @@ public static partial class ResultExtensions
     /// <param name="result">The result to bind.</param>
     /// <param name="func">The function that returns a new result.</param>
     /// <returns>A task that returns the bound result.</returns>
-    public static ValueTask<Result<TValue>> BindAsync<TValue>(this Result<TValue> result, Func<TValue, ValueTask<Result<TValue>>> func) =>
-        result.IsFailed ? ValueTask.FromResult(Result.Fail<TValue>(result.Errors)) : func(result.Value);
+    public static ValueTask<Result<TValue>> BindAsync<TValue>(this Result<TValue> result, Func<TValue, ValueTask<Result<TValue>>> func)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return result.IsFailed ? ValueTask.FromResult(Result.Fail<TValue>(result.Errors)) : func(result.Value);
+    }
 }

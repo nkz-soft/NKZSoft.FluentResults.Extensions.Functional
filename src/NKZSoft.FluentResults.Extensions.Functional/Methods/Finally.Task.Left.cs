@@ -12,6 +12,8 @@ public static partial class ResultExtensions
     /// <returns>A task representing the asynchronous operation. The task result contains the result of the function.</returns>
     public static async Task<T> FinallyAsync<T>(this Task<Result> resultTask, Func<Result, T> func)
     {
+        ArgumentNullException.ThrowIfNull(func);
+
         var result = await resultTask.ConfigureAwait(false);
         return result.Finally(func);
     }
@@ -28,6 +30,8 @@ public static partial class ResultExtensions
     public static async Task<T> FinallyAsync<T, TValue>(this Task<Result<TValue>> resultTask,
         Func<Result<TValue>, T> func)
     {
+        ArgumentNullException.ThrowIfNull(func);
+
         var result = await resultTask.ConfigureAwait(false);
         return result.Finally(func);
     }

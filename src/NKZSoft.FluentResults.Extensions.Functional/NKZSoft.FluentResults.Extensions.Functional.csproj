@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0</Version>
-    <Description>Provides the configuration for Grpc</Description>
+    <Version>1.0.1</Version>
+    <Description>It is a library that extends the popular FluentResults library and helps you write code in a more functional way.</Description>
     <Copyright>Copyright © 2024</Copyright>
     <RepositoryUrl>https://github.com/nkz-soft/NKZSoft.Service.Configuration.Grpc</RepositoryUrl>
   </PropertyGroup>
