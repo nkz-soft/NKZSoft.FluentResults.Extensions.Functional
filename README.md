@@ -30,7 +30,7 @@ If the Result is successful, it executes the function and returns the resulting 
 ```csharp
 public async Task<Result<int>> OnSuccessAsync(int x)
 ...
-Result.Ok(1).BindAsync(OnSuccessAsync);
+await Result.Ok(1).BindAsync(OnSuccessAsync);
 ```
 
 ### Finally
@@ -38,9 +38,9 @@ Result.Ok(1).BindAsync(OnSuccessAsync);
 Executes a function after a Result, regardless of its success or failure.
 
 ```csharp
-public async Task<int> OnBothAsync(Result arg)
+public async Task<int> OnBothAsync(Result result)
 ...
-Result.Ok().FinallyAsync(OnBothAsync);
+await Result.Ok().FinallyAsync(OnBothAsync);
 ```
 ### Tap
 
@@ -49,5 +49,18 @@ Executes an action if the result is successful and return the original result.
 ```csharp
 public async Task OnActionAsync()
 ...
-Result.Ok().Tap(OnActionAsync);
+await Result.Ok().TapAsync(OnActionAsync);
+```
+
+### Match
+
+Matches a Result to either a success or failure action.
+
+```csharp
+public async Task OnSuccessAsync()
+...
+public async Task OnFailureAsync(IList<IError> errors)
+...
+
+await Result.Ok().MatchAsync(OnActionAsync, OnFailureAsync);
 ```
