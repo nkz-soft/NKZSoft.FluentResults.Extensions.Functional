@@ -64,3 +64,12 @@ public async Task OnFailureAsync(IList<IError> errors)
 
 await Result.Ok().MatchAsync(OnActionAsync, OnFailureAsync);
 ```
+
+### Ensure
+
+Ensures that a condition is met for a successful Result.
+If the condition is not met, returns a failed Result with the specified error message.
+
+```csharp
+var outputResult = await result.EnsureAsync(() => true, FailErrorMessage);
+```
