@@ -1,14 +1,14 @@
 ﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
-public sealed class MatchTestsTask : MatchTestsBase
+public class MatchTestsValueTaskLeft : MatchTestsBase
 {
     [Theory]
     [InlineData(true)]
     [InlineData(false)]
     public async Task MatchResult(bool isSuccess)
     {
-        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
-        await result.MatchAsync(TaskSuccessEmpty, TaskFailure);
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
+        await result.MatchAsync(SuccessEmpty, Failure);
 
         AssertSuccess(isSuccess);
     }
@@ -18,8 +18,8 @@ public sealed class MatchTestsTask : MatchTestsBase
     [InlineData(false)]
     public async Task MatchResultReturnsValue(bool isSuccess)
     {
-        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
-        await result.MatchAsync(TaskValueSuccess, TaskValueFailure);
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
+        await result.MatchAsync(ValueSuccess, ValueFailure);
 
         AssertSuccess(isSuccess);
     }
@@ -29,8 +29,8 @@ public sealed class MatchTestsTask : MatchTestsBase
     [InlineData(false)]
     public async Task MatchResultT(bool isSuccess)
     {
-        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
-        await result.MatchAsync(TaskValueSuccess, TaskFailure);
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
+        await result.MatchAsync(SuccessT, Failure);
 
         AssertSuccess(isSuccess);
     }
@@ -40,8 +40,8 @@ public sealed class MatchTestsTask : MatchTestsBase
     [InlineData(false)]
     public async Task MatchResultTValue(bool isSuccess)
     {
-        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
-        await result.MatchAsync(TaskValueSuccessT, TaskValueFailureT);
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
+        await result.MatchAsync(ValueSuccessT, ValueFailure);
 
         AssertSuccess(isSuccess);
     }

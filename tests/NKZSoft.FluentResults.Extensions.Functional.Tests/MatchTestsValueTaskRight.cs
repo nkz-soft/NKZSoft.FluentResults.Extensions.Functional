@@ -1,6 +1,6 @@
 ﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
-public class MatchTestsTaskRight : MatchTestsBase
+public class MatchTestsValueTaskRight : MatchTestsBase
 {
     [Theory]
     [InlineData(true)]
@@ -8,7 +8,7 @@ public class MatchTestsTaskRight : MatchTestsBase
     public async Task MatchResult(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
-        await result.MatchAsync(TaskSuccessEmpty, TaskFailure);
+        await result.MatchAsync(ValueTaskSuccessEmpty, ValueTaskFailure);
 
         AssertSuccess(isSuccess);
     }
@@ -19,7 +19,7 @@ public class MatchTestsTaskRight : MatchTestsBase
     public async Task MatchResultReturnsValue(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
-        await result.MatchAsync(TaskValueSuccess, TaskValueFailure);
+        await result.MatchAsync(ValueTaskValueSuccess, ValueTaskValueFailure);
 
         AssertSuccess(isSuccess);
     }
@@ -30,7 +30,7 @@ public class MatchTestsTaskRight : MatchTestsBase
     public async Task MatchResultT(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
-        await result.MatchAsync(TaskValueSuccess, TaskFailure);
+        await result.MatchAsync(ValueTaskValueSuccess, ValueTaskFailure);
 
         AssertSuccess(isSuccess);
     }
@@ -41,7 +41,7 @@ public class MatchTestsTaskRight : MatchTestsBase
     public async Task MatchResultTValue(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
-        await result.MatchAsync(TaskValueSuccessT, TaskValueFailureT);
+        await result.MatchAsync(ValueTaskValueSuccessT, ValueTaskValueFailureT);
 
         AssertSuccess(result, isSuccess);
     }
