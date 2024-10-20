@@ -27,40 +27,76 @@ public abstract class MatchTestsBase : TestBase
         return TValue.Value;
     }
 
-    protected Task FailureAsync(IList<IError> arg)
+    protected Task TaskFailure(IList<IError> arg)
     {
         Failure(arg);
         return Task.CompletedTask;
     }
 
-    protected Task SuccessEmptyAsync()
+    protected ValueTask ValueTaskFailure(IList<IError> arg)
+    {
+        Failure(arg);
+        return ValueTask.CompletedTask;
+    }
+
+    protected Task TaskSuccessEmpty()
     {
         SuccessEmpty();
         return Task.CompletedTask;
     }
 
-    protected Task<TValue> ValueFailureAsync(IList<IError> arg)
+    protected ValueTask ValueTaskSuccessEmpty()
+    {
+        SuccessEmpty();
+        return ValueTask.CompletedTask;
+    }
+
+    protected Task<TValue> TaskValueFailure(IList<IError> arg)
     {
         Failure(arg);
         return Task.FromResult(TValue.Value);
     }
 
-    protected Task<TValue> ValueSuccessAsync()
+    protected ValueTask<TValue> ValueTaskValueFailure(IList<IError> arg)
+    {
+        Failure(arg);
+        return ValueTask.FromResult(TValue.Value);
+    }
+
+    protected Task<TValue> TaskValueSuccess()
     {
         SuccessEmpty();
         return Task.FromResult(TValue.Value);
     }
 
-    protected Task<TValue> ValueSuccessTAsync(TValue value)
+    protected ValueTask<TValue> ValueTaskValueSuccess()
+    {
+        SuccessEmpty();
+        return ValueTask.FromResult(TValue.Value);
+    }
+
+    protected Task<TValue> TaskValueSuccessT(TValue value)
     {
         SuccessEmpty();
         return Task.FromResult(TValue.Value);
     }
 
-    protected  Task<TValue> ValueFailureTAsync(IList<IError> arg)
+    protected ValueTask<TValue> ValueTaskValueSuccessT(TValue value)
+    {
+        SuccessEmpty();
+        return ValueTask.FromResult(TValue.Value);
+    }
+
+    protected  Task<TValue> TaskValueFailureT(IList<IError> arg)
     {
         Failure(arg);
         return Task.FromResult(TValue.Value);
+    }
+
+    protected  ValueTask<TValue> ValueTaskValueFailureT(IList<IError> arg)
+    {
+        Failure(arg);
+        return ValueTask.FromResult(TValue.Value);
     }
 
     protected void AssertSuccess(Result<TValue> output, bool isSuccess)
