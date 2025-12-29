@@ -32,11 +32,11 @@ public static partial class ResultExtensions
     /// </summary>
     /// <param name="resultTask">The Task of Result to ensure.</param>
     /// <param name="predicate">A function that evaluates to true if the condition is met. This function should return a Task of bool.</param>
-    /// <param name="errorPredicate">A function that returns a list of errors if the condition is not met. This function should return a Task of IList of IError.</param>
+    /// <param name="errorPredicate">A function that returns a list of errors if the condition is not met. This function should return a Task of IReadOnlyList of IError.</param>
     /// <returns>A Task of Result that is failed if the condition is not met, otherwise the original Task of Result.</returns>
     public static async ValueTask<Result> EnsureAsync(this ValueTask<Result> resultTask,
         Func<ValueTask<bool>> predicate,
-        Func<ValueTask<IList<IError>>> errorPredicate)
+        Func<ValueTask<IReadOnlyList<IError>>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);
@@ -129,11 +129,11 @@ public static partial class ResultExtensions
     /// <typeparam name="TValue">The type of the value contained in the result.</typeparam>
     /// <param name="resultTask">The Task of Result to ensure.</param>
     /// <param name="predicate">A function that evaluates to true if the condition is met. This function should return a Task of bool.</param>
-    /// <param name="errorPredicate">A function that provides the errors to use if the condition is not met. This function should return a Task of IList of IError.</param>
+    /// <param name="errorPredicate">A function that provides the errors to use if the condition is not met. This function should return a Task of IReadOnlyList of IError.</param>
     /// <returns>A Task of Result that is failed if the condition is not met, otherwise the original Task of Result.</returns>
     public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
         Func<ValueTask<bool>> predicate,
-        Func<ValueTask<IList<IError>>> errorPredicate)
+        Func<ValueTask<IReadOnlyList<IError>>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);

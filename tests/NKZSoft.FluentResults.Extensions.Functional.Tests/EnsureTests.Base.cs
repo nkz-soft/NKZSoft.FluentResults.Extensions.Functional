@@ -17,13 +17,13 @@ public abstract class EnsureTestsBase : TestBase
     protected static Task<bool> TaskFalsePredicateFunc() => Task.FromResult(false);
 
     protected static ValueTask<bool> ValueTaskFalsePredicateFunc() => ValueTask.FromResult(false);
-    protected static IList<IError> ErrorPredicateFunc()
+    protected static IReadOnlyList<IError> ErrorPredicateFunc()
         => new List<IError> { new Error(FailErrorMessage) };
 
-    protected static async Task<IList<IError>> TaskErrorPredicateFunc()
+    protected static async Task<IReadOnlyList<IError>> TaskErrorPredicateFunc()
         => await Task.FromResult(new List<IError> { new Error(FailErrorMessage) });
 
-    protected static async ValueTask<IList<IError>> ValueTaskErrorPredicateFunc()
+    protected static async ValueTask<IReadOnlyList<IError>> ValueTaskErrorPredicateFunc()
         => await ValueTask.FromResult(new List<IError> { new Error(FailErrorMessage) });
 
     protected static Result ResultOkPredicateFunc() => Result.Ok();

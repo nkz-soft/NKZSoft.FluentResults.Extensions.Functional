@@ -11,7 +11,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async ValueTask MatchAsync(this ValueTask<Result> resultTask,
         Func<ValueTask> onSuccess,
-        Func<IList<IError>, ValueTask> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -38,7 +38,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation, returning a value of type T.</returns>
     public static async ValueTask<T> MatchAsync<T>(this ValueTask<Result> resultTask,
         Func<ValueTask<T>> onSuccess,
-        Func<IList<IError>, ValueTask<T>> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -60,7 +60,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async ValueTask MatchAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
         Func<ValueTask<TValue>> onSuccess,
-        Func<IList<IError>, ValueTask> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -88,7 +88,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation. The task result contains the value returned by the executed function.</returns>
     public static async ValueTask<T> MatchAsync<T, TValue>(this ValueTask<Result<TValue>> resultTask,
         Func<TValue, ValueTask<T>> onSuccess,
-        Func<IList<IError>, ValueTask<T>> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);

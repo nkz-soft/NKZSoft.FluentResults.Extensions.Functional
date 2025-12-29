@@ -8,7 +8,7 @@ public static partial class ResultExtensions
     /// <param name="result">The Result to match.</param>
     /// <param name="onSuccess">The action to execute if the Result is successful.</param>
     /// <param name="onFailure">The action to execute if the Result is failed.</param>
-    public static void Match(this Result result, Action onSuccess, Action<IList<IError>> onFailure)
+    public static void Match(this Result result, Action onSuccess, Action<IReadOnlyList<IError>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -31,7 +31,7 @@ public static partial class ResultExtensions
     /// <param name="onSuccess">The function to execute if the Result is successful.</param>
     /// <param name="onFailure">The function to execute if the Result is failed.</param>
     /// <returns>The result of the executed function.</returns>
-    public static T Match<T>(this Result result, Func<T> onSuccess, Func<IList<IError>, T> onFailure)
+    public static T Match<T>(this Result result, Func<T> onSuccess, Func<IReadOnlyList<IError>, T> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -50,7 +50,7 @@ public static partial class ResultExtensions
     /// <param name="onFailure">The action to execute if the Result is failed.</param>
     public static void Match<TValue>(this Result<TValue> result,
         Action<TValue> onSuccess,
-        Action<IList<IError>> onFailure)
+        Action<IReadOnlyList<IError>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -76,7 +76,7 @@ public static partial class ResultExtensions
     /// <returns>The result of the executed function.</returns>
     public static T Match<T, TValue>(this Result<TValue> result,
         Func<TValue, T> onSuccess,
-        Func<IList<IError>, T> onFailure)
+        Func<IReadOnlyList<IError>, T> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);

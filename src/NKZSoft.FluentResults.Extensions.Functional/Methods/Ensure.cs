@@ -31,7 +31,7 @@ public static partial class ResultExtensions
     /// <param name="predicate">A function that evaluates to true if the condition is met.</param>
     /// <param name="errorPredicate">A function that returns a list of errors to use if the condition is not met.</param>
     /// <returns>A Result that is failed if the condition is not met, otherwise the original Result.</returns>
-    public static Result Ensure(this Result result, Func<bool> predicate, Func<IList<IError>> errorPredicate)
+    public static Result Ensure(this Result result, Func<bool> predicate, Func<IReadOnlyList<IError>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);
@@ -115,7 +115,7 @@ public static partial class ResultExtensions
     /// <param name="predicate">A function that evaluates to true if the condition is met.</param>
     /// <param name="errorPredicate">A function that returns a list of errors to use if the condition is not met.</param>
     /// <returns>A Result that is failed if the condition is not met, otherwise the original Result.</returns>
-    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, Func<IList<IError>> errorPredicate)
+    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, Func<IReadOnlyList<IError>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);

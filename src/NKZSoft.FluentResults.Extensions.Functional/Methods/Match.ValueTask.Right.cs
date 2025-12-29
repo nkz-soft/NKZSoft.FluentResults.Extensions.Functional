@@ -11,7 +11,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async ValueTask MatchAsync(this Result result,
         Func<ValueTask> onSuccess,
-        Func<IList<IError>, ValueTask> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -36,7 +36,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation, returning the result of the executed function.</returns>
     public static async ValueTask<T> MatchAsync<T>(this Result result,
         Func<ValueTask<T>> onSuccess,
-        Func<IList<IError>, ValueTask<T>> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -56,7 +56,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async ValueTask MatchAsync<TValue>(this Result<TValue> result,
         Func<ValueTask<TValue>> onSuccess,
-        Func<IList<IError>, ValueTask> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -82,7 +82,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation, returning the result of the success or failure function.</returns>
     public static async ValueTask<T> MatchAsync<T, TValue>(this Result<TValue> result,
         Func<TValue, ValueTask<T>> onSuccess,
-        Func<IList<IError>, ValueTask<T>> onFailure)
+        Func<IReadOnlyList<IError>, ValueTask<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);

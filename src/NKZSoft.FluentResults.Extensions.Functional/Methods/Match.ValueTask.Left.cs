@@ -9,7 +9,7 @@ public static partial class ResultExtensions
     /// <param name="onSuccess">The action to execute if the Result is successful.</param>
     /// <param name="onFailure">The action to execute if the Result is failed.</param>
     /// <exception cref="ArgumentNullException">Thrown if onSuccess or onFailure is null.</exception>
-    public static async ValueTask MatchAsync(this ValueTask<Result> resultTask, Action onSuccess, Action<IList<IError>> onFailure)
+    public static async ValueTask MatchAsync(this ValueTask<Result> resultTask, Action onSuccess, Action<IReadOnlyList<IError>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -36,7 +36,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation. The task result contains the value returned by the executed function.</returns>
     public static async ValueTask<T> MatchAsync<T>(this ValueTask<Result> resultTask,
         Func<T> onSuccess,
-        Func<IList<IError>, T> onFailure)
+        Func<IReadOnlyList<IError>, T> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -57,7 +57,7 @@ public static partial class ResultExtensions
     /// <param name="onFailure">The action to execute if the Result is failed.</param>
     public static async ValueTask MatchAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
         Action<TValue> onSuccess,
-        Action<IList<IError>> onFailure)
+        Action<IReadOnlyList<IError>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -85,7 +85,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation, returning the result of the success or failure function.</returns>
     public static async ValueTask<T> MatchAsync<T, TValue>(this ValueTask<Result<TValue>> resultTask,
         Func<TValue, T> onSuccess,
-        Func<IList<IError>, T> onFailure)
+        Func<IReadOnlyList<IError>, T> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);

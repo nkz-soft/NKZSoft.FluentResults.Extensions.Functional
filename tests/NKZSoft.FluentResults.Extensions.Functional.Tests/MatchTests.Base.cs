@@ -19,21 +19,21 @@ public abstract class MatchTestsBase : TestBase
 
     protected TValue ValueSuccessT(TValue obj) => ValueSuccess();
 
-    protected void Failure(IList<IError> errors) => ActionOnFailureExecuted = true;
+    protected void Failure(IReadOnlyList<IError> errors) => ActionOnFailureExecuted = true;
 
-    protected TValue ValueFailure(IList<IError> errors)
+    protected TValue ValueFailure(IReadOnlyList<IError> errors)
     {
         Failure(errors);
         return TValue.Value;
     }
 
-    protected Task TaskFailure(IList<IError> arg)
+    protected Task TaskFailure(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return Task.CompletedTask;
     }
 
-    protected ValueTask ValueTaskFailure(IList<IError> arg)
+    protected ValueTask ValueTaskFailure(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return ValueTask.CompletedTask;
@@ -51,13 +51,13 @@ public abstract class MatchTestsBase : TestBase
         return ValueTask.CompletedTask;
     }
 
-    protected Task<TValue> TaskValueFailure(IList<IError> arg)
+    protected Task<TValue> TaskValueFailure(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return Task.FromResult(TValue.Value);
     }
 
-    protected ValueTask<TValue> ValueTaskValueFailure(IList<IError> arg)
+    protected ValueTask<TValue> ValueTaskValueFailure(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return ValueTask.FromResult(TValue.Value);
@@ -87,13 +87,13 @@ public abstract class MatchTestsBase : TestBase
         return ValueTask.FromResult(TValue.Value);
     }
 
-    protected  Task<TValue> TaskValueFailureT(IList<IError> arg)
+    protected  Task<TValue> TaskValueFailureT(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return Task.FromResult(TValue.Value);
     }
 
-    protected  ValueTask<TValue> ValueTaskValueFailureT(IList<IError> arg)
+    protected  ValueTask<TValue> ValueTaskValueFailureT(IReadOnlyList<IError> arg)
     {
         Failure(arg);
         return ValueTask.FromResult(TValue.Value);

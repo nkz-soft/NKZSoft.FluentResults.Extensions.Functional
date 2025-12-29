@@ -35,7 +35,7 @@ public static partial class ResultExtensions
     /// <returns>A Task of Result that is failed with the specified errors if the condition is not met, otherwise the original Task of Result.</returns>
     public static async Task<Result> EnsureAsync(this Result result,
         Func<Task<bool>> predicate,
-        Func<Task<IList<IError>>> errorPredicate)
+        Func<Task<IReadOnlyList<IError>>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);
@@ -130,7 +130,7 @@ public static partial class ResultExtensions
     /// <returns>A Task of Result that is failed with the specified errors if the condition is not met, otherwise the original Task of Result.</returns>
     public static async Task<Result<TValue>> EnsureAsync<TValue>(this Result<TValue> result,
         Func<Task<bool>> predicate,
-        Func<Task<IList<IError>>> errorPredicate)
+        Func<Task<IReadOnlyList<IError>>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);
