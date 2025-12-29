@@ -36,7 +36,7 @@ public static partial class ResultExtensions
     /// <returns>A Task of Result that is failed if the condition is not met, otherwise the original Task of Result.</returns>
     public static async ValueTask<Result> EnsureAsync(this ValueTask<Result> resultTask,
         Func<bool> predicate,
-        Func<IList<IError>> errorPredicate)
+        Func<IReadOnlyList<IError>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);
@@ -132,7 +132,7 @@ public static partial class ResultExtensions
     /// <exception cref="ArgumentNullException">Thrown if predicate or errorPredicate is null.</exception>
     public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
         Func<bool> predicate,
-        Func<IList<IError>> errorPredicate)
+        Func<IReadOnlyList<IError>> errorPredicate)
     {
         ArgumentNullException.ThrowIfNull(predicate);
         ArgumentNullException.ThrowIfNull(errorPredicate);

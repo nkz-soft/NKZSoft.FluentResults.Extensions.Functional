@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.4</Version>
+    <Version>1.1.0</Version>
     <Description>It is a library that extends the popular FluentResults library and helps you write code in a more functional way.</Description>
-    <Copyright>Copyright © 2024</Copyright>
+    <Copyright>Copyright © 2025</Copyright>
     <RepositoryUrl>https://github.com/nkz-soft/NKZSoft.FluentResults.Extensions.Functional</RepositoryUrl>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>

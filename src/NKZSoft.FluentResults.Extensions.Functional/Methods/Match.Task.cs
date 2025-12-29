@@ -11,7 +11,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async Task MatchAsync(this Task<Result> resultTask,
         Func<Task> onSuccess,
-        Func<IList<IError>, Task> onFailure)
+        Func<IReadOnlyList<IError>, Task> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -38,7 +38,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation, returning a value of type T.</returns>
     public static async Task<T> MatchAsync<T>(this Task<Result> resultTask,
         Func<Task<T>> onSuccess,
-        Func<IList<IError>, Task<T>> onFailure)
+        Func<IReadOnlyList<IError>, Task<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -60,7 +60,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation.</returns>
     public static async Task MatchAsync<TValue>(this Task<Result<TValue>> resultTask,
         Func<Task<TValue>> onSuccess,
-        Func<IList<IError>, Task> onFailure)
+        Func<IReadOnlyList<IError>, Task> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);
@@ -88,7 +88,7 @@ public static partial class ResultExtensions
     /// <returns>A Task representing the asynchronous operation. The task result contains the value returned by the executed function.</returns>
     public static async Task<T> MatchAsync<T, TValue>(this Task<Result<TValue>> resultTask,
         Func<TValue, Task<T>> onSuccess,
-        Func<IList<IError>, Task<T>> onFailure)
+        Func<IReadOnlyList<IError>, Task<T>> onFailure)
     {
         ArgumentNullException.ThrowIfNull(onSuccess);
         ArgumentNullException.ThrowIfNull(onFailure);

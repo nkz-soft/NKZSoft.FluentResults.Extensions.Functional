@@ -59,7 +59,7 @@ Matches a Result to either a success or failure action.
 ```csharp
 public async Task OnSuccessAsync()
 ...
-public async Task OnFailureAsync(IList<IError> errors)
+public async Task OnFailureAsync(IReadOnlyList<IError> errors)
 ...
 
 await Result.Ok().MatchAsync(OnActionAsync, OnFailureAsync);
