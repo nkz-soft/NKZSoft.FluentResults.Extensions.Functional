@@ -14,7 +14,7 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(func);
 
         var result = await resultTask.ConfigureAwait(false);
-        return result.Map(func);
+        return result.IternalMap(func);
     }
 
     /// <summary>
@@ -32,6 +32,6 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(func);
 
         var result = await resultTask.ConfigureAwait(false);
-        return result.Map(func);
+        return result.IternalMap(func);
     }
 }
