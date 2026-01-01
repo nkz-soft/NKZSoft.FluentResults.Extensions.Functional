@@ -73,3 +73,57 @@ If the condition is not met, returns a failed Result with the specified error me
 ```csharp
 var outputResult = await result.EnsureAsync(() => true, FailErrorMessage);
 ```
+
+### Map
+
+Creates a new Result from the return value of a function.
+If the Result is failed, returns a failed Result with the same errors.
+
+```csharp
+public async Task<Dto> MapAsync(int value)
+...
+var output = await Result.Ok(1).MapAsync(MapAsync);
+```
+
+## Example
+
+```csharp
+public sealed class ExampleUsage
+{
+    public string ProcessPayment(int customerId, decimal amount)
+    {
+        var paymentGateway = new PaymentGateway();
+        var database = new Database();
+
+        return GetById(customerId)
+            .Tap(customer => customer.AddBalance(amount))
+            .Ensure(() => amount > 0, "Amount must be positive")
+            .Bind(customer => paymentGateway.Charge(customer, amount))
+            .Bind(customer => database.Save(customer))
+            .Map(customer => customer.Id)
+            .Finally(result => result.IsSuccess ? "OK" : result.Errors[0].Message);
+    }
+
+    private static Result<Customer> GetById(int id)
+        => id > 0 ? Result.Ok(new Customer(id)) : Result.Fail<Customer>("Customer not found: " + id);
+
+    private sealed class Customer
+    {
+        public Customer(int id) => Id = id;
+        public int Id { get; }
+        public void AddBalance(decimal amount) { }
+    }
+
+    private sealed class PaymentGateway
+    {
+        public Result<Customer> Charge(Customer customer, decimal amount)
+            => Result.Ok(customer);
+    }
+
+    private sealed class Database
+    {
+        public Result<Customer> Save(Customer customer)
+            => Result.Ok(customer);
+    }
+}
+```
