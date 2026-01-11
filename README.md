@@ -74,6 +74,19 @@ If the condition is not met, returns a failed Result with the specified error me
 var outputResult = await result.EnsureAsync(() => true, FailErrorMessage);
 ```
 
+### Check
+
+Executes a function only if the Result is successful, acting as a validation step in a chain.
+If the function returns failure, the failure is returned; otherwise it returns the original result.
+
+```csharp
+public Task<Result> EnsureUniqueEmailAsync(string email)
+...
+var output = await GetUserAsync()
+    .CheckAsync(user => EnsureUniqueEmailAsync(user.Email))
+    .BindAsync(SaveAsync);
+```
+
 ### Map
 
 Creates a new Result from the return value of a function.
@@ -98,6 +111,7 @@ public sealed class ExampleUsage
         return GetById(customerId)
             .Tap(customer => customer.AddBalance(amount))
             .Ensure(() => amount > 0, "Amount must be positive")
+            .Check(customer => customer.IsActive ? Result.Ok() : Result.Fail("Inactive customer"))
             .Bind(customer => paymentGateway.Charge(customer, amount))
             .Bind(customer => database.Save(customer))
             .Map(customer => customer.Id)
@@ -111,6 +125,7 @@ public sealed class ExampleUsage
     {
         public Customer(int id) => Id = id;
         public int Id { get; }
+        public bool IsActive => true;
         public void AddBalance(decimal amount) { }
     }
 
