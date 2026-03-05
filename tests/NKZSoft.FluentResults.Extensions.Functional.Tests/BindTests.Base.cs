@@ -9,6 +9,24 @@ public abstract class BindTestsBase : TestBase
         FuncExecuted = true;
         return Result.Ok();
     }
+
+    protected Result FailFunc()
+    {
+        FuncExecuted = true;
+        return Result.Fail(ErrorMessage);
+    }
+
+    protected Result<string> OkStringFunc()
+    {
+        FuncExecuted = true;
+        return Result.Ok("ok");
+    }
+
+    protected Result<string> FailStringFunc()
+    {
+        FuncExecuted = true;
+        return Result.Fail<string>(ErrorMessage);
+    }
     protected Task<Result> TaskOkFuncAsync()
     {
         FuncExecuted = true;
@@ -25,6 +43,30 @@ public abstract class BindTestsBase : TestBase
     {
         FuncExecuted = true;
         return Result.Ok(value);
+    }
+
+    protected Result OkFromTFunc(TValue value)
+    {
+        FuncExecuted = true;
+        return Result.Ok();
+    }
+
+    protected Result FailFromTFunc(TValue value)
+    {
+        FuncExecuted = true;
+        return Result.Fail(ErrorMessage);
+    }
+
+    protected Result<string> OkStringFromTFunc(TValue value)
+    {
+        FuncExecuted = true;
+        return Result.Ok("ok");
+    }
+
+    protected Result<string> FailStringFromTFunc(TValue value)
+    {
+        FuncExecuted = true;
+        return Result.Fail<string>(ErrorMessage);
     }
 
     protected Task<Result<TValue>> TaskOkTFuncAsync(TValue value)
