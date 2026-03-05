@@ -263,4 +263,54 @@ public sealed class EnsureTests : EnsureTestsBase
 
         AssertSameResults(result, output, false);
     }
+
+    [Fact]
+    public void EnsureSourceResultTIsOkValueBoolPredicateIsFalseExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
+
+        var output = result.Ensure(FalseValuePredicateFunc, FailErrorMessage);
+
+        AssertDifferentResults(result, output, false);
+    }
+
+    [Fact]
+    public void EnsureSourceResultTIsOkValueBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
+
+        var output = result.Ensure(FalseValuePredicateFunc, ErrorValuePredicateFunc);
+
+        AssertDifferentResults(result, output, false);
+    }
+
+    [Fact]
+    public void EnsureSourceResultTIsOkResultPredicateWithoutValueIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
+
+        var output = result.Ensure(() => Result.Fail(FailErrorMessage));
+
+        AssertDifferentResults(result, output, false);
+    }
+
+    [Fact]
+    public void EnsureSourceResultTIsOkValueResultPredicateIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
+
+        var output = result.Ensure(ResultValueFailPredicateFunc);
+
+        AssertDifferentResults(result, output, false);
+    }
+
+    [Fact]
+    public void EnsureSourceResultTIsOkValueResultTPredicateIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
+
+        var output = result.Ensure(ResultTValueFailPredicateFunc);
+
+        AssertDifferentResults(result, output, false);
+    }
 }

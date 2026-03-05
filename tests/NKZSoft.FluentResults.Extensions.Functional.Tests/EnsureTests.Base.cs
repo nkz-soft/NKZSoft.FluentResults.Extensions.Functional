@@ -14,9 +14,21 @@ public abstract class EnsureTestsBase : TestBase
 
     protected static bool FalsePredicateFunc() => false;
 
+    protected static bool TrueValuePredicateFunc(TValue _) => true;
+
+    protected static bool FalseValuePredicateFunc(TValue _) => false;
+
     protected static Task<bool> TaskFalsePredicateFunc() => Task.FromResult(false);
 
     protected static ValueTask<bool> ValueTaskFalsePredicateFunc() => ValueTask.FromResult(false);
+
+    protected static Task<bool> TaskTrueValuePredicateFunc(TValue _) => Task.FromResult(true);
+
+    protected static Task<bool> TaskFalseValuePredicateFunc(TValue _) => Task.FromResult(false);
+
+    protected static ValueTask<bool> ValueTaskTrueValuePredicateFunc(TValue _) => ValueTask.FromResult(true);
+
+    protected static ValueTask<bool> ValueTaskFalseValuePredicateFunc(TValue _) => ValueTask.FromResult(false);
     protected static IReadOnlyList<IError> ErrorPredicateFunc()
         => new List<IError> { new Error(FailErrorMessage) };
 
@@ -24,6 +36,15 @@ public abstract class EnsureTestsBase : TestBase
         => await Task.FromResult(new List<IError> { new Error(FailErrorMessage) });
 
     protected static async ValueTask<IReadOnlyList<IError>> ValueTaskErrorPredicateFunc()
+        => await ValueTask.FromResult(new List<IError> { new Error(FailErrorMessage) });
+
+    protected static IReadOnlyList<IError> ErrorValuePredicateFunc(TValue _)
+        => new List<IError> { new Error(FailErrorMessage) };
+
+    protected static async Task<IReadOnlyList<IError>> TaskErrorValuePredicateFunc(TValue _)
+        => await Task.FromResult(new List<IError> { new Error(FailErrorMessage) });
+
+    protected static async ValueTask<IReadOnlyList<IError>> ValueTaskErrorValuePredicateFunc(TValue _)
         => await ValueTask.FromResult(new List<IError> { new Error(FailErrorMessage) });
 
     protected static Result ResultOkPredicateFunc() => Result.Ok();
@@ -53,10 +74,42 @@ public abstract class EnsureTestsBase : TestBase
     protected static Result<TValue> ResultTFailPredicateFunc()
         => Result.Fail<TValue>(FailErrorMessage);
 
+    protected static Result ResultValueOkPredicateFunc(TValue _) => Result.Ok();
+
+    protected static Result ResultValueFailPredicateFunc(TValue _) => Result.Fail(FailErrorMessage);
+
+    protected static Result<TValue> ResultTValueOkPredicateFunc(TValue value) => Result.Ok(value);
+
+    protected static Result<TValue> ResultTValueFailPredicateFunc(TValue _) => Result.Fail<TValue>(FailErrorMessage);
+
     protected static async Task<Result<TValue>> TaskResultTFailPredicateFunc()
         => await Task.FromResult(Result.Fail<TValue>(FailErrorMessage));
 
+    protected static async Task<Result> TaskResultValueOkPredicateFunc(TValue _)
+        => await Task.FromResult(Result.Ok());
+
+    protected static async Task<Result> TaskResultValueFailPredicateFunc(TValue _)
+        => await Task.FromResult(Result.Fail(FailErrorMessage));
+
+    protected static async Task<Result<TValue>> TaskResultTValueOkPredicateFunc(TValue value)
+        => await Task.FromResult(Result.Ok(value));
+
+    protected static async Task<Result<TValue>> TaskResultTValueFailPredicateFunc(TValue _)
+        => await Task.FromResult(Result.Fail<TValue>(FailErrorMessage));
+
     protected static async ValueTask<Result<TValue>> ValueTaskResultTFailPredicateFunc()
+        => await ValueTask.FromResult(Result.Fail<TValue>(FailErrorMessage));
+
+    protected static async ValueTask<Result> ValueTaskResultValueOkPredicateFunc(TValue _)
+        => await ValueTask.FromResult(Result.Ok());
+
+    protected static async ValueTask<Result> ValueTaskResultValueFailPredicateFunc(TValue _)
+        => await ValueTask.FromResult(Result.Fail(FailErrorMessage));
+
+    protected static async ValueTask<Result<TValue>> ValueTaskResultTValueOkPredicateFunc(TValue value)
+        => await ValueTask.FromResult(Result.Ok(value));
+
+    protected static async ValueTask<Result<TValue>> ValueTaskResultTValueFailPredicateFunc(TValue _)
         => await ValueTask.FromResult(Result.Fail<TValue>(FailErrorMessage));
 
     protected static void AssertSuccess(Result output, bool isSuccess)
