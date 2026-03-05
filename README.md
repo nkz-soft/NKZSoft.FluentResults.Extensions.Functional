@@ -74,6 +74,21 @@ If the condition is not met, returns a failed Result with the specified error me
 var outputResult = await result.EnsureAsync(() => true, FailErrorMessage);
 ```
 
+For `Result<TValue>`, `Ensure` also supports value-aware predicates and result predicates:
+
+```csharp
+var output1 = Result.Ok(user)
+    .Ensure(u => !string.IsNullOrWhiteSpace(u.Email), "Email is required");
+
+var output2 = Result.Ok(user)
+    .Ensure(u => u.IsActive ? Result.Ok() : Result.Fail("User is inactive"));
+
+var output3 = await Result.Ok(user)
+    .EnsureAsync(u => Task.FromResult(u.Age >= 18), "User must be 18+");
+```
+
+These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
+
 ### Check
 
 Executes a function only if the Result is successful, acting as a validation step in a chain.
