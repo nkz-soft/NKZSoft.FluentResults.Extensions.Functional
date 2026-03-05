@@ -121,6 +121,26 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result asynchronously.
+    /// If the condition is not met, returns a failed Result with the specified error message.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
+        Func<TValue, bool> predicate,
+        string errorMessage)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(errorMessage);
+
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate(result.Value) ? Result.Fail<TValue>(errorMessage) : result;
+    }
+
+    /// <summary>
     /// Ensures that a condition is met for a successful Result asynchronously.
     /// If the condition is not met, returns a failed Result with the specified error messages.
     /// </summary>
@@ -147,6 +167,46 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result asynchronously.
+    /// If the condition is not met, returns a failed Result with the specified errors.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
+        Func<TValue, bool> predicate,
+        Func<TValue, IReadOnlyList<IError>> errorPredicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(errorPredicate);
+
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate(result.Value) ? Result.Fail<TValue>(errorPredicate(result.Value)) : result;
+    }
+
+    /// <summary>
+    /// Ensures that a condition is met for a successful Result asynchronously.
+    /// If the condition is not met, returns a failed Result with the errors from the predicate.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
+        Func<Result> predicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var predicateResult = predicate();
+
+        return predicateResult.IsFailed ? Result.Fail<TValue>(predicateResult.Errors) : result;
+    }
+
+    /// <summary>
     /// Ensures that a condition is met for a successful Result asynchronously.
     /// If the condition is not met, returns a failed Result with the errors from the error predicate.
     /// </summary>
@@ -167,6 +227,46 @@ public static partial class ResultExtensions
         }
 
         var predicateResult = predicate();
+
+        return predicateResult.IsFailed ? Result.Fail<TValue>(predicateResult.Errors) : result;
+    }
+
+    /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result asynchronously.
+    /// If the condition is not met, returns a failed Result with the errors from the predicate.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
+        Func<TValue, Result> predicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var predicateResult = predicate(result.Value);
+
+        return predicateResult.IsFailed ? Result.Fail<TValue>(predicateResult.Errors) : result;
+    }
+
+    /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result asynchronously.
+    /// If the condition is not met, returns a failed Result with the errors from the predicate.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureAsync<TValue>(this ValueTask<Result<TValue>> resultTask,
+        Func<TValue, Result<TValue>> predicate)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+
+        var result = await resultTask.ConfigureAwait(false);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var predicateResult = predicate(result.Value);
 
         return predicateResult.IsFailed ? Result.Fail<TValue>(predicateResult.Errors) : result;
     }

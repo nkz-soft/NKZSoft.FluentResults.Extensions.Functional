@@ -233,4 +233,49 @@ public class EnsureTestsValueTask : EnsureTestsBase
 
         AssertSuccess(output, false);
     }
+
+    [Fact]
+    public async Task EnsureSourceResultTIsOkValueValueTaskBoolPredicateIsFalseExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIfAsync(true, ErrorMessage, TValue.Value);
+        var output = await result.EnsureAsync(ValueTaskFalseValuePredicateFunc, FailErrorMessage);
+
+        AssertSuccess(output, false);
+    }
+
+    [Fact]
+    public async Task EnsureSourceResultTIsOkValueValueTaskBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIfAsync(true, ErrorMessage, TValue.Value);
+        var output = await result.EnsureAsync(ValueTaskFalseValuePredicateFunc, ValueTaskErrorValuePredicateFunc);
+
+        AssertSuccess(output, false);
+    }
+
+    [Fact]
+    public async Task EnsureSourceResultTIsOkValueTaskResultPredicateWithoutValueIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIfAsync(true, ErrorMessage, TValue.Value);
+        var output = await result.EnsureAsync(ValueTaskResultFailPredicateFunc);
+
+        AssertSuccess(output, false);
+    }
+
+    [Fact]
+    public async Task EnsureSourceResultTIsOkValueValueTaskResultPredicateIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIfAsync(true, ErrorMessage, TValue.Value);
+        var output = await result.EnsureAsync(ValueTaskResultValueFailPredicateFunc);
+
+        AssertSuccess(output, false);
+    }
+
+    [Fact]
+    public async Task EnsureSourceResultTIsOkValueValueTaskResultTPredicateIsFailExpectedResultFail()
+    {
+        var result = ResultExtensions.OkIfAsync(true, ErrorMessage, TValue.Value);
+        var output = await result.EnsureAsync(ValueTaskResultTValueFailPredicateFunc);
+
+        AssertSuccess(output, false);
+    }
 }
