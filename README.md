@@ -89,6 +89,18 @@ var output3 = await Result.Ok(user)
 
 These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
 
+### Try
+
+Executes code and converts thrown exceptions to failed `Result` values.
+
+```csharp
+var saveResult = ResultExtensions.Try(() => Save(customer));
+
+var loadResult = await ResultExtensions.TryAsync(
+    async () => await repository.LoadAsync(id),
+    ex => $"Load failed: {ex.Message}");
+```
+
 ### Check
 
 Executes a function only if the Result is successful, acting as a validation step in a chain.
