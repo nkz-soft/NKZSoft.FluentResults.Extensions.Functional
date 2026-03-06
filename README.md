@@ -154,6 +154,19 @@ public Task<Result<int>> GetNumberAsync()
 var output3 = await GetNumberAsync().MapAsync(MapValueTaskAsync);
 ```
 
+### Select
+
+LINQ-friendly alias for `Map`.
+If the Result is failed, returns a failed Result with the same errors.
+
+```csharp
+var output = Result.Ok(1).Select(v => v + 1);
+
+public Task<Result<int>> GetNumberAsync()
+...
+var output2 = await GetNumberAsync().SelectAsync(v => v + 1);
+```
+
 ## Example
 
 ```csharp
