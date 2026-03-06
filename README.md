@@ -97,6 +97,19 @@ var output3 = await Result.Ok(user)
 
 These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
 
+### Required
+
+Requires a successful result value to be non-null.
+If the source result is failed, errors are preserved.
+
+```csharp
+Result<string?> maybeName = Result.Ok<string?>(null);
+Result<string> requiredName = maybeName.Required("Name is required");
+
+Task<Result<string?>> maybeNameTask = GetNameAsync();
+Result<string> requiredFromTask = await maybeNameTask.RequiredAsync("Name is required");
+```
+
 ### Try
 
 Executes code and converts thrown exceptions to failed `Result` values.
