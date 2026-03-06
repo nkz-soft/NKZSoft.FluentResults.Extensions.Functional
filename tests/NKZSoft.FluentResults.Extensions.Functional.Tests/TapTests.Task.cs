@@ -34,4 +34,37 @@ public sealed class TapTestsTask : TapTestsBase
 
         AssertSuccess(output, isSuccess);
     }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task TapExecutesValueTaskActionOnResultSuccessAndReturnsSelf(bool isSuccess)
+    {
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
+        var output = await result.TapAsync(ValueTaskActionEmptyAsync);
+
+        AssertSuccess(output, isSuccess);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task TapTExecutesValueTaskActionOnResultSuccessAndReturnsSelf(bool isSuccess)
+    {
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
+        var output = await result.TapAsync(ValueTaskActionEmptyAsync);
+
+        AssertSuccess(output, isSuccess);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task TapTExecutesValueTaskActionTOnResultSuccessAndReturnsSelf(bool isSuccess)
+    {
+        var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
+        var output = await result.TapAsync(ValueTaskActionTAsync);
+
+        AssertSuccess(output, isSuccess);
+    }
 }

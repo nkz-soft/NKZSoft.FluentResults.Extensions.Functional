@@ -50,6 +50,14 @@ Executes an action if the result is successful and return the original result.
 public async Task OnActionAsync()
 ...
 await Result.Ok().TapAsync(OnActionAsync);
+
+public ValueTask OnActionValueTaskAsync()
+...
+await Result.Ok().TapAsync(OnActionValueTaskAsync);
+
+public Task<Result> GetResultAsync()
+...
+await GetResultAsync().TapAsync(OnActionValueTaskAsync);
 ```
 
 ### Match
@@ -123,6 +131,14 @@ If the Result is failed, returns a failed Result with the same errors.
 public async Task<Dto> MapAsync(int value)
 ...
 var output = await Result.Ok(1).MapAsync(MapAsync);
+
+public ValueTask<Dto> MapValueTaskAsync(int value)
+...
+var output2 = await Result.Ok(1).MapAsync(MapValueTaskAsync);
+
+public Task<Result<int>> GetNumberAsync()
+...
+var output3 = await GetNumberAsync().MapAsync(MapValueTaskAsync);
 ```
 
 ## Example

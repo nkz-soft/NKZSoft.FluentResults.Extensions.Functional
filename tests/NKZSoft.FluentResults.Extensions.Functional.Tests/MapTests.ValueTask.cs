@@ -29,4 +29,32 @@ public sealed class MapTestsValueTask : MapTestsBase
         var output = await ValueTaskOkResultTAsync().MapAsync(ValueTaskMapFuncAsync);
         AssertSuccess(output);
     }
+
+    [Fact]
+    public async Task MapValueTaskWithTaskFuncReturnsFailureAndDoesNotExecuteFunc()
+    {
+        var output = await ValueTaskFailResultAsync().MapAsync(TaskMapFuncAsync);
+        AssertFailure(output);
+    }
+
+    [Fact]
+    public async Task MapValueTaskWithTaskFuncSelectsNewResult()
+    {
+        var output = await Common.TestBase.ValueTaskOkResultAsync().MapAsync(TaskMapFuncAsync);
+        AssertSuccess(output);
+    }
+
+    [Fact]
+    public async Task MapValueTaskTWithTaskFuncReturnsFailureAndDoesNotExecuteFunc()
+    {
+        var output = await ValueTaskFailResultTAsync().MapAsync(TaskMapFuncAsync);
+        AssertFailure(output);
+    }
+
+    [Fact]
+    public async Task MapValueTaskTWithTaskFuncSelectsNewResult()
+    {
+        var output = await ValueTaskOkResultTAsync().MapAsync(TaskMapFuncAsync);
+        AssertSuccess(output);
+    }
 }
