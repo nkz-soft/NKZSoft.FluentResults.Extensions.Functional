@@ -176,6 +176,19 @@ var output = await GetUserAsync()
     .BindAsync(SaveAsync);
 ```
 
+### CheckIf
+
+Conditionally executes `Check` logic for `Result<TValue>`.
+If the condition/predicate is not satisfied, it returns the original result unchanged.
+
+```csharp
+var output = Result.Ok(user)
+    .CheckIf(user.IsActive, u => EnsureUniqueEmailAsync(u.Email));
+
+var output2 = await GetUserAsync()
+    .CheckIfAsync(u => u.IsActive, u => EnsureUniqueEmailAsync(u.Email));
+```
+
 ### Map
 
 Creates a new Result from the return value of a function.
