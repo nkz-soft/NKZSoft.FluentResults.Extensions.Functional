@@ -97,6 +97,20 @@ var output3 = await Result.Ok(user)
 
 These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
 
+### EnsureNot
+
+`EnsureNot` provides CSharpFunctionalExtensions-style inverted predicate checks for `Result<TValue>`.
+It fails when the predicate evaluates to `true`.
+
+```csharp
+var output = Result.Ok(15)
+    .EnsureNot(x => x > 10, "Value should be less than or equal to 10");
+
+Task<Result<int>> maybeAmountTask = GetAmountAsync();
+Result<int> ensuredFromTask = await maybeAmountTask
+    .EnsureNotAsync(x => x > 10, "Value should be less than or equal to 10");
+```
+
 ### Required
 
 Requires a successful result value to be non-null.
