@@ -110,6 +110,18 @@ Task<Result<string?>> maybeNameTask = GetNameAsync();
 Result<string> requiredFromTask = await maybeNameTask.RequiredAsync("Name is required");
 ```
 
+### EnsureNotNull
+
+`EnsureNotNull` provides CSharpFunctionalExtensions-style naming for non-null validation and follows the same behavior as `Required`.
+
+```csharp
+Result<string?> maybeEmail = Result.Ok<string?>(null);
+Result<string> ensuredEmail = maybeEmail.EnsureNotNull("Email is required");
+
+Task<Result<string?>> maybeEmailTask = GetEmailAsync();
+Result<string> ensuredFromTask = await maybeEmailTask.EnsureNotNullAsync("Email is required");
+```
+
 ### Try
 
 Executes code and converts thrown exceptions to failed `Result` values.
