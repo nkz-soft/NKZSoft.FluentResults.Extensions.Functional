@@ -208,6 +208,21 @@ public Task<Result<int>> GetNumberAsync()
 var output2 = await GetNumberAsync().SelectAsync(v => v + 1);
 ```
 
+### SelectMany
+
+LINQ-friendly alias composition for `Bind` + `Map`.
+Supports query syntax projections while preserving failure short-circuit behavior.
+
+```csharp
+var output =
+    from user in Result.Ok(currentUser)
+    from account in GetAccount(user.Id)
+    select new UserAccountDto(user, account);
+
+var asyncOutput = await GetUserAsync()
+    .SelectManyAsync(GetAccountAsync, (user, account) => new UserAccountDto(user, account));
+```
+
 ## Example
 
 ```csharp
