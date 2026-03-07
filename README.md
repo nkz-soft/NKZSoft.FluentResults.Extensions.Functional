@@ -148,6 +148,21 @@ var loadResult = await ResultExtensions.TryAsync(
     ex => $"Load failed: {ex.Message}");
 ```
 
+### Of
+
+Creates successful results from values and value-producing delegates.
+Unlike `Try`, exceptions are not converted to failure results and are propagated to the caller.
+
+```csharp
+var fromValue = ResultExtensions.Of(42);
+
+var fromFunc = ResultExtensions.Of(() => ComputeValue());
+
+var fromTask = await ResultExtensions.OfAsync(repository.GetByIdAsync(id));
+
+var fromValueTask = await ResultExtensions.OfAsync(GetValueValueTaskAsync);
+```
+
 ### Check
 
 Executes a function only if the Result is successful, acting as a validation step in a chain.
