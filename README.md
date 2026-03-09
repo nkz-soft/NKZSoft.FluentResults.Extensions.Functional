@@ -97,6 +97,23 @@ var output3 = await Result.Ok(user)
 
 These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
 
+### SuccessIf
+
+`SuccessIf` provides CSharpFunctionalExtensions-style naming for FluentResults `OkIf` behavior.
+
+```csharp
+var output = ResultExtensions.SuccessIf(amount > 0, "Amount must be positive");
+
+var outputWithValue = ResultExtensions.SuccessIf(
+    () => amount > 0,
+    amount,
+    "Amount must be positive");
+
+var asyncOutput = await ResultExtensions.SuccessIfAsync(
+    async () => await IsAmountValidAsync(amount),
+    "Amount must be positive");
+```
+
 ### EnsureNot
 
 `EnsureNot` provides CSharpFunctionalExtensions-style inverted predicate checks for `Result<TValue>`.
