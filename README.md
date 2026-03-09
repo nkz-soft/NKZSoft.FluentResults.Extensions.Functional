@@ -165,6 +165,22 @@ var loadResult = await ResultExtensions.TryAsync(
     ex => $"Load failed: {ex.Message}");
 ```
 
+### OnSuccessTry
+
+Executes an action/function only for successful results and converts thrown exceptions into failed `Result` values.
+For failed source results, errors are preserved and the delegate is not executed.
+
+```csharp
+var output = Result.Ok()
+    .OnSuccessTry(() => Save(customer));
+
+var outputWithValue = Result.Ok(customer)
+    .OnSuccessTry(c => SendNotification(c));
+
+var asyncOutput = await GetCustomerResultAsync()
+    .OnSuccessTryAsync(async c => await SendNotificationAsync(c));
+```
+
 ### Of
 
 Creates successful results from values and value-producing delegates.
