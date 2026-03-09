@@ -132,6 +132,23 @@ var asyncOutput = await ResultExtensions.FailureIfAsync(
     "Amount must be positive");
 ```
 
+### FirstFailureOrSuccess
+
+`FirstFailureOrSuccess` provides CSharpFunctionalExtensions-style short-circuit failure selection.
+It returns the first failed `Result` from the provided sequence or `Result.Ok()` when all results are successful.
+This differs from FluentResults `Merge`, which aggregates reasons from all results.
+
+```csharp
+var output = ResultExtensions.FirstFailureOrSuccess(
+    Result.Ok(),
+    Result.Fail("Validation failed"),
+    Result.Fail("Will not be returned"));
+
+var asyncOutput = await ResultExtensions.FirstFailureOrSuccessAsync(
+    Task.FromResult(Result.Ok()),
+    Task.FromResult(Result.Fail("Validation failed")));
+```
+
 ### EnsureNot
 
 `EnsureNot` provides CSharpFunctionalExtensions-style inverted predicate checks for `Result<TValue>`.
