@@ -114,6 +114,24 @@ var asyncOutput = await ResultExtensions.SuccessIfAsync(
     "Amount must be positive");
 ```
 
+### FailureIf
+
+`FailureIf` provides CSharpFunctionalExtensions-style inverted condition naming.
+It fails when the condition/predicate is `true`.
+
+```csharp
+var output = ResultExtensions.FailureIf(amount <= 0, "Amount must be positive");
+
+var outputWithValue = ResultExtensions.FailureIf(
+    () => amount <= 0,
+    amount,
+    "Amount must be positive");
+
+var asyncOutput = await ResultExtensions.FailureIfAsync(
+    async () => await IsAmountInvalidAsync(amount),
+    "Amount must be positive");
+```
+
 ### EnsureNot
 
 `EnsureNot` provides CSharpFunctionalExtensions-style inverted predicate checks for `Result<TValue>`.
