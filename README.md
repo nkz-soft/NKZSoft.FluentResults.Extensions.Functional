@@ -232,6 +232,22 @@ var asyncRecovered = await GetCustomerResultAsync()
     .CompensateAsync(errors => RecoverCustomerAsync(errors));
 ```
 
+### OnFailureCompensate
+
+`OnFailureCompensate` is a CSharpFunctionalExtensions-style alias for `Compensate`.
+It executes fallback logic only when the source result is failed.
+
+```csharp
+var recovered = Result.Fail("Validation failed")
+    .OnFailureCompensate(() => Result.Ok());
+
+var recoveredWithValue = Result.Fail<int>("Validation failed")
+    .OnFailureCompensate(errors => Result.Ok(42));
+
+var asyncRecovered = await GetCustomerResultAsync()
+    .OnFailureCompensateAsync(errors => RecoverCustomerAsync(errors));
+```
+
 ### Of
 
 Creates successful results from values and value-producing delegates.
