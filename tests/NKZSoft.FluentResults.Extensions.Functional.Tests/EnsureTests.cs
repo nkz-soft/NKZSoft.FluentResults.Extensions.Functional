@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class EnsureTests : EnsureTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureBoolPredicateIsTrue(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -14,7 +14,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsOkBoolPredicateIsFalseExpectedResultFail()
     {
         var result = Result.OkIf(true, ErrorMessage);
@@ -24,7 +24,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsFailBoolPredicateIsFalseExpectedResultFail()
     {
         var result = Result.OkIf(false, ErrorMessage);
@@ -34,9 +34,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureBoolPredicateIsTrueAndSpecifiedErrorPredicate(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -47,7 +47,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsOkBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
     {
         var result = Result.OkIf(true, ErrorMessage);
@@ -58,7 +58,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsFailBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
     {
         var result = Result.OkIf(false, ErrorMessage);
@@ -69,9 +69,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureResultPredicateIsOk(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -81,7 +81,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsOkResultPredicateIsFailExpectedResultFail()
     {
         var result = Result.OkIf(true, ErrorMessage);
@@ -91,7 +91,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsFailResultPredicateIsFailExpectedResultFail()
     {
         var result = Result.OkIf(false, ErrorMessage);
@@ -101,9 +101,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureResultTPredicateIsOk(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -113,7 +113,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsOkResultTPredicateIsFailExpectedResultFail()
     {
         var result = Result.OkIf(true, ErrorMessage);
@@ -123,7 +123,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultIsFailResultTPredicateIsFailExpectedResultFail()
     {
         var result = Result.OkIf(false, ErrorMessage);
@@ -133,9 +133,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureTBoolPredicateIsTrue(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -145,7 +145,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkBoolPredicateIsFalseExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -155,7 +155,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsFailBoolPredicateIsFalseExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(false, ErrorMessage, TValue.Value);
@@ -165,9 +165,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureTBoolPredicateIsTrueAndSpecifiedErrorPredicate(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -178,7 +178,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -189,7 +189,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsFailBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(false, ErrorMessage, TValue.Value);
@@ -200,9 +200,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureTResultPredicateIsOk(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -212,7 +212,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkResultPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -222,7 +222,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsFailResultPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(false, ErrorMessage, TValue.Value);
@@ -232,9 +232,9 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void EnsureTResultTPredicateIsOk(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -244,7 +244,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkResultTPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -254,7 +254,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsFailResultTPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(false, ErrorMessage, TValue.Value);
@@ -264,7 +264,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertSameResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkValueBoolPredicateIsFalseExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -274,7 +274,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkValueBoolPredicateIsFalseAndSpecifiedErrorPredicateExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -284,7 +284,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkResultPredicateWithoutValueIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -294,7 +294,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkValueResultPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);
@@ -304,7 +304,7 @@ public sealed class EnsureTests : EnsureTestsBase
         AssertDifferentResults(result, output, false);
     }
 
-    [Fact]
+    [Test]
     public void EnsureSourceResultTIsOkValueResultTPredicateIsFailExpectedResultFail()
     {
         var result = ResultExtensions.OkIf(true, ErrorMessage, TValue.Value);

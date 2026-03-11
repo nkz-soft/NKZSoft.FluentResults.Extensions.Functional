@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTestsValueTaskRight : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncExecutesValueTaskFunctionOnlyWhenResultIsSuccessful(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -14,9 +14,9 @@ public sealed class OnSuccessTryTestsValueTaskRight : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncTExecutesValueTaskFunctionOnlyWhenResultIsSuccessful(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -26,7 +26,7 @@ public sealed class OnSuccessTryTestsValueTaskRight : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsValueTaskExceptionToFailureWithDefaultError()
     {
         var output = await Result.Ok().OnSuccessTryAsync(ThrowValueTaskActionAsync);
@@ -35,7 +35,7 @@ public sealed class OnSuccessTryTestsValueTaskRight : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsValueTaskExceptionToFailureWithCustomError()
     {
         var output = await Result.Ok().OnSuccessTryAsync(ThrowValueTaskActionAsync, CustomErrorHandler);
@@ -44,7 +44,7 @@ public sealed class OnSuccessTryTestsValueTaskRight : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncThrowsWhenFunctionIsNull()
     {
         var action = async () => await Result.Ok().OnSuccessTryAsync((Func<ValueTask>)null!);

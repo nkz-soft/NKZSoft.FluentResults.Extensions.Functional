@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CheckTestsTaskRight : CheckTestsBase
 {
-    [Fact]
+    [Test]
     public async Task CheckTaskRightReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail(ErrorMessage);
@@ -14,7 +14,7 @@ public sealed class CheckTestsTaskRight : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckTaskRightReturnsOriginalResultWhenCheckSucceeds()
     {
         var result = Result.Ok();
@@ -26,7 +26,7 @@ public sealed class CheckTestsTaskRight : CheckTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckTaskRightReturnsFailedCheckResultWhenCheckFails()
     {
         var result = Result.Ok();
@@ -46,7 +46,7 @@ public sealed class CheckTestsTaskRight : CheckTestsBase
         AssertFailedWithErrors(output, checkResult!);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckTaskRightTReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -58,7 +58,7 @@ public sealed class CheckTestsTaskRight : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckTaskRightTReturnsOriginalResultWhenCheckSucceeds()
     {
         var result = Result.Ok(TValue.Value);
@@ -71,7 +71,7 @@ public sealed class CheckTestsTaskRight : CheckTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckTaskRightTReturnsFailedResultWithCheckErrorsWhenCheckFails()
     {
         var result = Result.Ok(TValue.Value);

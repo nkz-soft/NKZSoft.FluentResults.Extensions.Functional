@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class TryTestsTask : TryTestsBase
 {
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskActionIsSuccessfulExpectedResultOk()
     {
         var output = await ResultExtensions.TryAsync(SuccessTaskAction);
@@ -10,7 +10,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskActionThrowsExpectedResultFailWithDefaultError()
     {
         var output = await ResultExtensions.TryAsync(FailTaskAction);
@@ -19,7 +19,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskActionThrowsAndCustomErrorHandlerExpectedResultFailWithCustomError()
     {
         var output = await ResultExtensions.TryAsync(FailTaskAction, CustomErrorHandler);
@@ -28,7 +28,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskActionIsNullExpectedThrowArgumentNullException()
     {
         var action = async () => await ResultExtensions.TryAsync((Func<Task>)null!);
@@ -36,7 +36,7 @@ public sealed class TryTestsTask : TryTestsBase
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskFuncIsSuccessfulExpectedResultOkWithValue()
     {
         var output = await ResultExtensions.TryAsync(SuccessTaskFunc);
@@ -45,7 +45,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskFuncThrowsExpectedResultFailWithDefaultError()
     {
         var output = await ResultExtensions.TryAsync(FailTaskFunc);
@@ -54,7 +54,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskFuncThrowsAndCustomErrorHandlerExpectedResultFailWithCustomError()
     {
         var output = await ResultExtensions.TryAsync(FailTaskFunc, CustomErrorHandler);
@@ -63,7 +63,7 @@ public sealed class TryTestsTask : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task TryAsyncTaskFuncIsNullExpectedThrowArgumentNullException()
     {
         var action = async () => await ResultExtensions.TryAsync<TValue>((Func<Task<TValue>>)null!);

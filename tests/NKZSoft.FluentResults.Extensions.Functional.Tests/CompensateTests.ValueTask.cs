@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CompensateTestsValueTask : CompensateTestsBase
 {
-    [Fact]
+    [Test]
     public async Task CompensateAsyncExecutesValueTaskFallbackWhenValueTaskSourceIsFailed()
     {
         var output = await new ValueTask<Result>(Result.Fail(ErrorMessage))
@@ -12,7 +12,7 @@ public sealed class CompensateTestsValueTask : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncExecutesTaskFallbackWhenValueTaskSourceIsFailed()
     {
         var output = await new ValueTask<Result>(Result.Fail(ErrorMessage))
@@ -22,7 +22,7 @@ public sealed class CompensateTestsValueTask : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncWithErrorsValueTaskFallbackPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);
@@ -33,7 +33,7 @@ public sealed class CompensateTestsValueTask : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncWithErrorsTaskFallbackPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);
@@ -44,7 +44,7 @@ public sealed class CompensateTestsValueTask : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncTExecutesValueTaskFallbackWhenValueTaskSourceIsFailed()
     {
         var output = await new ValueTask<Result<TValue>>(Result.Fail<TValue>(ErrorMessage))
@@ -55,7 +55,7 @@ public sealed class CompensateTestsValueTask : CompensateTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncTExecutesTaskFallbackWhenValueTaskSourceIsFailed()
     {
         var output = await new ValueTask<Result<TValue>>(Result.Fail<TValue>(ErrorMessage))

@@ -19,6 +19,14 @@ Available on [NuGet](https://www.nuget.org/packages/NKZSoft.FluentResults.Extens
 dotnet add package NKZSoft.FluentResults.Extensions.Functional
 ```
 
+## Testing
+
+The test project uses [TUnit](https://tunit.dev/).
+
+```bash
+dotnet test NKZSoft.FluentResults.Extensions.Functional.sln
+```
+
 ## Features
 All methods have asynchronous overloads and ValueTask support.
 

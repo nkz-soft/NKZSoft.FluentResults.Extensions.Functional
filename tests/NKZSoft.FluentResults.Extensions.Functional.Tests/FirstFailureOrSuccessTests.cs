@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FirstFailureOrSuccessTests
 {
-    [Fact]
+    [Test]
     public void FirstFailureOrSuccessReturnsFirstFailedResult()
     {
         var firstSuccess = Result.Ok();
@@ -16,7 +16,7 @@ public sealed class FirstFailureOrSuccessTests
         output.Errors.Should().ContainSingle(error => error.Message == "Failure 1");
     }
 
-    [Fact]
+    [Test]
     public void FirstFailureOrSuccessReturnsSuccessWhenAllAreSuccessful()
     {
         var output = ResultExtensions.FirstFailureOrSuccess(Result.Ok(), Result.Ok(), Result.Ok());
@@ -24,7 +24,7 @@ public sealed class FirstFailureOrSuccessTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void FirstFailureOrSuccessReturnsSuccessWhenNoResultsProvided()
     {
         var output = ResultExtensions.FirstFailureOrSuccess();
@@ -32,7 +32,7 @@ public sealed class FirstFailureOrSuccessTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void FirstFailureOrSuccessThrowsWhenResultsArrayIsNull()
     {
         var action = () => ResultExtensions.FirstFailureOrSuccess(null!);
@@ -40,7 +40,7 @@ public sealed class FirstFailureOrSuccessTests
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void FirstFailureOrSuccessThrowsWhenResultItemIsNull()
     {
         Result?[] inputs = [Result.Ok(), null, Result.Fail("Failure")];

@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTestsTask : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncExecutesTaskFunctionOnlyWhenTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
@@ -14,9 +14,9 @@ public sealed class OnSuccessTryTestsTask : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncTExecutesTaskFunctionOnlyWhenTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
@@ -26,7 +26,7 @@ public sealed class OnSuccessTryTestsTask : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsTaskExceptionToFailureWithDefaultError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage).AsTask()
@@ -36,7 +36,7 @@ public sealed class OnSuccessTryTestsTask : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsTaskExceptionToFailureWithCustomError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage).AsTask()
@@ -46,7 +46,7 @@ public sealed class OnSuccessTryTestsTask : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncThrowsWhenFunctionIsNull()
     {
         var action = async () => await ResultExtensions.OkIfAsync(true, ErrorMessage).AsTask()

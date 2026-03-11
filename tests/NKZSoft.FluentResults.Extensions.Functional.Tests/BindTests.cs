@@ -1,8 +1,8 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class BindTests : BindTestsBase
 {
-    [Fact]
+    [Test]
     public void InternalBindReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail(ErrorMessage)
@@ -10,7 +10,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void InternalBindSelectsNewResult()
     {
         var output = Result.Ok()
@@ -18,7 +18,7 @@ public sealed class BindTests : BindTestsBase
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void InternalBindTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail<TValue>(ErrorMessage)
@@ -26,7 +26,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void InternalBindTSelectsNewResult()
     {
         var output = Result.Ok(TValue.Value)
@@ -34,7 +34,7 @@ public sealed class BindTests : BindTestsBase
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail(ErrorMessage).Bind(OkFunc);
@@ -42,7 +42,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultSelectsNewResult()
     {
         var output = Result.Ok().Bind(OkFunc);
@@ -50,7 +50,7 @@ public sealed class BindTests : BindTestsBase
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultToResultTSelectsNewResult()
     {
         var output = Result.Ok().Bind(OkStringFunc);
@@ -59,7 +59,7 @@ public sealed class BindTests : BindTestsBase
         output.Value.Should().Be("ok");
     }
 
-    [Fact]
+    [Test]
     public void BindResultToResultTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail(ErrorMessage).Bind(OkStringFunc);
@@ -67,7 +67,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultSelectsNewResult()
     {
         var output = Result.Ok(TValue.Value).Bind(OkFromTFunc);
@@ -75,7 +75,7 @@ public sealed class BindTests : BindTestsBase
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail<TValue>(ErrorMessage).Bind(OkFromTFunc);
@@ -83,7 +83,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultPropagatesFuncFailure()
     {
         var output = Result.Ok(TValue.Value).Bind(FailFromTFunc);
@@ -93,7 +93,7 @@ public sealed class BindTests : BindTestsBase
         output.Errors.Should().Contain(error => error.Message == ErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultTSelectsNewResult()
     {
         var output = Result.Ok(TValue.Value).Bind(OkStringFromTFunc);
@@ -102,7 +102,7 @@ public sealed class BindTests : BindTestsBase
         output.Value.Should().Be("ok");
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail<TValue>(ErrorMessage).Bind(OkStringFromTFunc);
@@ -110,7 +110,7 @@ public sealed class BindTests : BindTestsBase
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void BindResultTToResultTPropagatesFuncFailure()
     {
         var output = Result.Ok(TValue.Value).Bind(FailStringFromTFunc);

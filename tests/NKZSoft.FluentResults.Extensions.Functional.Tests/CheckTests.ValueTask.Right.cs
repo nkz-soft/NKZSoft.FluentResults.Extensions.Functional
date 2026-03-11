@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CheckTestsValueTaskRight : CheckTestsBase
 {
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail(ErrorMessage);
@@ -14,7 +14,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightReturnsOriginalResultWhenCheckSucceedsSynchronously()
     {
         var result = Result.Ok();
@@ -26,7 +26,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightReturnsOriginalResultWhenCheckSucceedsAsynchronously()
     {
         var result = Result.Ok();
@@ -38,7 +38,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightReturnsFailedCheckResultWhenCheckFails()
     {
         var result = Result.Ok();
@@ -58,7 +58,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         AssertFailedWithErrors(output, checkResult!);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightTReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -70,7 +70,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightTReturnsOriginalResultWhenCheckSucceeds()
     {
         var result = Result.Ok(TValue.Value);
@@ -83,7 +83,7 @@ public sealed class CheckTestsValueTaskRight : CheckTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckValueTaskRightTReturnsFailedResultWithCheckErrorsWhenCheckFails()
     {
         var result = Result.Ok(TValue.Value);

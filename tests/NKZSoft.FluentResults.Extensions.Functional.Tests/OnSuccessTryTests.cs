@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void OnSuccessTryExecutesActionOnlyWhenResultIsSuccessful(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -18,9 +18,9 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         }
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void OnSuccessTryTExecutesActionOnlyWhenResultIsSuccessful(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -34,7 +34,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         }
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryConvertsExceptionToFailureWithDefaultError()
     {
         var output = Result.Ok().OnSuccessTry(ThrowAction);
@@ -43,7 +43,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryConvertsExceptionToFailureWithCustomError()
     {
         var output = Result.Ok().OnSuccessTry(ThrowAction, CustomErrorHandler);
@@ -52,7 +52,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryTConvertsExceptionToFailureWithDefaultError()
     {
         var output = Result.Ok(TValue.Value).OnSuccessTry(ThrowActionWithValue);
@@ -61,7 +61,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryTConvertsExceptionToFailureWithCustomError()
     {
         var output = Result.Ok(TValue.Value).OnSuccessTry(ThrowActionWithValue, CustomErrorHandler);
@@ -70,7 +70,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryThrowsWhenActionIsNull()
     {
         var action = () => Result.Ok().OnSuccessTry(null!);
@@ -78,7 +78,7 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void OnSuccessTryTThrowsWhenActionIsNull()
     {
         var action = () => Result.Ok(TValue.Value).OnSuccessTry(null!);

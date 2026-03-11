@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class SelectManyTestsValueTask : SelectManyTestsBase
 {
-    [Fact]
+    [Test]
     public async Task SelectManyValueTaskReturnsSourceFailure()
     {
         var output = await ValueTaskFailResultTAsync().SelectManyAsync(BindSuccessValueTask, Project);
@@ -10,7 +10,7 @@ public sealed class SelectManyTestsValueTask : SelectManyTestsBase
         AssertSourceFailure(output);
     }
 
-    [Fact]
+    [Test]
     public async Task SelectManyValueTaskReturnsBindFailure()
     {
         var output = await ValueTaskOkResultTAsync().SelectManyAsync(BindFailureValueTask, Project);
@@ -18,7 +18,7 @@ public sealed class SelectManyTestsValueTask : SelectManyTestsBase
         AssertBindFailure(output);
     }
 
-    [Fact]
+    [Test]
     public async Task SelectManyValueTaskReturnsProjectedResult()
     {
         var output = await ValueTaskOkResultTAsync().SelectManyAsync(BindSuccessValueTask, Project);

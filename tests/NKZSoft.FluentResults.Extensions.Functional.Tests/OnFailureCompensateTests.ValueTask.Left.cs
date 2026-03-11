@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnFailureCompensateTestsValueTaskLeft : CompensateTestsBase
 {
-    [Fact]
+    [Test]
     public async Task OnFailureCompensateAsyncReturnsOriginalValueTaskResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok();
@@ -13,7 +13,7 @@ public sealed class OnFailureCompensateTestsValueTaskLeft : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public async Task OnFailureCompensateAsyncExecutesFallbackWhenValueTaskSourceIsFailed()
     {
         var output = await new ValueTask<Result>(Result.Fail(ErrorMessage)).OnFailureCompensateAsync(() => OkCompensate());
@@ -22,7 +22,7 @@ public sealed class OnFailureCompensateTestsValueTaskLeft : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task OnFailureCompensateAsyncWithErrorsPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);

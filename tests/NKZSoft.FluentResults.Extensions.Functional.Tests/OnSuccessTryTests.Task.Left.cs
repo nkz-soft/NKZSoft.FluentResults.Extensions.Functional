@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTestsTaskLeft : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncExecutesActionOnlyWhenTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
@@ -14,9 +14,9 @@ public sealed class OnSuccessTryTestsTaskLeft : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncTExecutesActionOnlyWhenTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();
@@ -26,7 +26,7 @@ public sealed class OnSuccessTryTestsTaskLeft : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsExceptionToFailureWithCustomError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage).AsTask()
@@ -36,7 +36,7 @@ public sealed class OnSuccessTryTestsTaskLeft : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncThrowsWhenActionIsNull()
     {
         var action = async () => await ResultExtensions.OkIfAsync(true, ErrorMessage).AsTask()

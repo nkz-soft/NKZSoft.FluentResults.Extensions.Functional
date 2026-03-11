@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class TapTests : TapTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void TapExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -13,9 +13,9 @@ public sealed class TapTests : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void TapTExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -24,9 +24,9 @@ public sealed class TapTests : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void TapTExecutesActionTOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);

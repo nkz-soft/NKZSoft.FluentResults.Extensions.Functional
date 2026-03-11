@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FailureIfTestsValueTask
 {
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateReturnsFailWhenPredicateReturnsTrue()
     {
         var output = await ResultExtensions.FailureIfAsync(() => ValueTask.FromResult(true), "error");
@@ -11,7 +11,7 @@ public sealed class FailureIfTestsValueTask
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateReturnsOkWhenPredicateReturnsFalse()
     {
         var output = await ResultExtensions.FailureIfAsync(() => ValueTask.FromResult(false), "error");
@@ -19,7 +19,7 @@ public sealed class FailureIfTestsValueTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateWithValueReturnsFailWhenPredicateReturnsTrue()
     {
         var output = await ResultExtensions.FailureIfAsync(() => ValueTask.FromResult(true), 10, "error");
@@ -28,7 +28,7 @@ public sealed class FailureIfTestsValueTask
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateWithValueReturnsOkWithValueWhenPredicateReturnsFalse()
     {
         var value = new object();
@@ -38,7 +38,7 @@ public sealed class FailureIfTestsValueTask
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateThrowsWhenPredicateIsNull()
     {
         var action = async () => await ResultExtensions.FailureIfAsync((Func<ValueTask<bool>>)null!, "error");
@@ -46,7 +46,7 @@ public sealed class FailureIfTestsValueTask
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncValueTaskPredicateWithValueThrowsWhenPredicateIsNull()
     {
         var action = async () => await ResultExtensions.FailureIfAsync((Func<ValueTask<bool>>)null!, 10, "error");

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OfTestsTask : OfTestsBase
 {
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskExpectedResultOkWithValue()
     {
         var output = await ResultExtensions.OfAsync(SuccessTask());
@@ -11,7 +11,7 @@ public sealed class OfTestsTask : OfTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskIsNullExpectedThrowArgumentNullException()
     {
         var action = async () => await ResultExtensions.OfAsync((Task<TValue>)null!);
@@ -19,7 +19,7 @@ public sealed class OfTestsTask : OfTestsBase
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskThrowsExpectedException()
     {
         var action = async () => await ResultExtensions.OfAsync(FailTask());
@@ -27,7 +27,7 @@ public sealed class OfTestsTask : OfTestsBase
         await action.Should().ThrowAsync<InvalidOperationException>().WithMessage(ExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskFuncExpectedResultOkWithValue()
     {
         var output = await ResultExtensions.OfAsync(SuccessTask);
@@ -36,7 +36,7 @@ public sealed class OfTestsTask : OfTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskFuncIsNullExpectedThrowArgumentNullException()
     {
         var action = async () => await ResultExtensions.OfAsync((Func<Task<TValue>>)null!);
@@ -44,7 +44,7 @@ public sealed class OfTestsTask : OfTestsBase
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task OfAsyncTaskFuncThrowsExpectedException()
     {
         var action = async () => await ResultExtensions.OfAsync(FailTask);

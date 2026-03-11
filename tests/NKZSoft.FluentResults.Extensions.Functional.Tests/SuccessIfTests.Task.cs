@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class SuccessIfTestsTask
 {
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateReturnsOkWhenPredicateReturnsTrue()
     {
         var output = await ResultExtensions.SuccessIfAsync(() => Task.FromResult(true), "error");
@@ -10,7 +10,7 @@ public sealed class SuccessIfTestsTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateReturnsFailWhenPredicateReturnsFalse()
     {
         var output = await ResultExtensions.SuccessIfAsync(() => Task.FromResult(false), "error");
@@ -19,7 +19,7 @@ public sealed class SuccessIfTestsTask
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateWithValueReturnsOkWithValueWhenPredicateReturnsTrue()
     {
         var value = new object();
@@ -29,7 +29,7 @@ public sealed class SuccessIfTestsTask
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateWithValueReturnsFailWhenPredicateReturnsFalse()
     {
         var output = await ResultExtensions.SuccessIfAsync(() => Task.FromResult(false), 10, "error");
@@ -38,7 +38,7 @@ public sealed class SuccessIfTestsTask
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateThrowsWhenPredicateIsNull()
     {
         var action = async () => await ResultExtensions.SuccessIfAsync((Func<Task<bool>>)null!, "error");
@@ -46,7 +46,7 @@ public sealed class SuccessIfTestsTask
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task SuccessIfAsyncTaskPredicateWithValueThrowsWhenPredicateIsNull()
     {
         var action = async () => await ResultExtensions.SuccessIfAsync((Func<Task<bool>>)null!, 10, "error");

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnFailureCompensateTests : CompensateTestsBase
 {
-    [Fact]
+    [Test]
     public void OnFailureCompensateReturnsOriginalResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok();
@@ -13,7 +13,7 @@ public sealed class OnFailureCompensateTests : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public void OnFailureCompensateExecutesFallbackWhenSourceIsFailed()
     {
         var result = Result.Fail(ErrorMessage);
@@ -24,7 +24,7 @@ public sealed class OnFailureCompensateTests : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void OnFailureCompensateWithErrorsPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);
@@ -35,7 +35,7 @@ public sealed class OnFailureCompensateTests : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public void OnFailureCompensateTReturnsOriginalResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok(TValue.Value);
@@ -46,7 +46,7 @@ public sealed class OnFailureCompensateTests : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public void OnFailureCompensateTExecutesFallbackWhenSourceIsFailed()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -58,7 +58,7 @@ public sealed class OnFailureCompensateTests : CompensateTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void OnFailureCompensateThrowsWhenFallbackIsNull()
     {
         var action = () => Result.Ok().OnFailureCompensate((Func<Result>)null!);

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class EnsureNotTestsValueTaskLeft
 {
-    [Fact]
+    [Test]
     public async Task EnsureNotValueTaskLeftReturnsSuccessWhenPredicateIsFalse()
     {
         var resultTask = ValueTask.FromResult(Result.Ok(5));
@@ -13,7 +13,7 @@ public sealed class EnsureNotTestsValueTaskLeft
         output.Value.Should().Be(5);
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureNotValueTaskLeftReturnsFailureWhenPredicateIsTrue()
     {
         var resultTask = ValueTask.FromResult(Result.Ok(15));
@@ -24,7 +24,7 @@ public sealed class EnsureNotTestsValueTaskLeft
         output.Errors.Should().Contain(x => x.Message == "Value should be less than or equal to 10");
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureNotValueTaskLeftPreservesSourceErrorsWhenSourceIsFailed()
     {
         var resultTask = ValueTask.FromResult(Result.Fail<int>("Source failure"));

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class TryTests : TryTestsBase
 {
-    [Fact]
+    [Test]
     public void TryActionIsSuccessfulExpectedResultOk()
     {
         var output = ResultExtensions.Try(SuccessAction);
@@ -10,7 +10,7 @@ public sealed class TryTests : TryTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void TryActionThrowsExpectedResultFailWithDefaultError()
     {
         var output = ResultExtensions.Try(FailAction);
@@ -19,7 +19,7 @@ public sealed class TryTests : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public void TryActionThrowsAndCustomErrorHandlerExpectedResultFailWithCustomError()
     {
         var output = ResultExtensions.Try(FailAction, CustomErrorHandler);
@@ -28,7 +28,7 @@ public sealed class TryTests : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public void TryActionIsNullExpectedThrowArgumentNullException()
     {
         var action = () => ResultExtensions.Try(null!);
@@ -36,7 +36,7 @@ public sealed class TryTests : TryTestsBase
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void TryFuncIsSuccessfulExpectedResultOkWithValue()
     {
         var output = ResultExtensions.Try(SuccessFunc);
@@ -45,7 +45,7 @@ public sealed class TryTests : TryTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void TryFuncThrowsExpectedResultFailWithDefaultError()
     {
         var output = ResultExtensions.Try(FailFunc);
@@ -54,7 +54,7 @@ public sealed class TryTests : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public void TryFuncThrowsAndCustomErrorHandlerExpectedResultFailWithCustomError()
     {
         var output = ResultExtensions.Try(FailFunc, CustomErrorHandler);
@@ -63,7 +63,7 @@ public sealed class TryTests : TryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public void TryFuncIsNullExpectedThrowArgumentNullException()
     {
         var action = () => ResultExtensions.Try<TValue>(null!);

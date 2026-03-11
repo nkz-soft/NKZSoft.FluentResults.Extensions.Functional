@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class RequiredTests
 {
-    [Fact]
+    [Test]
     public void RequiredReturnsFailureWhenValueIsNull()
     {
         var result = Result.Ok<string?>(null);
@@ -13,7 +13,7 @@ public sealed class RequiredTests
         output.Errors.Should().Contain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void RequiredReturnsSuccessWhenReferenceValueIsNotNull()
     {
         const string value = "ok";
@@ -25,7 +25,7 @@ public sealed class RequiredTests
         output.Value.Should().Be(value);
     }
 
-    [Fact]
+    [Test]
     public void RequiredReturnsSuccessWhenNullableStructHasValue()
     {
         var result = Result.Ok<int?>(42);
@@ -36,7 +36,7 @@ public sealed class RequiredTests
         output.Value.Should().Be(42);
     }
 
-    [Fact]
+    [Test]
     public void RequiredReturnsFailureWhenNullableStructIsNull()
     {
         var result = Result.Ok<int?>(null);
@@ -47,7 +47,7 @@ public sealed class RequiredTests
         output.Errors.Should().Contain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void RequiredPreservesSourceErrorsWhenSourceIsFailed()
     {
         var result = Result.Fail<string?>("Source failure");
@@ -59,7 +59,7 @@ public sealed class RequiredTests
         output.Errors.Should().NotContain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void RequiredThrowsWhenErrorMessageIsNull()
     {
         var result = Result.Ok<string?>("ok");

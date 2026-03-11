@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FirstFailureOrSuccessTestsValueTask
 {
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncValueTaskReturnsFirstFailedResult()
     {
         var firstFailure = Result.Fail("Failure 1");
@@ -18,7 +18,7 @@ public sealed class FirstFailureOrSuccessTestsValueTask
         output.Errors.Should().ContainSingle(error => error.Message == "Failure 1");
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncValueTaskReturnsSuccessWhenAllAreSuccessful()
     {
         var output = await ResultExtensions.FirstFailureOrSuccessAsync(
@@ -28,7 +28,7 @@ public sealed class FirstFailureOrSuccessTestsValueTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncValueTaskReturnsSuccessWhenNoResultsProvided()
     {
         var output = await ResultExtensions.FirstFailureOrSuccessAsync(Array.Empty<ValueTask<Result>>());
@@ -36,7 +36,7 @@ public sealed class FirstFailureOrSuccessTestsValueTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncValueTaskThrowsWhenResultsArrayIsNull()
     {
         var action = async () => await ResultExtensions.FirstFailureOrSuccessAsync((ValueTask<Result>[])null!);

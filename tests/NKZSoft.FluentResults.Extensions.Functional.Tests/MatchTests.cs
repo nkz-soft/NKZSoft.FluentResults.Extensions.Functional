@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class MatchTests : MatchTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void MatchResult(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -13,9 +13,9 @@ public sealed class MatchTests : MatchTestsBase
         AssertSuccess(result, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void MatchResultReturnsValue(bool isSuccess)
     {
         var result = Result.OkIf(isSuccess, ErrorMessage);
@@ -24,9 +24,9 @@ public sealed class MatchTests : MatchTestsBase
         AssertSuccess(result, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void MatchResultT(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);
@@ -35,9 +35,9 @@ public sealed class MatchTests : MatchTestsBase
         AssertSuccess(result, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public void MatchResultTValue(bool isSuccess)
     {
         var result = ResultExtensions.OkIf(isSuccess, ErrorMessage, TValue.Value);

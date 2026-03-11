@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OfTests : OfTestsBase
 {
-    [Fact]
+    [Test]
     public void OfValueExpectedResultOkWithValue()
     {
         var output = ResultExtensions.Of(TValue.Value);
@@ -11,7 +11,7 @@ public sealed class OfTests : OfTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void OfNullableValueExpectedResultOkWithNull()
     {
         var output = ResultExtensions.Of((string?)null);
@@ -20,7 +20,7 @@ public sealed class OfTests : OfTestsBase
         output.Value.Should().BeNull();
     }
 
-    [Fact]
+    [Test]
     public void OfFuncExpectedResultOkWithValue()
     {
         var output = ResultExtensions.Of(SuccessFunc);
@@ -29,7 +29,7 @@ public sealed class OfTests : OfTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void OfFuncIsNullExpectedThrowArgumentNullException()
     {
         var action = () => ResultExtensions.Of((Func<TValue>)null!);
@@ -37,7 +37,7 @@ public sealed class OfTests : OfTestsBase
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void OfFuncThrowsExpectedException()
     {
         var action = () => ResultExtensions.Of(FailFunc);

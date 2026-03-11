@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class SelectManyTests : SelectManyTestsBase
 {
-    [Fact]
+    [Test]
     public void SelectManyReturnsSourceFailure()
     {
         var output = Result.Fail<TValue>(ErrorMessage).SelectMany(BindSuccess, Project);
@@ -10,7 +10,7 @@ public sealed class SelectManyTests : SelectManyTestsBase
         AssertSourceFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void SelectManyReturnsBindFailure()
     {
         var output = Result.Ok(TValue.Value).SelectMany(BindFailure, Project);
@@ -18,7 +18,7 @@ public sealed class SelectManyTests : SelectManyTestsBase
         AssertBindFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void SelectManyReturnsProjectedResult()
     {
         var output = Result.Ok(TValue.Value).SelectMany(BindSuccess, Project);
@@ -26,7 +26,7 @@ public sealed class SelectManyTests : SelectManyTestsBase
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void SelectManyWithNullBindExpectedThrowArgumentNullException()
     {
         var action = () => Result.Ok(TValue.Value).SelectMany((Func<TValue, Result<TValueBind>>)null!, Project);
@@ -34,7 +34,7 @@ public sealed class SelectManyTests : SelectManyTestsBase
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void SelectManyWithNullProjectExpectedThrowArgumentNullException()
     {
         var action = () => Result.Ok(TValue.Value).SelectMany(BindSuccess, (Func<TValue, TValueBind, TValueSelectMany>)null!);

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FailureIfTests
 {
-    [Fact]
+    [Test]
     public void FailureIfBoolReturnsFailWhenConditionTrue()
     {
         var output = ResultExtensions.FailureIf(true, "error");
@@ -11,7 +11,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void FailureIfBoolReturnsOkWhenConditionFalse()
     {
         var output = ResultExtensions.FailureIf(false, "error");
@@ -19,7 +19,7 @@ public sealed class FailureIfTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void FailureIfBoolWithValueReturnsFailWhenConditionTrue()
     {
         var output = ResultExtensions.FailureIf(true, 10, "error");
@@ -28,7 +28,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void FailureIfBoolWithValueReturnsOkWithValueWhenConditionFalse()
     {
         var value = new object();
@@ -38,7 +38,7 @@ public sealed class FailureIfTests
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateReturnsFailWhenPredicateReturnsTrue()
     {
         var output = ResultExtensions.FailureIf(() => true, "error");
@@ -47,7 +47,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateReturnsOkWhenPredicateReturnsFalse()
     {
         var output = ResultExtensions.FailureIf(() => false, "error");
@@ -55,7 +55,7 @@ public sealed class FailureIfTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateWithValueReturnsFailWhenPredicateReturnsTrue()
     {
         var output = ResultExtensions.FailureIf(() => true, 10, "error");
@@ -64,7 +64,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateWithValueReturnsOkWithValueWhenPredicateReturnsFalse()
     {
         var value = new object();
@@ -74,7 +74,7 @@ public sealed class FailureIfTests
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateThrowsWhenPredicateIsNull()
     {
         var action = () => ResultExtensions.FailureIf((Func<bool>)null!, "error");
@@ -82,7 +82,7 @@ public sealed class FailureIfTests
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void FailureIfPredicateWithValueThrowsWhenPredicateIsNull()
     {
         var action = () => ResultExtensions.FailureIf((Func<bool>)null!, 10, "error");
@@ -90,7 +90,7 @@ public sealed class FailureIfTests
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncBoolReturnsFailWhenConditionTrue()
     {
         var output = await ResultExtensions.FailureIfAsync(true, "error");
@@ -99,7 +99,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncBoolReturnsOkWhenConditionFalse()
     {
         var output = await ResultExtensions.FailureIfAsync(false, "error");
@@ -107,7 +107,7 @@ public sealed class FailureIfTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncBoolWithValueReturnsFailWhenConditionTrue()
     {
         var output = await ResultExtensions.FailureIfAsync(true, 10, "error");
@@ -116,7 +116,7 @@ public sealed class FailureIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public async Task FailureIfAsyncBoolWithValueReturnsOkWithValueWhenConditionFalse()
     {
         var value = new object();
