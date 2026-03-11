@@ -216,6 +216,22 @@ var asyncOutput = await GetCustomerResultAsync()
     .OnSuccessTryAsync(async c => await SendNotificationAsync(c));
 ```
 
+### Compensate
+
+Recovers from failure by executing a fallback function only when the source result is failed.
+For successful source results, the original result instance is returned unchanged.
+
+```csharp
+var recovered = Result.Fail("Validation failed")
+    .Compensate(() => Result.Ok());
+
+var recoveredWithErrors = Result.Fail<int>("Validation failed")
+    .Compensate(errors => Result.Ok(42));
+
+var asyncRecovered = await GetCustomerResultAsync()
+    .CompensateAsync(errors => RecoverCustomerAsync(errors));
+```
+
 ### Of
 
 Creates successful results from values and value-producing delegates.
