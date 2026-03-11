@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class EnsureNotNullTests
 {
-    [Fact]
+    [Test]
     public void EnsureNotNullReturnsFailureWhenValueIsNull()
     {
         var result = Result.Ok<string?>(null);
@@ -13,7 +13,7 @@ public sealed class EnsureNotNullTests
         output.Errors.Should().Contain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotNullReturnsSuccessWhenReferenceValueIsNotNull()
     {
         const string value = "ok";
@@ -25,7 +25,7 @@ public sealed class EnsureNotNullTests
         output.Value.Should().Be(value);
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotNullReturnsSuccessWhenNullableStructHasValue()
     {
         var result = Result.Ok<int?>(42);
@@ -36,7 +36,7 @@ public sealed class EnsureNotNullTests
         output.Value.Should().Be(42);
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotNullReturnsFailureWhenNullableStructIsNull()
     {
         var result = Result.Ok<int?>(null);
@@ -47,7 +47,7 @@ public sealed class EnsureNotNullTests
         output.Errors.Should().Contain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotNullPreservesSourceErrorsWhenSourceIsFailed()
     {
         var result = Result.Fail<string?>("Source failure");
@@ -59,7 +59,7 @@ public sealed class EnsureNotNullTests
         output.Errors.Should().NotContain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotNullThrowsWhenErrorMessageIsNull()
     {
         var result = Result.Ok<string?>("ok");

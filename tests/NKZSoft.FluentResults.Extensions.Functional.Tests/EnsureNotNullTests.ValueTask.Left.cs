@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class EnsureNotNullTestsValueTaskLeft
 {
-    [Fact]
+    [Test]
     public async Task EnsureNotNullValueTaskLeftReturnsFailureWhenValueIsNull()
     {
         var resultTask = ValueTask.FromResult(Result.Ok<string?>(null));
@@ -13,7 +13,7 @@ public sealed class EnsureNotNullTestsValueTaskLeft
         output.Errors.Should().Contain(x => x.Message == "Value is required");
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureNotNullValueTaskLeftReturnsSuccessWhenValueIsNotNull()
     {
         var resultTask = ValueTask.FromResult(Result.Ok<string?>("ok"));
@@ -24,7 +24,7 @@ public sealed class EnsureNotNullTestsValueTaskLeft
         output.Value.Should().Be("ok");
     }
 
-    [Fact]
+    [Test]
     public async Task EnsureNotNullValueTaskLeftPreservesSourceErrorsWhenSourceIsFailed()
     {
         var resultTask = ValueTask.FromResult(Result.Fail<string?>("Source failure"));

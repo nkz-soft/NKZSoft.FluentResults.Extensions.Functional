@@ -2,28 +2,28 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class MapTests : MapTestsBase
 {
-    [Fact]
+    [Test]
     public void MapReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail(ErrorMessage).Map(MapFunc);
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void MapSelectsNewResult()
     {
         var output = Result.Ok().Map(MapFunc);
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public void MapTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = ResultExtensions.Map(Result.Fail<TValue>(ErrorMessage), MapFunc);
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public void MapTSelectsNewResult()
     {
         var output = ResultExtensions.Map(Result.Ok(TValue.Value), MapFunc);

@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CheckTests : CheckTestsBase
 {
-    [Fact]
+    [Test]
     public void CheckReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail(ErrorMessage);
@@ -14,7 +14,7 @@ public sealed class CheckTests : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void CheckReturnsOriginalResultWhenCheckSucceeds()
     {
         var result = Result.Ok();
@@ -26,7 +26,7 @@ public sealed class CheckTests : CheckTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void CheckReturnsFailedCheckResultWhenCheckFails()
     {
         var result = Result.Ok();
@@ -46,7 +46,7 @@ public sealed class CheckTests : CheckTestsBase
         AssertFailedWithErrors(output, checkResult!);
     }
 
-    [Fact]
+    [Test]
     public void CheckTReturnsOriginalResultWhenSourceIsFailed()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -58,7 +58,7 @@ public sealed class CheckTests : CheckTestsBase
         output.IsFailed.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void CheckTReturnsOriginalResultWhenCheckSucceeds()
     {
         var result = Result.Ok(TValue.Value);
@@ -71,7 +71,7 @@ public sealed class CheckTests : CheckTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void CheckTReturnsFailedResultWithCheckErrorsWhenCheckFails()
     {
         var result = Result.Ok(TValue.Value);

@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTestsValueTask : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncExecutesValueTaskFunctionOnlyWhenValueTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
@@ -14,9 +14,9 @@ public sealed class OnSuccessTryTestsValueTask : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncTExecutesValueTaskFunctionOnlyWhenValueTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -26,7 +26,7 @@ public sealed class OnSuccessTryTestsValueTask : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsValueTaskExceptionToFailureWithDefaultError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage)
@@ -36,7 +36,7 @@ public sealed class OnSuccessTryTestsValueTask : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsValueTaskExceptionToFailureWithCustomError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage)
@@ -46,7 +46,7 @@ public sealed class OnSuccessTryTestsValueTask : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncThrowsWhenFunctionIsNull()
     {
         var action = async () => await ResultExtensions.OkIfAsync(true, ErrorMessage)

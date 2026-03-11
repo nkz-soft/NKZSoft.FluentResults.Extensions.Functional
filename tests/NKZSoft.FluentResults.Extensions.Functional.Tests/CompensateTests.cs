@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CompensateTests : CompensateTestsBase
 {
-    [Fact]
+    [Test]
     public void CompensateReturnsOriginalResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok();
@@ -13,7 +13,7 @@ public sealed class CompensateTests : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public void CompensateExecutesFallbackWhenSourceIsFailed()
     {
         var result = Result.Fail(ErrorMessage);
@@ -24,7 +24,7 @@ public sealed class CompensateTests : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void CompensateWithErrorsPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);
@@ -35,7 +35,7 @@ public sealed class CompensateTests : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public void CompensateTReturnsOriginalResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok(TValue.Value);
@@ -47,7 +47,7 @@ public sealed class CompensateTests : CompensateTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void CompensateTExecutesFallbackWhenSourceIsFailed()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -59,7 +59,7 @@ public sealed class CompensateTests : CompensateTestsBase
         output.Value.Should().BeSameAs(TValue.Value);
     }
 
-    [Fact]
+    [Test]
     public void CompensateTWithErrorsPassesSourceErrors()
     {
         var result = Result.Fail<TValue>(ErrorMessage);
@@ -70,28 +70,28 @@ public sealed class CompensateTests : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public void CompensateThrowsWhenFallbackIsNull()
     {
         var action = () => Result.Ok().Compensate((Func<Result>)null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void CompensateWithErrorsThrowsWhenFallbackIsNull()
     {
         var action = () => Result.Ok().Compensate((Func<IReadOnlyCollection<IError>, Result>)null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void CompensateTThrowsWhenFallbackIsNull()
     {
         var action = () => Result.Ok(TValue.Value).Compensate((Func<Result<TValue>>)null!);
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void CompensateTWithErrorsThrowsWhenFallbackIsNull()
     {
         var action = () => Result.Ok(TValue.Value).Compensate((Func<IReadOnlyCollection<IError>, Result<TValue>>)null!);

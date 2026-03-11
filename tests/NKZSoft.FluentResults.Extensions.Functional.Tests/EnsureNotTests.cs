@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class EnsureNotTests
 {
-    [Fact]
+    [Test]
     public void EnsureNotReturnsSuccessWhenPredicateIsFalse()
     {
         var result = Result.Ok(5);
@@ -13,7 +13,7 @@ public sealed class EnsureNotTests
         output.Value.Should().Be(5);
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotReturnsFailureWhenPredicateIsTrue()
     {
         var result = Result.Ok(15);
@@ -24,7 +24,7 @@ public sealed class EnsureNotTests
         output.Errors.Should().Contain(x => x.Message == "Value should be less than or equal to 10");
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotPreservesSourceErrorsWhenSourceIsFailed()
     {
         var result = Result.Fail<int>("Source failure");
@@ -36,7 +36,7 @@ public sealed class EnsureNotTests
         output.Errors.Should().NotContain(x => x.Message == "Value should be less than or equal to 10");
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotThrowsWhenPredicateIsNull()
     {
         var result = Result.Ok(5);
@@ -46,7 +46,7 @@ public sealed class EnsureNotTests
         act.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void EnsureNotThrowsWhenErrorMessageIsNull()
     {
         var result = Result.Ok(5);

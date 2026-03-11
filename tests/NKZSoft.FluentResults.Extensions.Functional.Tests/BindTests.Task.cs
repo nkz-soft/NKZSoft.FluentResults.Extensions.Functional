@@ -2,28 +2,28 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class BindTestsTask : BindTestsBase
 {
-    [Fact]
+    [Test]
     public async Task BindTaskReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = await TaskFailResultAsync().BindAsync(TaskOkFuncAsync);
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public async Task BindTaskSelectsNewResult()
     {
         var output = await Common.TestBase.TaskOkResultAsync().BindAsync(TaskOkFuncAsync);
         AssertSuccess(output);
     }
 
-    [Fact]
+    [Test]
     public async Task BindTaskTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = await TaskFailResultTAsync().BindAsync(TaskOkTFuncAsync);
         AssertFailure(output);
     }
 
-    [Fact]
+    [Test]
     public async Task BindTaskTSelectsNewResult()
     {
         var output = await TaskOkResultTAsync().BindAsync(TaskOkTFuncAsync);

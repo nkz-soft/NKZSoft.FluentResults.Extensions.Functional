@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class SuccessIfTests
 {
-    [Fact]
+    [Test]
     public void SuccessIfBoolReturnsOkWhenConditionTrue()
     {
         var output = ResultExtensions.SuccessIf(true, "error");
@@ -10,7 +10,7 @@ public sealed class SuccessIfTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfBoolReturnsFailWhenConditionFalse()
     {
         var output = ResultExtensions.SuccessIf(false, "error");
@@ -19,7 +19,7 @@ public sealed class SuccessIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfBoolWithValueReturnsOkWithValueWhenConditionTrue()
     {
         var value = new object();
@@ -29,7 +29,7 @@ public sealed class SuccessIfTests
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfBoolWithValueReturnsFailWhenConditionFalse()
     {
         var output = ResultExtensions.SuccessIf(false, 10, "error");
@@ -38,7 +38,7 @@ public sealed class SuccessIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateReturnsOkWhenPredicateReturnsTrue()
     {
         var output = ResultExtensions.SuccessIf(() => true, "error");
@@ -46,7 +46,7 @@ public sealed class SuccessIfTests
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateReturnsFailWhenPredicateReturnsFalse()
     {
         var output = ResultExtensions.SuccessIf(() => false, "error");
@@ -55,7 +55,7 @@ public sealed class SuccessIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateWithValueReturnsOkWithValueWhenPredicateReturnsTrue()
     {
         var value = new object();
@@ -65,7 +65,7 @@ public sealed class SuccessIfTests
         output.Value.Should().BeSameAs(value);
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateWithValueReturnsFailWhenPredicateReturnsFalse()
     {
         var output = ResultExtensions.SuccessIf(() => false, 10, "error");
@@ -74,7 +74,7 @@ public sealed class SuccessIfTests
         output.Errors.Should().Contain(x => x.Message == "error");
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateThrowsWhenPredicateIsNull()
     {
         var action = () => ResultExtensions.SuccessIf((Func<bool>)null!, "error");
@@ -82,7 +82,7 @@ public sealed class SuccessIfTests
         action.Should().Throw<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public void SuccessIfPredicateWithValueThrowsWhenPredicateIsNull()
     {
         var action = () => ResultExtensions.SuccessIf((Func<bool>)null!, 10, "error");

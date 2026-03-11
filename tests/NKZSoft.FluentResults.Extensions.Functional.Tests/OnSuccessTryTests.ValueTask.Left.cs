@@ -2,9 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class OnSuccessTryTestsValueTaskLeft : OnSuccessTryTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncExecutesActionOnlyWhenValueTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
@@ -14,9 +14,9 @@ public sealed class OnSuccessTryTestsValueTaskLeft : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task OnSuccessTryAsyncTExecutesActionOnlyWhenValueTaskResultIsSuccessful(bool isSuccess)
     {
         var resultTask = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -26,7 +26,7 @@ public sealed class OnSuccessTryTestsValueTaskLeft : OnSuccessTryTestsBase
         AssertState(output, isSuccess, isSuccess);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsExceptionToFailureWithDefaultError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage)
@@ -36,7 +36,7 @@ public sealed class OnSuccessTryTestsValueTaskLeft : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == TryExceptionMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncConvertsExceptionToFailureWithCustomError()
     {
         var output = await ResultExtensions.OkIfAsync(true, ErrorMessage)
@@ -46,7 +46,7 @@ public sealed class OnSuccessTryTestsValueTaskLeft : OnSuccessTryTestsBase
         output.Errors.Should().ContainSingle(error => error.Message == CustomErrorMessage);
     }
 
-    [Fact]
+    [Test]
     public async Task OnSuccessTryAsyncThrowsWhenActionIsNull()
     {
         var action = async () => await ResultExtensions.OkIfAsync(true, ErrorMessage)

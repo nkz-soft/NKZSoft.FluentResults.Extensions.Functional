@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public class TapTestsValueTaskLeft : TapTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
@@ -13,9 +13,9 @@ public class TapTestsValueTaskLeft : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -24,9 +24,9 @@ public class TapTestsValueTaskLeft : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesActionTOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);

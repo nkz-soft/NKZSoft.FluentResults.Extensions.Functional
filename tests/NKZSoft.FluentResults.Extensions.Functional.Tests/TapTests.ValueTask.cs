@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class TapTestsValueTask : TapTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
@@ -13,9 +13,9 @@ public sealed class TapTestsValueTask : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -24,9 +24,9 @@ public sealed class TapTestsValueTask : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesActionTOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -35,9 +35,9 @@ public sealed class TapTestsValueTask : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapExecutesTaskActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage);
@@ -46,9 +46,9 @@ public sealed class TapTestsValueTask : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesTaskActionOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);
@@ -57,9 +57,9 @@ public sealed class TapTestsValueTask : TapTestsBase
         AssertSuccess(output, isSuccess);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task TapTExecutesTaskActionTOnResultSuccessAndReturnsSelf(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value);

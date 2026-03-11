@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FirstFailureOrSuccessTestsTask
 {
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncTaskReturnsFirstFailedResult()
     {
         var firstFailure = Result.Fail("Failure 1");
@@ -18,7 +18,7 @@ public sealed class FirstFailureOrSuccessTestsTask
         output.Errors.Should().ContainSingle(error => error.Message == "Failure 1");
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncTaskReturnsSuccessWhenAllAreSuccessful()
     {
         var output = await ResultExtensions.FirstFailureOrSuccessAsync(
@@ -28,7 +28,7 @@ public sealed class FirstFailureOrSuccessTestsTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncTaskReturnsSuccessWhenNoResultsProvided()
     {
         var output = await ResultExtensions.FirstFailureOrSuccessAsync(Array.Empty<Task<Result>>());
@@ -36,7 +36,7 @@ public sealed class FirstFailureOrSuccessTestsTask
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncTaskThrowsWhenResultsArrayIsNull()
     {
         var action = async () => await ResultExtensions.FirstFailureOrSuccessAsync((Task<Result>[])null!);
@@ -44,7 +44,7 @@ public sealed class FirstFailureOrSuccessTestsTask
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
 
-    [Fact]
+    [Test]
     public async Task FirstFailureOrSuccessAsyncTaskThrowsWhenResultTaskItemIsNull()
     {
         Task<Result>[] inputs = [Task.FromResult(Result.Ok()), null!, Task.FromResult(Result.Fail("Failure"))];

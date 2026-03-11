@@ -1,10 +1,10 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
+namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class FinallyTestsTask : FinallyTestsBase
 {
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task FinallyResultReturnsT(bool isSuccess)
     {
         var result =  ResultExtensions.OkIfAsync(isSuccess, ErrorMessage).AsTask();
@@ -13,9 +13,9 @@ public sealed class FinallyTestsTask : FinallyTestsBase
         AssertCalled(output);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [Test]
+    [Arguments(true)]
+    [Arguments(false)]
     public async Task FinallyResultTReturnsT(bool isSuccess)
     {
         var result = ResultExtensions.OkIfAsync(isSuccess, ErrorMessage, TValue.Value).AsTask();

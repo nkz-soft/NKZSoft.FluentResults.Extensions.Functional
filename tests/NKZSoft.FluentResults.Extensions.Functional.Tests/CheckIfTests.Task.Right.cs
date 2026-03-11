@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CheckIfTestsTaskRight : CheckIfTestsBase
 {
-    [Fact]
+    [Test]
     public async Task CheckIfTaskRightConditionFalseReturnsOriginalResultAndSkipsCheck()
     {
         var result = Result.Ok(TValue.Value);
@@ -13,7 +13,7 @@ public sealed class CheckIfTestsTaskRight : CheckIfTestsBase
         AssertSameInstance(result, output);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckIfTaskRightConditionTrueExecutesCheckAndReturnsFailure()
     {
         var result = Result.Ok(TValue.Value);
@@ -33,7 +33,7 @@ public sealed class CheckIfTestsTaskRight : CheckIfTestsBase
         AssertFailedWithErrors(output, checkResult!);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckIfTaskRightPredicateFalseSkipsCheckAndReturnsOriginalResult()
     {
         var result = Result.Ok(TValue.Value);
@@ -45,7 +45,7 @@ public sealed class CheckIfTestsTaskRight : CheckIfTestsBase
         AssertSameInstance(result, output);
     }
 
-    [Fact]
+    [Test]
     public async Task CheckIfTaskRightPredicateOnFailedSourceSkipsPredicateAndCheck()
     {
         var result = Result.Fail<TValue>(ErrorMessage);

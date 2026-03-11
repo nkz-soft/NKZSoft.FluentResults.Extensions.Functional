@@ -2,7 +2,7 @@ namespace NKZSoft.FluentResults.Extensions.Functional.Tests;
 
 public sealed class CompensateTestsTaskLeft : CompensateTestsBase
 {
-    [Fact]
+    [Test]
     public async Task CompensateAsyncReturnsOriginalTaskResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok();
@@ -13,7 +13,7 @@ public sealed class CompensateTestsTaskLeft : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncExecutesFallbackWhenTaskSourceIsFailed()
     {
         var output = await Task.FromResult(Result.Fail(ErrorMessage)).CompensateAsync(() => OkCompensate());
@@ -22,7 +22,7 @@ public sealed class CompensateTestsTaskLeft : CompensateTestsBase
         output.IsSuccess.Should().BeTrue();
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncWithErrorsPassesSourceErrors()
     {
         var result = Result.Fail(ErrorMessage);
@@ -33,7 +33,7 @@ public sealed class CompensateTestsTaskLeft : CompensateTestsBase
         ReceivedErrors.Should().BeEquivalentTo(result.Errors);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncTReturnsOriginalTaskResultWhenSourceIsSuccessful()
     {
         var result = Result.Ok(TValue.Value);
@@ -44,7 +44,7 @@ public sealed class CompensateTestsTaskLeft : CompensateTestsBase
         output.Should().BeSameAs(result);
     }
 
-    [Fact]
+    [Test]
     public async Task CompensateAsyncThrowsWhenFallbackIsNull()
     {
         var action = async () => await Task.FromResult(Result.Ok()).CompensateAsync((Func<Result>)null!);
