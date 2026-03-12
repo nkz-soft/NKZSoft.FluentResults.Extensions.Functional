@@ -163,6 +163,29 @@ var asyncOutput = await ResultExtensions.FailureIfAsync(
 </details>
 
 <details>
+<summary><strong>Combine</strong></summary>
+
+`Combine` provides CSharpFunctionalExtensions-style naming over FluentResults `Merge`.
+It aggregates reasons from all input results and returns success only when all inputs are successful.
+
+```csharp
+var output = ResultExtensions.Combine(
+    Result.Ok(),
+    Result.Fail("Validation failed"),
+    Result.Fail("Another error"));
+
+var outputWithValues = ResultExtensions.Combine(
+    Result.Ok(1),
+    Result.Ok(2));
+
+var asyncOutput = await ResultExtensions.CombineAsync(
+    Task.FromResult(Result.Ok()),
+    Task.FromResult(Result.Fail("Validation failed")));
+```
+
+</details>
+
+<details>
 <summary><strong>FirstFailureOrSuccess</strong></summary>
 
 `FirstFailureOrSuccess` provides CSharpFunctionalExtensions-style short-circuit failure selection.
