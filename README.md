@@ -210,6 +210,30 @@ var asyncOutput = await ResultExtensions.CombineInOrderAsync(
 </details>
 
 <details>
+<summary><strong>CompleteInOrder</strong></summary>
+
+`CompleteInOrder` is an alias over `CombineInOrder` for ordered async result completion.
+For synchronous inputs, behavior matches `Combine`/`CombineInOrder`.
+For async (`Task`/`ValueTask`) inputs, results are awaited in input order before aggregation.
+
+```csharp
+var output = ResultExtensions.CompleteInOrder(
+    Result.Ok(),
+    Result.Fail("Validation failed"),
+    Result.Fail("Another error"));
+
+var outputWithValues = ResultExtensions.CompleteInOrder(
+    Result.Ok(1),
+    Result.Ok(2));
+
+var asyncOutput = await ResultExtensions.CompleteInOrderAsync(
+    Task.FromResult(Result.Ok()),
+    Task.FromResult(Result.Fail("Validation failed")));
+```
+
+</details>
+
+<details>
 <summary><strong>FirstFailureOrSuccess</strong></summary>
 
 `FirstFailureOrSuccess` provides CSharpFunctionalExtensions-style short-circuit failure selection.
