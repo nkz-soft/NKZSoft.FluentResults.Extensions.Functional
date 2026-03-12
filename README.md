@@ -329,6 +329,26 @@ public Task<Result<int>> GetNumberAsync()
 var output2 = await GetNumberAsync().SelectAsync(v => v + 1);
 ```
 
+### GetValueOrDefault
+
+Returns the successful value from `Result<TValue>` or a fallback when the result is failed.
+Includes selector overloads and async variants for `Task<Result<TValue>>` / `ValueTask<Result<TValue>>`.
+
+```csharp
+Result<int> amountResult = Result.Ok(10);
+int amount = amountResult.GetValueOrDefault(0);
+
+Result<int> failedAmountResult = Result.Fail<int>("Amount is missing");
+int amountWithFallback = failedAmountResult.GetValueOrDefault(() => 0);
+
+string text = failedAmountResult.GetValueOrDefault(
+    value => value.ToString(),
+    () => "N/A");
+
+Task<Result<int>> amountTask = GetAmountAsync();
+int fromTask = await amountTask.GetValueOrDefaultAsync(0);
+```
+
 ### SelectMany
 
 LINQ-friendly alias composition for `Bind` + `Map`.
