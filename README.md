@@ -30,7 +30,8 @@ dotnet test NKZSoft.FluentResults.Extensions.Functional.sln
 ## Features
 All methods have asynchronous overloads and ValueTask support.
 
-### Bind
+<details>
+<summary><strong>Bind</strong></summary>
 
 It executes the function only if the Result is successful (i.e., not failed). If the Result is failed, it returns the original failed Result. 
 If the Result is successful, it executes the function and returns the resulting Result.
@@ -41,7 +42,10 @@ public async Task<Result<int>> OnSuccessAsync(int x)
 await Result.Ok(1).BindAsync(OnSuccessAsync);
 ```
 
-### Finally
+</details>
+
+<details>
+<summary><strong>Finally</strong></summary>
 
 Executes a function after a Result, regardless of its success or failure.
 
@@ -50,7 +54,11 @@ public async Task<int> OnBothAsync(Result result)
 ...
 await Result.Ok().FinallyAsync(OnBothAsync);
 ```
-### Tap
+
+</details>
+
+<details>
+<summary><strong>Tap</strong></summary>
 
 Executes an action if the result is successful and return the original result.
 
@@ -68,7 +76,10 @@ public Task<Result> GetResultAsync()
 await GetResultAsync().TapAsync(OnActionValueTaskAsync);
 ```
 
-### Match
+</details>
+
+<details>
+<summary><strong>Match</strong></summary>
 
 Matches a Result to either a success or failure action.
 
@@ -81,7 +92,10 @@ public async Task OnFailureAsync(IReadOnlyList<IError> errors)
 await Result.Ok().MatchAsync(OnActionAsync, OnFailureAsync);
 ```
 
-### Ensure
+</details>
+
+<details>
+<summary><strong>Ensure</strong></summary>
 
 Ensures that a condition is met for a successful Result.
 If the condition is not met, returns a failed Result with the specified error message.
@@ -105,7 +119,10 @@ var output3 = await Result.Ok(user)
 
 These overloads are available for sync, `Task`, and `ValueTask` variants (left/right/both async forms).
 
-### SuccessIf
+</details>
+
+<details>
+<summary><strong>SuccessIf</strong></summary>
 
 `SuccessIf` provides CSharpFunctionalExtensions-style naming for FluentResults `OkIf` behavior.
 
@@ -122,7 +139,10 @@ var asyncOutput = await ResultExtensions.SuccessIfAsync(
     "Amount must be positive");
 ```
 
-### FailureIf
+</details>
+
+<details>
+<summary><strong>FailureIf</strong></summary>
 
 `FailureIf` provides CSharpFunctionalExtensions-style inverted condition naming.
 It fails when the condition/predicate is `true`.
@@ -140,7 +160,10 @@ var asyncOutput = await ResultExtensions.FailureIfAsync(
     "Amount must be positive");
 ```
 
-### FirstFailureOrSuccess
+</details>
+
+<details>
+<summary><strong>FirstFailureOrSuccess</strong></summary>
 
 `FirstFailureOrSuccess` provides CSharpFunctionalExtensions-style short-circuit failure selection.
 It returns the first failed `Result` from the provided sequence or `Result.Ok()` when all results are successful.
@@ -157,7 +180,10 @@ var asyncOutput = await ResultExtensions.FirstFailureOrSuccessAsync(
     Task.FromResult(Result.Fail("Validation failed")));
 ```
 
-### EnsureNot
+</details>
+
+<details>
+<summary><strong>EnsureNot</strong></summary>
 
 `EnsureNot` provides CSharpFunctionalExtensions-style inverted predicate checks for `Result<TValue>`.
 It fails when the predicate evaluates to `true`.
@@ -171,7 +197,10 @@ Result<int> ensuredFromTask = await maybeAmountTask
     .EnsureNotAsync(x => x > 10, "Value should be less than or equal to 10");
 ```
 
-### Required
+</details>
+
+<details>
+<summary><strong>Required</strong></summary>
 
 Requires a successful result value to be non-null.
 If the source result is failed, errors are preserved.
@@ -184,7 +213,10 @@ Task<Result<string?>> maybeNameTask = GetNameAsync();
 Result<string> requiredFromTask = await maybeNameTask.RequiredAsync("Name is required");
 ```
 
-### EnsureNotNull
+</details>
+
+<details>
+<summary><strong>EnsureNotNull</strong></summary>
 
 `EnsureNotNull` provides CSharpFunctionalExtensions-style naming for non-null validation and follows the same behavior as `Required`.
 
@@ -196,7 +228,10 @@ Task<Result<string?>> maybeEmailTask = GetEmailAsync();
 Result<string> ensuredFromTask = await maybeEmailTask.EnsureNotNullAsync("Email is required");
 ```
 
-### Try
+</details>
+
+<details>
+<summary><strong>Try</strong></summary>
 
 Executes code and converts thrown exceptions to failed `Result` values.
 
@@ -208,7 +243,10 @@ var loadResult = await ResultExtensions.TryAsync(
     ex => $"Load failed: {ex.Message}");
 ```
 
-### OnSuccessTry
+</details>
+
+<details>
+<summary><strong>OnSuccessTry</strong></summary>
 
 Executes an action/function only for successful results and converts thrown exceptions into failed `Result` values.
 For failed source results, errors are preserved and the delegate is not executed.
@@ -224,7 +262,10 @@ var asyncOutput = await GetCustomerResultAsync()
     .OnSuccessTryAsync(async c => await SendNotificationAsync(c));
 ```
 
-### Compensate
+</details>
+
+<details>
+<summary><strong>Compensate</strong></summary>
 
 Recovers from failure by executing a fallback function only when the source result is failed.
 For successful source results, the original result instance is returned unchanged.
@@ -240,7 +281,10 @@ var asyncRecovered = await GetCustomerResultAsync()
     .CompensateAsync(errors => RecoverCustomerAsync(errors));
 ```
 
-### OnFailureCompensate
+</details>
+
+<details>
+<summary><strong>OnFailureCompensate</strong></summary>
 
 `OnFailureCompensate` is a CSharpFunctionalExtensions-style alias for `Compensate`.
 It executes fallback logic only when the source result is failed.
@@ -256,7 +300,10 @@ var asyncRecovered = await GetCustomerResultAsync()
     .OnFailureCompensateAsync(errors => RecoverCustomerAsync(errors));
 ```
 
-### Of
+</details>
+
+<details>
+<summary><strong>Of</strong></summary>
 
 Creates successful results from values and value-producing delegates.
 Unlike `Try`, exceptions are not converted to failure results and are propagated to the caller.
@@ -271,7 +318,10 @@ var fromTask = await ResultExtensions.OfAsync(repository.GetByIdAsync(id));
 var fromValueTask = await ResultExtensions.OfAsync(GetValueValueTaskAsync);
 ```
 
-### Check
+</details>
+
+<details>
+<summary><strong>Check</strong></summary>
 
 Executes a function only if the Result is successful, acting as a validation step in a chain.
 If the function returns failure, the failure is returned; otherwise it returns the original result.
@@ -284,7 +334,10 @@ var output = await GetUserAsync()
     .BindAsync(SaveAsync);
 ```
 
-### CheckIf
+</details>
+
+<details>
+<summary><strong>CheckIf</strong></summary>
 
 Conditionally executes `Check` logic for `Result<TValue>`.
 If the condition/predicate is not satisfied, it returns the original result unchanged.
@@ -297,7 +350,10 @@ var output2 = await GetUserAsync()
     .CheckIfAsync(u => u.IsActive, u => EnsureUniqueEmailAsync(u.Email));
 ```
 
-### Map
+</details>
+
+<details>
+<summary><strong>Map</strong></summary>
 
 Creates a new Result from the return value of a function.
 If the Result is failed, returns a failed Result with the same errors.
@@ -316,7 +372,10 @@ public Task<Result<int>> GetNumberAsync()
 var output3 = await GetNumberAsync().MapAsync(MapValueTaskAsync);
 ```
 
-### Select
+</details>
+
+<details>
+<summary><strong>Select</strong></summary>
 
 LINQ-friendly alias for `Map`.
 If the Result is failed, returns a failed Result with the same errors.
@@ -329,7 +388,10 @@ public Task<Result<int>> GetNumberAsync()
 var output2 = await GetNumberAsync().SelectAsync(v => v + 1);
 ```
 
-### GetValueOrDefault
+</details>
+
+<details>
+<summary><strong>GetValueOrDefault</strong></summary>
 
 Returns the successful value from `Result<TValue>` or a fallback when the result is failed.
 Includes selector overloads and async variants for `Task<Result<TValue>>` / `ValueTask<Result<TValue>>`.
@@ -349,7 +411,10 @@ Task<Result<int>> amountTask = GetAmountAsync();
 int fromTask = await amountTask.GetValueOrDefaultAsync(0);
 ```
 
-### SelectMany
+</details>
+
+<details>
+<summary><strong>SelectMany</strong></summary>
 
 LINQ-friendly alias composition for `Bind` + `Map`.
 Supports query syntax projections while preserving failure short-circuit behavior.
@@ -363,6 +428,8 @@ var output =
 var asyncOutput = await GetUserAsync()
     .SelectManyAsync(GetAccountAsync, (user, account) => new UserAccountDto(user, account));
 ```
+
+</details>
 
 ## Example
 
