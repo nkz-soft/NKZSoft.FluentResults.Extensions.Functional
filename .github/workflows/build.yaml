@@ -15,6 +15,7 @@ on:
       - "**.md"
 
 permissions:
+  contents: read
   pull-requests: write
 
 jobs:
@@ -24,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v5
         with:
@@ -34,25 +37,45 @@ jobs:
         run: dotnet build -c Release
       - name: Test
         run: dotnet test --solution NKZSoft.FluentResults.Extensions.Functional.sln --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
-      - name: Merge test results
-        run: |
-            dotnet tool install -g dotnet-reportgenerator-globaltool
-            reportgenerator "-reports:coverage/*.cobertura.xml" "-targetdir:coverage/result" -reporttypes:Cobertura
-      - name: Code Coverage Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Generate coverage report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.3
         with:
-          filename: coverage/result/*.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: true
-          indicators: true
-          output: both
-          thresholds: '50 60'
+          reports: 'coverage/*.cobertura.xml'
+          targetdir: 'coverage/result'
+          reporttypes: 'Cobertura;MarkdownSummaryGithub'
+      - name: Calculate coverage badge values
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+          from decimal import Decimal, ROUND_HALF_UP
+
+          line_rate = Decimal(ET.parse("coverage/result/Cobertura.xml").getroot().attrib["line-rate"]) * 100
+          line_coverage = line_rate.quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as github_env:
+              github_env.write(f"LINE_COVERAGE={line_coverage}%\n")
+              github_env.write(f"LINE_COVERAGE_VALUE={line_coverage}\n")
+          PY
+      - name: Publish Coverage Badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
+          gistID: d24d45d2f634d03f790e3656b3024e44
+          filename: coverage.svg
+          label: coverage
+          message: ${{ env.LINE_COVERAGE }}
+          valColorRange: ${{ env.LINE_COVERAGE_VALUE }}
+          minColorRange: 0
+          maxColorRange: 100
+          style: flat-square
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
         with:
           recreate: true
-          path: code-coverage-results.md
+          path: coverage/result/SummaryGithub.md
