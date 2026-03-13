@@ -15,6 +15,7 @@ on:
       - "**.md"
 
 permissions:
+  contents: write
   pull-requests: write
 
 jobs:
@@ -24,6 +25,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v5
         with:
@@ -50,6 +53,90 @@ jobs:
           indicators: true
           output: both
           thresholds: '50 60'
+      - name: Generate Coverage Badge Data
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          python <<'PY'
+          import glob
+          import json
+          import os
+          import xml.etree.ElementTree as ET
+
+          lines_covered = 0
+          lines_valid = 0
+
+          for path in glob.glob("coverage/*.cobertura.xml"):
+              root = ET.parse(path).getroot()
+              lines_covered += int(root.attrib["lines-covered"])
+              lines_valid += int(root.attrib["lines-valid"])
+
+          if lines_valid == 0:
+              raise SystemExit("No line coverage data found")
+
+          coverage = 100 * lines_covered / lines_valid
+
+          if coverage >= 90:
+              color = "brightgreen"
+          elif coverage >= 75:
+              color = "green"
+          elif coverage >= 60:
+              color = "yellowgreen"
+          elif coverage >= 40:
+              color = "yellow"
+          else:
+              color = "red"
+
+          os.makedirs("badge-data/coverage", exist_ok=True)
+
+          with open("badge-data/coverage/coverage-badge.json", "w", encoding="utf-8") as handle:
+              json.dump(
+                  {
+                      "schemaVersion": 1,
+                      "label": "coverage",
+                      "message": f"{coverage:.1f}%",
+                      "color": color,
+                  },
+                  handle,
+                  separators=(",", ":"),
+              )
+          PY
+      - name: Publish Coverage Badge Data
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git fetch origin badges || true
+
+          badge_worktree="$(mktemp -d)"
+
+          if git ls-remote --exit-code --heads origin badges >/dev/null 2>&1; then
+            git worktree add -B badges "$badge_worktree" origin/badges
+          else
+            git worktree add -b badges "$badge_worktree"
+          fi
+
+          mkdir -p "$badge_worktree/coverage"
+          cp badge-data/coverage/coverage-badge.json "$badge_worktree/coverage/coverage-badge.json"
+
+          pushd "$badge_worktree"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add coverage/coverage-badge.json
+
+          if git diff --cached --quiet; then
+            echo "No badge data changes to publish"
+            popd
+            git worktree remove "$badge_worktree" --force
+            exit 0
+          fi
+
+          git commit -m "docs(badge): update coverage badge data"
+          git push origin badges
+          popd
+
+          git worktree remove "$badge_worktree" --force
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
