@@ -446,6 +446,30 @@ var output3 = await GetNumberAsync().MapAsync(MapValueTaskAsync);
 </details>
 
 <details>
+<summary><strong>MapIf</strong></summary>
+
+Conditionally maps a successful `Result<TValue>`.
+If the condition or predicate is not satisfied, it returns the original result unchanged.
+
+```csharp
+var output = Result.Ok(10)
+    .MapIf(true, value => value + 5);
+
+var output2 = Result.Ok(10)
+    .MapIf(value => value > 5, value => value * 2);
+
+public Task<int> IncrementAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .MapIfAsync(value => value > 5, IncrementAsync);
+
+var output4 = await GetNumberAsync()
+    .MapIfAsync(true, value => ValueTask.FromResult(value * 3));
+```
+
+</details>
+
+<details>
 <summary><strong>MapTry</strong></summary>
 
 Creates a new Result from the return value of a function and converts thrown exceptions into failed Results.
