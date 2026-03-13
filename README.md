@@ -446,6 +446,30 @@ var output3 = await GetNumberAsync().MapAsync(MapValueTaskAsync);
 </details>
 
 <details>
+<summary><strong>MapTry</strong></summary>
+
+Creates a new Result from the return value of a function and converts thrown exceptions into failed Results.
+If the source Result is failed, its errors are preserved and the delegate is not executed.
+
+```csharp
+var output = Result.Ok(1)
+    .MapTry(value => int.Parse(value.ToString()));
+
+var outputWithCustomError = Result.Ok("42")
+    .MapTry(value => int.Parse(value), ex => $"Parsing failed: {ex.Message}");
+
+public Task<int> LoadNumberAsync()
+...
+var outputAsync = await Result.Ok()
+    .MapTryAsync(LoadNumberAsync);
+
+var outputFromTask = await GetNumberAsync()
+    .MapTryAsync(value => ValueTask.FromResult(value + 1));
+```
+
+</details>
+
+<details>
 <summary><strong>Select</strong></summary>
 
 LINQ-friendly alias for `Map`.
