@@ -12,21 +12,31 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v6
+
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: 10.0.x
         cache: true
         cache-dependency-path: '**/packages.lock.json'
+
     - name: Build
       run: dotnet build -c Release
+
     - name: Test
       run: dotnet test -c Release --no-build
+
     - name: Pack nugets
       run: dotnet pack -c Release --no-build --output .
+
     - name: Publish to NuGet
       run: dotnet nuget push "*.nupkg" --api-key ${{secrets.nuget_api_key}} --source https://api.nuget.org/v3/index.json
-    - name: Drafts release notes
-      uses: release-drafter/release-drafter@v6
+
+    - name: Create Release
+      uses: softprops/action-gh-release@v2
+      with:
+        generate_release_notes: true
+        draft: false
+        prerelease: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
