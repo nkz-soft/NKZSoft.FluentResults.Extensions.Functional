@@ -3,7 +3,7 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/nkz-soft/NKZSoft.FluentResults.Extensions.Functional?style=flat-square)
 ![license](https://img.shields.io/github/license/nkz-soft/NKZSoft.FluentResults.Extensions.Functional?style=flat-square)
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/nkz-soft/NKZSoft.FluentResults.Extensions.Functional/build.yaml)
-[![coverage](https://raw.githubusercontent.com/nkz-soft/NKZSoft.FluentResults.Extensions.Functional/badges/coverage/badge_linecoverage.svg)](https://github.com/nkz-soft/NKZSoft.FluentResults.Extensions.Functional/actions/workflows/build.yaml)
+[![coverage](https://img.shields.io/endpoint?style=flat-square&url=https://gist.githubusercontent.com/nkz-soft/d24d45d2f634d03f790e3656b3024e44/raw/coverage.json)](https://github.com/nkz-soft/NKZSoft.FluentResults.Extensions.Functional/actions/workflows/build.yaml)
 
 It is a library that extends the popular [FluentResults](https://github.com/altmann/FluentResults) library and helps you write code in a more functional way.
 The project was inspired by [Functional Extensions for C#](https://github.com/vkhorikov/CSharpFunctionalExtensions).

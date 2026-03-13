@@ -15,7 +15,7 @@ on:
       - "**.md"
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
 
 jobs:
@@ -42,43 +42,37 @@ jobs:
         with:
           reports: 'coverage/*.cobertura.xml'
           targetdir: 'coverage/result'
-          reporttypes: 'Cobertura;MarkdownSummaryGithub;Badges'
-      - name: Publish Coverage Badge
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+          reporttypes: 'Cobertura;MarkdownSummaryGithub'
+      - name: Calculate coverage badge values
         shell: bash
         run: |
           set -euo pipefail
 
-          git fetch origin badges || true
+          python3 <<'PY'
+          import os
+          import xml.etree.ElementTree as ET
+          from decimal import Decimal, ROUND_HALF_UP
 
-          badge_worktree="$(mktemp -d)"
+          line_rate = Decimal(ET.parse("coverage/result/Cobertura.xml").getroot().attrib["line-rate"]) * 100
+          line_coverage = line_rate.quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
 
-          if git ls-remote --exit-code --heads origin badges >/dev/null 2>&1; then
-            git worktree add -B badges "$badge_worktree" origin/badges
-          else
-            git worktree add -b badges "$badge_worktree"
-          fi
-
-          mkdir -p "$badge_worktree/coverage"
-          cp coverage/result/badge_linecoverage.svg "$badge_worktree/coverage/badge_linecoverage.svg"
-
-          pushd "$badge_worktree"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add coverage/badge_linecoverage.svg
-
-          if git diff --cached --quiet; then
-            echo "No badge data changes to publish"
-            popd
-            git worktree remove "$badge_worktree" --force
-            exit 0
-          fi
-
-          git commit -m "docs(badge): update coverage badge data"
-          git push origin badges
-          popd
-
-          git worktree remove "$badge_worktree" --force
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as github_env:
+              github_env.write(f"LINE_COVERAGE={line_coverage}%\n")
+              github_env.write(f"LINE_COVERAGE_VALUE={line_coverage}\n")
+          PY
+      - name: Publish Coverage Badge
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
+          gistID: d24d45d2f634d03f790e3656b3024e44
+          filename: coverage.json
+          label: coverage
+          message: ${{ env.LINE_COVERAGE }}
+          valColorRange: ${{ env.LINE_COVERAGE_VALUE }}
+          minColorRange: 0
+          maxColorRange: 100
+          style: flat-square
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
