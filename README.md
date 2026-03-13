@@ -470,6 +470,27 @@ var output4 = await GetNumberAsync()
 </details>
 
 <details>
+<summary><strong>MapError</strong></summary>
+
+`MapError` provides CSharpFunctionalExtensions-style naming over FluentResults `MapErrors`.
+Because FluentResults supports multiple `IError` values, `MapError` maps every error in a failed result and returns successful results unchanged.
+
+```csharp
+var output = Result.Fail("Validation failed")
+    .MapError(error => new Error($"Mapped: {error.Message}"));
+
+var outputWithValue = Result.Fail<int>("Validation failed")
+    .MapError(error => new Error($"Mapped: {error.Message}"));
+
+public Task<IError> MapErrorAsync(IError error)
+...
+var asyncOutput = await GetResultAsync()
+    .MapErrorAsync(MapErrorAsync);
+```
+
+</details>
+
+<details>
 <summary><strong>MapTry</strong></summary>
 
 Creates a new Result from the return value of a function and converts thrown exceptions into failed Results.
