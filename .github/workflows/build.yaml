@@ -37,71 +37,13 @@ jobs:
         run: dotnet build -c Release
       - name: Test
         run: dotnet test --solution NKZSoft.FluentResults.Extensions.Functional.sln --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
-      - name: Merge test results
-        run: |
-            dotnet tool install -g dotnet-reportgenerator-globaltool
-            reportgenerator "-reports:coverage/*.cobertura.xml" "-targetdir:coverage/result" -reporttypes:Cobertura
-      - name: Code Coverage Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Generate coverage report
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.3
         with:
-          filename: coverage/result/*.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: true
-          indicators: true
-          output: both
-          thresholds: '50 60'
-      - name: Generate Coverage Badge Data
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        shell: bash
-        run: |
-          python <<'PY'
-          import glob
-          import json
-          import os
-          import xml.etree.ElementTree as ET
-
-          lines_covered = 0
-          lines_valid = 0
-
-          for path in glob.glob("coverage/*.cobertura.xml"):
-              root = ET.parse(path).getroot()
-              lines_covered += int(root.attrib["lines-covered"])
-              lines_valid += int(root.attrib["lines-valid"])
-
-          if lines_valid == 0:
-              raise SystemExit("No line coverage data found")
-
-          coverage = 100 * lines_covered / lines_valid
-
-          if coverage >= 90:
-              color = "brightgreen"
-          elif coverage >= 75:
-              color = "green"
-          elif coverage >= 60:
-              color = "yellowgreen"
-          elif coverage >= 40:
-              color = "yellow"
-          else:
-              color = "red"
-
-          os.makedirs("badge-data/coverage", exist_ok=True)
-
-          with open("badge-data/coverage/coverage-badge.json", "w", encoding="utf-8") as handle:
-              json.dump(
-                  {
-                      "schemaVersion": 1,
-                      "label": "coverage",
-                      "message": f"{coverage:.1f}%",
-                      "color": color,
-                  },
-                  handle,
-                  separators=(",", ":"),
-              )
-          PY
-      - name: Publish Coverage Badge Data
+          reports: 'coverage/*.cobertura.xml'
+          targetdir: 'coverage/result'
+          reporttypes: 'Cobertura;MarkdownSummaryGithub;Badges'
+      - name: Publish Coverage Badge
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: bash
         run: |
@@ -118,12 +60,12 @@ jobs:
           fi
 
           mkdir -p "$badge_worktree/coverage"
-          cp badge-data/coverage/coverage-badge.json "$badge_worktree/coverage/coverage-badge.json"
+          cp coverage/result/badge_linecoverage.svg "$badge_worktree/coverage/badge_linecoverage.svg"
 
           pushd "$badge_worktree"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add coverage/coverage-badge.json
+          git add coverage/badge_linecoverage.svg
 
           if git diff --cached --quiet; then
             echo "No badge data changes to publish"
@@ -142,4 +84,4 @@ jobs:
         if: github.event_name == 'pull_request'
         with:
           recreate: true
-          path: code-coverage-results.md
+          path: coverage/result/SummaryGithub.md
