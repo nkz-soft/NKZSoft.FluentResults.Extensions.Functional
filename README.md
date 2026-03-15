@@ -109,6 +109,31 @@ var output4 = await GetNumberAsync()
 </details>
 
 <details>
+<summary><strong>BindOptional</strong></summary>
+
+Conditionally executes bind logic for nullable result values.
+If the source result is failed, the failure is preserved.
+If the source result is successful and the value is `null`, the delegate is skipped and a successful `null` result is returned.
+
+```csharp
+var output = Result.Ok<string?>("alice")
+    .BindOptional(name => Result.Ok<string?>($"{name}@example.com"));
+
+var output2 = Result.Ok<string?>(null)
+    .BindOptional(name => Result.Ok<string?>($"{name}@example.com"));
+
+public Task<Result<int?>> DoubleAsync(int value)
+...
+var output3 = await Result.Ok<int?>(21)
+    .BindOptionalAsync(DoubleAsync);
+
+var output4 = await GetNullableNameAsync()
+    .BindOptionalAsync(name => ValueTask.FromResult(Result.Ok<string?>($"user:{name}")));
+```
+
+</details>
+
+<details>
 <summary><strong>Tap</strong></summary>
 
 Executes an action if the result is successful and return the original result.
