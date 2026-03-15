@@ -134,6 +134,28 @@ var output4 = await GetNullableNameAsync()
 </details>
 
 <details>
+<summary><strong>BindZip</strong></summary>
+
+Binds a successful result and appends the newly produced value to the existing successful value tuple.
+This is useful when you want to keep previous successful values in a pipeline instead of projecting them away.
+
+```csharp
+var output = Result.Ok(user)
+    .BindZip(u => GetAccount(u));
+// Result<(User user, Account account)>
+
+var output2 = Result.Ok(user)
+    .BindZip(u => GetAccount(u))
+    .BindZip((u, account) => GetSubscription(u, account));
+// Result<(User user, Account account, Subscription subscription)>
+
+var output3 = await GetUserAsync()
+    .BindZipAsync(u => GetAccountAsync(u));
+```
+
+</details>
+
+<details>
 <summary><strong>Tap</strong></summary>
 
 Executes an action if the result is successful and return the original result.
