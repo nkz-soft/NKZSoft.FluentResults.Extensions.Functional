@@ -83,6 +83,32 @@ var output4 = await GetNumberAsync()
 </details>
 
 <details>
+<summary><strong>BindTry</strong></summary>
+
+Executes `Bind` logic for successful results and converts thrown exceptions into failed results.
+If the source result is already failed, the original failure is preserved and the delegate is not executed.
+
+```csharp
+var output = Result.Ok(10)
+    .BindTry(value => Result.Ok(value + 5));
+
+var output2 = Result.Ok(10)
+    .BindTry(
+        value => Result.Ok(int.Parse(value.ToString())),
+        ex => $"Bind failed: {ex.Message}");
+
+public Task<Result<int>> IncrementAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .BindTryAsync(IncrementAsync);
+
+var output4 = await GetNumberAsync()
+    .BindTryAsync(value => ValueTask.FromResult(Result.Ok(value * 3)));
+```
+
+</details>
+
+<details>
 <summary><strong>Tap</strong></summary>
 
 Executes an action if the result is successful and return the original result.
