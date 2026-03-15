@@ -59,6 +59,30 @@ await Result.Ok().FinallyAsync(OnBothAsync);
 </details>
 
 <details>
+<summary><strong>BindIf</strong></summary>
+
+Conditionally executes `Bind` logic.
+If the condition/predicate is not satisfied, it returns the original result unchanged.
+
+```csharp
+var output = Result.Ok(10)
+    .BindIf(true, value => Result.Ok(value + 5));
+
+var output2 = Result.Ok(10)
+    .BindIf(value => value > 5, value => Result.Ok(value * 2));
+
+public Task<Result<int>> IncrementAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .BindIfAsync(value => value > 5, IncrementAsync);
+
+var output4 = await GetNumberAsync()
+    .BindIfAsync(true, value => ValueTask.FromResult(Result.Ok(value * 3)));
+```
+
+</details>
+
+<details>
 <summary><strong>Tap</strong></summary>
 
 Executes an action if the result is successful and return the original result.
