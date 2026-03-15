@@ -2,6 +2,14 @@ namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
+    /// <summary>
+    /// Binds an optional result value only when a value is present.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <typeparam name="TValueOut">The type of the bound result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="func">The function to execute when the operation runs.</param>
+    /// <returns>A task that returns a successful optional result when the source has no value, the original errors when the source is failed, or the bound result when a value is present.</returns>
     public static Task<Result<TValueOut?>> BindOptionalAsync<TValue, TValueOut>(
         this Result<TValue?> result,
         Func<TValue, Task<Result<TValueOut?>>> func)
@@ -19,6 +27,14 @@ public static partial class ResultExtensions
             : func(result.Value);
     }
 
+    /// <summary>
+    /// Binds an optional result value only when a value is present.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <typeparam name="TValueOut">The type of the bound result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="func">The function to execute when the operation runs.</param>
+    /// <returns>A task that returns a successful optional result when the source has no value, the original errors when the source is failed, or the bound result when a value is present.</returns>
     public static Task<Result<TValueOut?>> BindOptionalAsync<TValue, TValueOut>(
         this Result<TValue?> result,
         Func<TValue, Task<Result<TValueOut?>>> func)
