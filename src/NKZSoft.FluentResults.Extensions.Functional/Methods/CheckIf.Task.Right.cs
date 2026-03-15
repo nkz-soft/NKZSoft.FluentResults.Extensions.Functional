@@ -2,6 +2,14 @@ namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
+    /// <summary>
+    /// Executes a check asynchronously when the condition is true.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="condition">The condition that controls whether the operation runs.</param>
+    /// <param name="check">The check to execute when the condition is satisfied.</param>
+    /// <returns>A task that returns the original result when the condition is not met; otherwise the result of the asynchronous check.</returns>
     public static Task<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         bool condition,
@@ -12,6 +20,14 @@ public static partial class ResultExtensions
         return condition ? result.CheckAsync(check) : Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Executes a check asynchronously when the condition is true.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="condition">The condition that controls whether the operation runs.</param>
+    /// <param name="check">The check to execute when the condition is satisfied.</param>
+    /// <returns>A task that returns the original result when the condition is not met; otherwise the result of the asynchronous check.</returns>
     public static Task<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         bool condition,
@@ -22,6 +38,14 @@ public static partial class ResultExtensions
         return condition ? result.CheckAsync(check) : Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Executes a check asynchronously when the predicate evaluates to true for the result value.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="predicate">The predicate that controls whether the operation runs.</param>
+    /// <param name="check">The check to execute when the condition is satisfied.</param>
+    /// <returns>A task that returns the original result when the condition is not met; otherwise the result of the asynchronous check.</returns>
     public static Task<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
@@ -33,6 +57,14 @@ public static partial class ResultExtensions
         return result.IsSuccess && predicate(result.Value) ? result.CheckAsync(check) : Task.FromResult(result);
     }
 
+    /// <summary>
+    /// Executes a check asynchronously when the predicate evaluates to true for the result value.
+    /// </summary>
+    /// <typeparam name="TValue">The type of the source result value.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="predicate">The predicate that controls whether the operation runs.</param>
+    /// <param name="check">The check to execute when the condition is satisfied.</param>
+    /// <returns>A task that returns the original result when the condition is not met; otherwise the result of the asynchronous check.</returns>
     public static Task<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
