@@ -201,6 +201,30 @@ var output4 = await GetNumberAsync()
 </details>
 
 <details>
+<summary><strong>TapIfTry</strong></summary>
+
+Conditionally executes `Tap` logic and converts thrown exceptions into failures.
+If the condition or predicate is not satisfied, it returns the original result unchanged.
+
+```csharp
+var output = Result.Ok(10)
+    .TapIfTry(true, () => Log("ok"));
+
+var output2 = Result.Ok(10)
+    .TapIfTry(value => value > 5, value => Audit(value));
+
+public Task NotifyAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .TapIfTryAsync(value => value > 5, NotifyAsync);
+
+var output4 = await GetNumberAsync()
+    .TapIfTryAsync(true, value => ValueTask.CompletedTask);
+```
+
+</details>
+
+<details>
 <summary><strong>Match</strong></summary>
 
 Matches a Result to either a success or failure action.
