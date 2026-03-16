@@ -177,6 +177,30 @@ await GetResultAsync().TapAsync(OnActionValueTaskAsync);
 </details>
 
 <details>
+<summary><strong>TapIf</strong></summary>
+
+Conditionally executes `Tap` logic.
+If the condition or predicate is not satisfied, it returns the original result unchanged.
+
+```csharp
+var output = Result.Ok(10)
+    .TapIf(true, () => Log("ok"));
+
+var output2 = Result.Ok(10)
+    .TapIf(value => value > 5, value => Audit(value));
+
+public Task NotifyAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .TapIfAsync(value => value > 5, NotifyAsync);
+
+var output4 = await GetNumberAsync()
+    .TapIfAsync(true, value => ValueTask.CompletedTask);
+```
+
+</details>
+
+<details>
 <summary><strong>Match</strong></summary>
 
 Matches a Result to either a success or failure action.
