@@ -5,6 +5,9 @@ on:
     tags:
     - '**'           # Push events to every tag including hierarchical tags like v1.0/beta
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest

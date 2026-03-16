@@ -225,6 +225,30 @@ var output4 = await GetNumberAsync()
 </details>
 
 <details>
+<summary><strong>TapTry</strong></summary>
+
+Executes `Tap` logic for successful results and converts thrown exceptions into failures.
+For failed source results, errors are preserved and the delegate is not executed.
+
+```csharp
+var output = Result.Ok(10)
+    .TapTry(() => Log("ok"));
+
+var output2 = Result.Ok(10)
+    .TapTry(value => Audit(value));
+
+public Task NotifyAsync(int value)
+...
+var output3 = await Result.Ok(10)
+    .TapTryAsync(NotifyAsync);
+
+var output4 = await GetNumberAsync()
+    .TapTryAsync(value => ValueTask.CompletedTask);
+```
+
+</details>
+
+<details>
 <summary><strong>Match</strong></summary>
 
 Matches a Result to either a success or failure action.
