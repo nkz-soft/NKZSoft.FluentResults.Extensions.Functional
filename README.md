@@ -198,6 +198,27 @@ var asyncOutput = await GetResultAsync()
 </details>
 
 <details>
+<summary><strong>TapErrorIf</strong></summary>
+
+Conditionally executes `TapError` logic.
+If the condition is false, it returns the original result unchanged.
+
+```csharp
+var output = Result.Fail("Validation failed")
+    .TapErrorIf(true, () => Log("failed"));
+
+var output2 = Result.Fail("Validation failed")
+    .TapErrorIf(true, error => Log(error.Message));
+
+public Task OnErrorAsync(IError error)
+...
+var output3 = await GetResultAsync()
+    .TapErrorIfAsync(true, OnErrorAsync);
+```
+
+</details>
+
+<details>
 <summary><strong>TapIf</strong></summary>
 
 Conditionally executes `Tap` logic.
