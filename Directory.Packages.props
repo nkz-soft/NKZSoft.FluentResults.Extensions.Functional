@@ -6,7 +6,7 @@
     <PackageVersion Include="FluentResults" Version="4.0.0" />
     <PackageVersion Include="FluentAssertions" Version="8.8.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
-    <PackageVersion Include="TUnit" Version="1.13.11" />
+    <PackageVersion Include="TUnit" Version="1.19.57" />
     <PackageVersion Include="coverlet.collector" Version="8.0.0" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.103" />
   </ItemGroup>
