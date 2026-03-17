@@ -177,6 +177,27 @@ await GetResultAsync().TapAsync(OnActionValueTaskAsync);
 </details>
 
 <details>
+<summary><strong>TapError</strong></summary>
+
+Executes an action when the result is failed and returns the original result.
+For FluentResults compatibility with multiple errors, `TapError` also provides per-error overloads.
+
+```csharp
+var output = Result.Fail("Validation failed")
+    .TapError(() => Log("failed"));
+
+var outputWithValue = Result.Fail<int>("Validation failed")
+    .TapError(error => Log(error.Message));
+
+public Task OnErrorAsync(IError error)
+...
+var asyncOutput = await GetResultAsync()
+    .TapErrorAsync(OnErrorAsync);
+```
+
+</details>
+
+<details>
 <summary><strong>TapIf</strong></summary>
 
 Conditionally executes `Tap` logic.
