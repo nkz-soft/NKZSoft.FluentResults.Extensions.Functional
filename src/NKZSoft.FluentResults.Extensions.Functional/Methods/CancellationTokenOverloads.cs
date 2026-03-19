@@ -2,6 +2,9 @@ namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>MapAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> MapAsync<TValue>(
         this Result result,
         Func<CancellationToken, Task<TValue>> func,
@@ -11,6 +14,9 @@ public static partial class ResultExtensions
         return result.MapAsync(() => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>MapAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> MapAsync<TValue>(
         this Result result,
         Func<CancellationToken, ValueTask<TValue>> func,
@@ -20,6 +26,9 @@ public static partial class ResultExtensions
         return result.MapAsync(() => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>MapAsync</c>.
+    /// </summary>
     public static Task<Result<TValueOut>> MapAsync<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task<TValueOut>> func,
@@ -29,6 +38,9 @@ public static partial class ResultExtensions
         return result.MapAsync(value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>MapAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValueOut>> MapAsync<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask<TValueOut>> func,
@@ -38,6 +50,9 @@ public static partial class ResultExtensions
         return result.MapAsync(value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result<TValue>> MapAsync<TValue>(
         this Task<Result> resultTask,
         Func<CancellationToken, Task<TValue>> func,
@@ -47,6 +62,9 @@ public static partial class ResultExtensions
         return await result.MapAsync(func, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result<TValue>> MapAsync<TValue>(
         this ValueTask<Result> resultTask,
         Func<CancellationToken, ValueTask<TValue>> func,
@@ -56,6 +74,9 @@ public static partial class ResultExtensions
         return await result.MapAsync(func, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindAsync</c>.
+    /// </summary>
     public static Task<Result> BindAsync(
         this Result result,
         Func<CancellationToken, Task<Result>> func,
@@ -65,6 +86,9 @@ public static partial class ResultExtensions
         return result.BindAsync(() => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindAsync</c>.
+    /// </summary>
     public static ValueTask<Result> BindAsync(
         this Result result,
         Func<CancellationToken, ValueTask<Result>> func,
@@ -74,6 +98,9 @@ public static partial class ResultExtensions
         return result.BindAsync(() => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> BindAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task<Result<TValue>>> func,
@@ -83,6 +110,9 @@ public static partial class ResultExtensions
         return result.BindAsync(value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> BindAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask<Result<TValue>>> func,
@@ -92,6 +122,9 @@ public static partial class ResultExtensions
         return result.BindAsync(value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> BindAsync(
         this Task<Result> resultTask,
         Func<CancellationToken, Task<Result>> func,
@@ -101,6 +134,9 @@ public static partial class ResultExtensions
         return await result.BindAsync(func, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> BindAsync(
         this ValueTask<Result> resultTask,
         Func<CancellationToken, ValueTask<Result>> func,
@@ -110,6 +146,9 @@ public static partial class ResultExtensions
         return await result.BindAsync(func, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindTryAsync</c>.
+    /// </summary>
     public static Task<Result> BindTryAsync(
         this Result result,
         Func<CancellationToken, Task<Result>> func,
@@ -120,6 +159,9 @@ public static partial class ResultExtensions
         return result.BindTryAsync(() => func(cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindTryAsync</c>.
+    /// </summary>
     public static ValueTask<Result> BindTryAsync(
         this Result result,
         Func<CancellationToken, ValueTask<Result>> func,
@@ -130,6 +172,9 @@ public static partial class ResultExtensions
         return result.BindTryAsync(() => func(cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindTryAsync</c>.
+    /// </summary>
     public static Task<Result<TValueOut>> BindTryAsync<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task<Result<TValueOut>>> func,
@@ -140,6 +185,9 @@ public static partial class ResultExtensions
         return result.BindTryAsync(value => func(value, cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>BindTryAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValueOut>> BindTryAsync<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask<Result<TValueOut>>> func,
@@ -150,6 +198,9 @@ public static partial class ResultExtensions
         return result.BindTryAsync(value => func(value, cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> TapAsync(
         this Result result,
         Func<CancellationToken, Task> func,
@@ -159,6 +210,9 @@ public static partial class ResultExtensions
         return await result.TapAsync(() => func(cancellationToken)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> TapAsync(
         this Result result,
         Func<CancellationToken, ValueTask> func,
@@ -168,6 +222,9 @@ public static partial class ResultExtensions
         return await result.TapAsync(() => func(cancellationToken)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result<TValue>> TapAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task> func,
@@ -177,6 +234,9 @@ public static partial class ResultExtensions
         return await result.TapAsync(value => func(value, cancellationToken)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result<TValue>> TapAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask> func,
@@ -186,6 +246,9 @@ public static partial class ResultExtensions
         return await result.TapAsync(value => func(value, cancellationToken)).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> TapTryAsync(
         this Result result,
         Func<CancellationToken, Task> func,
@@ -196,6 +259,9 @@ public static partial class ResultExtensions
         return await result.TapTryAsync(() => func(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> TapTryAsync(
         this Result result,
         Func<CancellationToken, ValueTask> func,
@@ -206,6 +272,9 @@ public static partial class ResultExtensions
         return await result.TapTryAsync(() => func(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result<TValue>> TapTryAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task> func,
@@ -216,6 +285,9 @@ public static partial class ResultExtensions
         return await result.TapTryAsync(value => func(value, cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result<TValue>> TapTryAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask> func,
@@ -226,6 +298,9 @@ public static partial class ResultExtensions
         return await result.TapTryAsync(value => func(value, cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfAsync</c>.
+    /// </summary>
     public static Task<Result> TapIfAsync(
         this Result result,
         bool condition,
@@ -236,6 +311,9 @@ public static partial class ResultExtensions
         return result.TapIfAsync(condition, () => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfAsync</c>.
+    /// </summary>
     public static ValueTask<Result> TapIfAsync(
         this Result result,
         bool condition,
@@ -246,6 +324,9 @@ public static partial class ResultExtensions
         return result.TapIfAsync(condition, () => func(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> TapIfAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
@@ -257,6 +338,9 @@ public static partial class ResultExtensions
         return result.TapIfAsync(predicate, value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> TapIfAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
@@ -268,6 +352,9 @@ public static partial class ResultExtensions
         return result.TapIfAsync(predicate, value => func(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfTryAsync</c>.
+    /// </summary>
     public static Task<Result> TapIfTryAsync(
         this Result result,
         bool condition,
@@ -279,6 +366,9 @@ public static partial class ResultExtensions
         return result.TapIfTryAsync(condition, () => func(cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfTryAsync</c>.
+    /// </summary>
     public static ValueTask<Result> TapIfTryAsync(
         this Result result,
         bool condition,
@@ -290,6 +380,9 @@ public static partial class ResultExtensions
         return result.TapIfTryAsync(condition, () => func(cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfTryAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> TapIfTryAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
@@ -302,6 +395,9 @@ public static partial class ResultExtensions
         return result.TapIfTryAsync(predicate, value => func(value, cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>TapIfTryAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> TapIfTryAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, bool> predicate,
@@ -314,6 +410,9 @@ public static partial class ResultExtensions
         return result.TapIfTryAsync(predicate, value => func(value, cancellationToken), errorHandler);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckAsync</c>.
+    /// </summary>
     public static Task<Result> CheckAsync(
         this Result result,
         Func<CancellationToken, Task<Result>> check,
@@ -323,6 +422,9 @@ public static partial class ResultExtensions
         return result.CheckAsync(() => check(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckAsync</c>.
+    /// </summary>
     public static ValueTask<Result> CheckAsync(
         this Result result,
         Func<CancellationToken, ValueTask<Result>> check,
@@ -332,6 +434,9 @@ public static partial class ResultExtensions
         return result.CheckAsync(() => check(cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> CheckAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task<Result>> check,
@@ -341,6 +446,9 @@ public static partial class ResultExtensions
         return result.CheckAsync(value => check(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> CheckAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask<Result>> check,
@@ -350,6 +458,9 @@ public static partial class ResultExtensions
         return result.CheckAsync(value => check(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckIfAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         bool condition,
@@ -360,6 +471,9 @@ public static partial class ResultExtensions
         return result.CheckIfAsync(condition, value => check(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CheckIfAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> CheckIfAsync<TValue>(
         this Result<TValue> result,
         bool condition,
@@ -370,6 +484,9 @@ public static partial class ResultExtensions
         return result.CheckIfAsync(condition, value => check(value, cancellationToken));
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>EnsureAsync</c>.
+    /// </summary>
     public static Task<Result<TValue>> EnsureAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, Task<bool>> predicate,
@@ -380,6 +497,9 @@ public static partial class ResultExtensions
         return result.EnsureAsync(value => predicate(value, cancellationToken), errorMessage);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>EnsureAsync</c>.
+    /// </summary>
     public static ValueTask<Result<TValue>> EnsureAsync<TValue>(
         this Result<TValue> result,
         Func<TValue, CancellationToken, ValueTask<bool>> predicate,
@@ -390,6 +510,9 @@ public static partial class ResultExtensions
         return result.EnsureAsync(value => predicate(value, cancellationToken), errorMessage);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> TryAsync(
         Func<CancellationToken, Task> action,
         Func<Exception, string>? errorHandler = null,
@@ -399,6 +522,9 @@ public static partial class ResultExtensions
         return await TryAsync(() => action(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> TryAsync(
         Func<CancellationToken, ValueTask> action,
         Func<Exception, string>? errorHandler = null,
@@ -408,6 +534,9 @@ public static partial class ResultExtensions
         return await TryAsync(() => action(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result<TValue>> TryAsync<TValue>(
         Func<CancellationToken, Task<TValue>> func,
         Func<Exception, string>? errorHandler = null,
@@ -417,6 +546,9 @@ public static partial class ResultExtensions
         return await TryAsync(() => func(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result<TValue>> TryAsync<TValue>(
         Func<CancellationToken, ValueTask<TValue>> func,
         Func<Exception, string>? errorHandler = null,
@@ -426,6 +558,9 @@ public static partial class ResultExtensions
         return await TryAsync(() => func(cancellationToken), errorHandler).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> CombineInOrderAsync(
         Task<Result>[] results,
         CancellationToken cancellationToken = default)
@@ -442,6 +577,9 @@ public static partial class ResultExtensions
         return CombineInOrder(resolved);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> CombineInOrderAsync(
         ValueTask<Result>[] results,
         CancellationToken cancellationToken = default)
@@ -457,16 +595,25 @@ public static partial class ResultExtensions
         return CombineInOrder(resolved);
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CompleteInOrderAsync</c>.
+    /// </summary>
     public static Task<Result> CompleteInOrderAsync(
         Task<Result>[] results,
         CancellationToken cancellationToken = default)
         => CombineInOrderAsync(results, cancellationToken);
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>CompleteInOrderAsync</c>.
+    /// </summary>
     public static ValueTask<Result> CompleteInOrderAsync(
         ValueTask<Result>[] results,
         CancellationToken cancellationToken = default)
         => CombineInOrderAsync(results, cancellationToken);
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>Task</c>.
+    /// </summary>
     public static async Task<Result> FirstFailureOrSuccessAsync(
         Task<Result>[] results,
         CancellationToken cancellationToken = default)
@@ -486,6 +633,9 @@ public static partial class ResultExtensions
         return Result.Ok();
     }
 
+    /// <summary>
+    /// Cancellation-token-aware overload for <c>ValueTask</c>.
+    /// </summary>
     public static async ValueTask<Result> FirstFailureOrSuccessAsync(
         ValueTask<Result>[] results,
         CancellationToken cancellationToken = default)
