@@ -524,6 +524,12 @@ var saveResult = ResultExtensions.Try(() => Save(customer));
 var loadResult = await ResultExtensions.TryAsync(
     async () => await repository.LoadAsync(id),
     ex => $"Load failed: {ex.Message}");
+
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+var cancellableLoad = await ResultExtensions.TryAsync(
+    token => repository.LoadAsync(id, token),
+    ex => $"Load failed: {ex.Message}",
+    cts.Token);
 ```
 
 </details>
