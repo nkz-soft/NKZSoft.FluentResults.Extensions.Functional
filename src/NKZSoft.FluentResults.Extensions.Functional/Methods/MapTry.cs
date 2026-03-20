@@ -12,8 +12,14 @@ public static partial class ResultExtensions
     /// <returns>A mapped successful result, the original failure, or a failed result created from a thrown exception.</returns>
     public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, string>? errorHandler = null)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich error mapper.
+    /// </summary>
     public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, IError> errorHandler)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich multi-error mapper.
+    /// </summary>
     public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, IEnumerable<IError>> errorHandler)
         => result.InternalMapTry(func, errorHandler);
 
@@ -31,11 +37,17 @@ public static partial class ResultExtensions
         Func<TValue, TValueOut> func,
         Func<Exception, string>? errorHandler = null)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich error mapper.
+    /// </summary>
     public static Result<TValueOut> MapTry<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, TValueOut> func,
         Func<Exception, IError> errorHandler)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich multi-error mapper.
+    /// </summary>
     public static Result<TValueOut> MapTry<TValue, TValueOut>(
         this Result<TValue> result,
         Func<TValue, TValueOut> func,

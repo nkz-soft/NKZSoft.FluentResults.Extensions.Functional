@@ -17,12 +17,18 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(errorMessage);
         return result.Required(errorMessage);
     }
+    /// <summary>
+    /// Ensures a successful reference type result value is non-null and returns the specified rich error when null.
+    /// </summary>
     public static Result<TValue> EnsureNotNull<TValue>(this Result<TValue?> result, IError error)
         where TValue : class
     {
         ArgumentNullException.ThrowIfNull(error);
         return result.Required(error);
     }
+    /// <summary>
+    /// Ensures a successful reference type result value is non-null and returns the specified rich errors when null.
+    /// </summary>
     public static Result<TValue> EnsureNotNull<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
         where TValue : class
     {
@@ -45,12 +51,18 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(errorMessage);
         return result.Required(errorMessage);
     }
+    /// <summary>
+    /// Ensures a successful nullable struct result value has a value and returns the specified rich error when null.
+    /// </summary>
     public static Result<TValue> EnsureNotNull<TValue>(this Result<TValue?> result, IError error)
         where TValue : struct
     {
         ArgumentNullException.ThrowIfNull(error);
         return result.Required(error);
     }
+    /// <summary>
+    /// Ensures a successful nullable struct result value has a value and returns the specified rich errors when null.
+    /// </summary>
     public static Result<TValue> EnsureNotNull<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
         where TValue : struct
     {

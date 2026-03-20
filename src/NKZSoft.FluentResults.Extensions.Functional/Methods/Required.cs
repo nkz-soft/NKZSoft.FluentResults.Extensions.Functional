@@ -23,6 +23,9 @@ public static partial class ResultExtensions
 
         return result.Value is null ? Result.Fail<TValue>(errorMessage) : Result.Ok(result.Value);
     }
+    /// <summary>
+    /// Requires a successful result value to be non-null and returns the specified rich error when null.
+    /// </summary>
     public static Result<TValue> Required<TValue>(this Result<TValue?> result, IError error)
         where TValue : class
     {
@@ -35,6 +38,9 @@ public static partial class ResultExtensions
 
         return result.Value is null ? Result.Fail<TValue>(error) : Result.Ok(result.Value);
     }
+    /// <summary>
+    /// Requires a successful result value to be non-null and returns the specified rich errors when null.
+    /// </summary>
     public static Result<TValue> Required<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
         where TValue : class
     {
@@ -69,6 +75,9 @@ public static partial class ResultExtensions
 
         return result.Value.HasValue ? Result.Ok(result.Value.Value) : Result.Fail<TValue>(errorMessage);
     }
+    /// <summary>
+    /// Requires a successful nullable struct result value to have a value and returns the specified rich error when null.
+    /// </summary>
     public static Result<TValue> Required<TValue>(this Result<TValue?> result, IError error)
         where TValue : struct
     {
@@ -81,6 +90,9 @@ public static partial class ResultExtensions
 
         return result.Value.HasValue ? Result.Ok(result.Value.Value) : Result.Fail<TValue>(error);
     }
+    /// <summary>
+    /// Requires a successful nullable struct result value to have a value and returns the specified rich errors when null.
+    /// </summary>
     public static Result<TValue> Required<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
         where TValue : struct
     {

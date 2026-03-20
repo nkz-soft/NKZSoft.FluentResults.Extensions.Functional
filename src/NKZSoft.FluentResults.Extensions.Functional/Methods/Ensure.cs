@@ -22,6 +22,9 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail(errorMessage) : result;
     }
+    /// <summary>
+    /// Ensures that a condition is met for a successful Result and returns the specified rich error when the condition is not met.
+    /// </summary>
     public static Result Ensure(this Result result, Func<bool> predicate, IError error)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -34,6 +37,9 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail(error) : result;
     }
+    /// <summary>
+    /// Ensures that a condition is met for a successful Result and returns the specified rich errors when the condition is not met.
+    /// </summary>
     public static Result Ensure(this Result result, Func<bool> predicate, IEnumerable<IError> errors)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -130,6 +136,9 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail<TValue>(errorMessage) : result;
     }
+    /// <summary>
+    /// Ensures that a condition is met for a successful Result and returns the specified rich error when the condition is not met.
+    /// </summary>
     public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, IError error)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -142,6 +151,9 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail<TValue>(error) : result;
     }
+    /// <summary>
+    /// Ensures that a condition is met for a successful Result and returns the specified rich errors when the condition is not met.
+    /// </summary>
     public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, IEnumerable<IError> errors)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -176,6 +188,9 @@ public static partial class ResultExtensions
 
         return !predicate(result.Value) ? Result.Fail<TValue>(errorMessage) : result;
     }
+    /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result and returns the specified rich error when the condition is not met.
+    /// </summary>
     public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, IError error)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -188,6 +203,9 @@ public static partial class ResultExtensions
 
         return !predicate(result.Value) ? Result.Fail<TValue>(error) : result;
     }
+    /// <summary>
+    /// Ensures that a condition based on the result value is met for a successful Result and returns the specified rich errors when the condition is not met.
+    /// </summary>
     public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, IEnumerable<IError> errors)
     {
         ArgumentNullException.ThrowIfNull(predicate);
