@@ -64,8 +64,23 @@ public sealed class RequiredTests
     {
         var result = Result.Ok<string?>("ok");
 
-        Action act = () => result.Required(null!);
+        Action act = () => result.Required((string)null!);
 
         act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Test]
+    public void RequiredReturnsFailureWithIErrorAndPreservesMetadata()
+    {
+        var result = Result.Ok<string?>(null);
+        var error = new Error("Value is required").WithMetadata("code", "E_REQUIRED");
+
+        var output = result.Required(error);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(x =>
+            x.Message == "Value is required" &&
+            x.Metadata.ContainsKey("code") &&
+            Equals(x.Metadata["code"], "E_REQUIRED"));
     }
 }

@@ -17,6 +17,28 @@ public static partial class ResultExtensions
         var result = await resultTask.ConfigureAwait(false);
         return result.EnsureNotNull(errorMessage);
     }
+    /// <summary>
+    /// Ensures a successful ValueTask reference type result value is non-null and returns the specified rich error when null.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureNotNullAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IError error)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(error);
+    }
+    /// <summary>
+    /// Ensures a successful ValueTask reference type result value is non-null and returns the specified rich errors when null.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureNotNullAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(errors);
+    }
 
     /// <summary>
     /// Ensures a successful ValueTask nullable struct result value has a value.
@@ -32,5 +54,27 @@ public static partial class ResultExtensions
 
         var result = await resultTask.ConfigureAwait(false);
         return result.EnsureNotNull(errorMessage);
+    }
+    /// <summary>
+    /// Ensures a successful ValueTask nullable struct result value has a value and returns the specified rich error when null.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureNotNullAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IError error)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(error);
+    }
+    /// <summary>
+    /// Ensures a successful ValueTask nullable struct result value has a value and returns the specified rich errors when null.
+    /// </summary>
+    public static async ValueTask<Result<TValue>> EnsureNotNullAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(errors);
     }
 }

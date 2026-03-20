@@ -53,6 +53,18 @@ public sealed class OnSuccessTryTests : OnSuccessTryTestsBase
     }
 
     [Test]
+    public void OnSuccessTryConvertsExceptionToFailureWithCustomIError()
+    {
+        var output = Result.Ok().OnSuccessTry(ThrowAction, CustomIErrorHandler);
+
+        AssertState(output, true, false);
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
     public void OnSuccessTryTConvertsExceptionToFailureWithDefaultError()
     {
         var output = Result.Ok(TValue.Value).OnSuccessTry(ThrowActionWithValue);

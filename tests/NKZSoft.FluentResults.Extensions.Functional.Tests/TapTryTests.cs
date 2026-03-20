@@ -57,6 +57,18 @@ public sealed class TapTryTests : TapTryTestsBase
     }
 
     [Test]
+    public void TapTryConvertsExceptionToFailureWithCustomIError()
+    {
+        var output = Result.Ok().TapTry(ThrowAction, CustomIErrorHandler);
+
+        AssertState(output, expectedActionExecuted: true, expectedSuccess: false);
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
     public void TapTryTConvertsExceptionToFailureWithDefaultError()
     {
         var output = Result.Ok(TValue.Value).TapTry(ThrowActionWithValue);

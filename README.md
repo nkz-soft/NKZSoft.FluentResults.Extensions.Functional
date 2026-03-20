@@ -97,6 +97,11 @@ var output2 = Result.Ok(10)
         value => Result.Ok(int.Parse(value.ToString())),
         ex => $"Bind failed: {ex.Message}");
 
+var outputWithRichError = Result.Ok(10)
+    .BindTry(
+        value => Result.Ok(int.Parse(value.ToString())),
+        ex => new Error("Bind failed").WithMetadata("exception", ex.GetType().Name));
+
 public Task<Result<int>> IncrementAsync(int value)
 ...
 var output3 = await Result.Ok(10)
@@ -286,6 +291,11 @@ var output3 = await Result.Ok(10)
 
 var output4 = await GetNumberAsync()
     .TapTryAsync(value => ValueTask.CompletedTask);
+
+var outputWithRichError = Result.Ok(10)
+    .TapTry(
+        value => ThrowingAudit(value),
+        ex => new Error("Tap failed").WithMetadata("exception", ex.GetType().Name));
 ```
 
 </details>
@@ -341,6 +351,10 @@ These overloads are available for sync, `Task`, and `ValueTask` variants (left/r
 ```csharp
 var output = ResultExtensions.SuccessIf(amount > 0, "Amount must be positive");
 
+var outputWithRichError = ResultExtensions.SuccessIf(
+    amount > 0,
+    new Error("Amount must be positive").WithMetadata("code", "amount_positive"));
+
 var outputWithValue = ResultExtensions.SuccessIf(
     () => amount > 0,
     amount,
@@ -361,6 +375,10 @@ It fails when the condition/predicate is `true`.
 
 ```csharp
 var output = ResultExtensions.FailureIf(amount <= 0, "Amount must be positive");
+
+var outputWithRichError = ResultExtensions.FailureIf(
+    amount <= 0,
+    new Error("Amount must be positive").WithMetadata("code", "amount_positive"));
 
 var outputWithValue = ResultExtensions.FailureIf(
     () => amount <= 0,
@@ -491,6 +509,8 @@ If the source result is failed, errors are preserved.
 ```csharp
 Result<string?> maybeName = Result.Ok<string?>(null);
 Result<string> requiredName = maybeName.Required("Name is required");
+Result<string> requiredNameWithIError = maybeName.Required(
+    new Error("Name is required").WithMetadata("field", "Name"));
 
 Task<Result<string?>> maybeNameTask = GetNameAsync();
 Result<string> requiredFromTask = await maybeNameTask.RequiredAsync("Name is required");
@@ -506,6 +526,8 @@ Result<string> requiredFromTask = await maybeNameTask.RequiredAsync("Name is req
 ```csharp
 Result<string?> maybeEmail = Result.Ok<string?>(null);
 Result<string> ensuredEmail = maybeEmail.EnsureNotNull("Email is required");
+Result<string> ensuredEmailWithIError = maybeEmail.EnsureNotNull(
+    new Error("Email is required").WithMetadata("field", "Email"));
 
 Task<Result<string?>> maybeEmailTask = GetEmailAsync();
 Result<string> ensuredFromTask = await maybeEmailTask.EnsureNotNullAsync("Email is required");
@@ -525,6 +547,10 @@ var loadResult = await ResultExtensions.TryAsync(
     async () => await repository.LoadAsync(id),
     ex => $"Load failed: {ex.Message}");
 
+var loadResultWithRichError = await ResultExtensions.TryAsync(
+    async () => await repository.LoadAsync(id),
+    ex => new Error("Load failed").WithMetadata("exception", ex.GetType().Name));
+
 using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
 var cancellableLoad = await ResultExtensions.TryAsync(
     token => repository.LoadAsync(id, token),
@@ -543,6 +569,11 @@ For failed source results, errors are preserved and the delegate is not executed
 ```csharp
 var output = Result.Ok()
     .OnSuccessTry(() => Save(customer));
+
+var outputWithRichError = Result.Ok()
+    .OnSuccessTry(
+        () => Save(customer),
+        ex => new Error("Save failed").WithMetadata("exception", ex.GetType().Name));
 
 var outputWithValue = Result.Ok(customer)
     .OnSuccessTry(c => SendNotification(c));
@@ -720,6 +751,11 @@ var output = Result.Ok(1)
 
 var outputWithCustomError = Result.Ok("42")
     .MapTry(value => int.Parse(value), ex => $"Parsing failed: {ex.Message}");
+
+var outputWithRichError = Result.Ok("42")
+    .MapTry(
+        value => int.Parse(value),
+        ex => new Error("Parsing failed").WithMetadata("exception", ex.GetType().Name));
 
 public Task<int> LoadNumberAsync()
 ...

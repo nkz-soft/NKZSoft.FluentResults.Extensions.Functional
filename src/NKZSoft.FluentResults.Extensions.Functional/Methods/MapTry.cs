@@ -12,6 +12,16 @@ public static partial class ResultExtensions
     /// <returns>A mapped successful result, the original failure, or a failed result created from a thrown exception.</returns>
     public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, string>? errorHandler = null)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich error mapper.
+    /// </summary>
+    public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, IError> errorHandler)
+        => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich multi-error mapper.
+    /// </summary>
+    public static Result<TValue> MapTry<TValue>(this Result result, Func<TValue> func, Func<Exception, IEnumerable<IError>> errorHandler)
+        => result.InternalMapTry(func, errorHandler);
 
     /// <summary>
     /// Maps a successful result and converts thrown exceptions into failed results.
@@ -27,6 +37,22 @@ public static partial class ResultExtensions
         Func<TValue, TValueOut> func,
         Func<Exception, string>? errorHandler = null)
         => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich error mapper.
+    /// </summary>
+    public static Result<TValueOut> MapTry<TValue, TValueOut>(
+        this Result<TValue> result,
+        Func<TValue, TValueOut> func,
+        Func<Exception, IError> errorHandler)
+        => result.InternalMapTry(func, errorHandler);
+    /// <summary>
+    /// Maps a successful result and converts thrown exceptions into failed results using a rich multi-error mapper.
+    /// </summary>
+    public static Result<TValueOut> MapTry<TValue, TValueOut>(
+        this Result<TValue> result,
+        Func<TValue, TValueOut> func,
+        Func<Exception, IEnumerable<IError>> errorHandler)
+        => result.InternalMapTry(func, errorHandler);
 
     internal static Result<TValue> InternalMapTry<TValue>(
         this Result result,
@@ -39,6 +65,26 @@ public static partial class ResultExtensions
             ? Result.Fail<TValue>(result.Errors)
             : Try(func, errorHandler);
     }
+    internal static Result<TValue> InternalMapTry<TValue>(
+        this Result result,
+        Func<TValue> func,
+        Func<Exception, IError> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return result.IsFailed
+            ? Result.Fail<TValue>(result.Errors)
+            : Try(func, errorHandler);
+    }
+    internal static Result<TValue> InternalMapTry<TValue>(
+        this Result result,
+        Func<TValue> func,
+        Func<Exception, IEnumerable<IError>> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return result.IsFailed
+            ? Result.Fail<TValue>(result.Errors)
+            : Try(func, errorHandler);
+    }
 
     internal static Result<TValueOut> InternalMapTry<TValue, TValueOut>(
         this Result<TValue> result,
@@ -47,6 +93,26 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(func);
 
+        return result.IsFailed
+            ? Result.Fail<TValueOut>(result.Errors)
+            : Try(() => func(result.Value), errorHandler);
+    }
+    internal static Result<TValueOut> InternalMapTry<TValue, TValueOut>(
+        this Result<TValue> result,
+        Func<TValue, TValueOut> func,
+        Func<Exception, IError> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(func);
+        return result.IsFailed
+            ? Result.Fail<TValueOut>(result.Errors)
+            : Try(() => func(result.Value), errorHandler);
+    }
+    internal static Result<TValueOut> InternalMapTry<TValue, TValueOut>(
+        this Result<TValue> result,
+        Func<TValue, TValueOut> func,
+        Func<Exception, IEnumerable<IError>> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(func);
         return result.IsFailed
             ? Result.Fail<TValueOut>(result.Errors)
             : Try(() => func(result.Value), errorHandler);

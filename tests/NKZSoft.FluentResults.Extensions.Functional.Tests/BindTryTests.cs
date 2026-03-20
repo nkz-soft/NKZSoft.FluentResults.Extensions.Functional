@@ -43,6 +43,18 @@ public sealed class BindTryTests : BindTryTestsBase
     }
 
     [Test]
+    public void BindTryResultToResultTConvertsExceptionToFailureWithCustomIError()
+    {
+        var output = Result.Ok().BindTry(ThrowResultTFunc, CustomIErrorHandler);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
     public void BindTryTResultToResultReturnsSourceFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail<TValue>(ErrorMessage).BindTry(OkResultFromTFunc);

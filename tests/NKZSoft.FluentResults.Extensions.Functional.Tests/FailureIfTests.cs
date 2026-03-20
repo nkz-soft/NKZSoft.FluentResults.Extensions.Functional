@@ -12,6 +12,18 @@ public sealed class FailureIfTests
     }
 
     [Test]
+    public void FailureIfBoolReturnsFailWithIErrorWhenConditionTrue()
+    {
+        var output = ResultExtensions.FailureIf(true, new Error("error").WithMetadata("code", "E1"));
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == "error" &&
+            error.Metadata.ContainsKey("code") &&
+            Equals(error.Metadata["code"], "E1"));
+    }
+
+    [Test]
     public void FailureIfBoolReturnsOkWhenConditionFalse()
     {
         var output = ResultExtensions.FailureIf(false, "error");
