@@ -29,6 +29,30 @@ public sealed class TryTests : TryTestsBase
     }
 
     [Test]
+    public void TryActionThrowsAndCustomIErrorHandlerExpectedResultFailWithMetadata()
+    {
+        var output = ResultExtensions.Try(FailAction, CustomIErrorHandler);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
+    public void TryActionThrowsAndCustomIErrorsHandlerExpectedResultFailWithMetadata()
+    {
+        var output = ResultExtensions.Try(FailAction, CustomIErrorsHandler);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
     public void TryActionIsNullExpectedThrowArgumentNullException()
     {
         var action = () => ResultExtensions.Try(null!);

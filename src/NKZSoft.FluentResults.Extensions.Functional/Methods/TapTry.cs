@@ -21,6 +21,28 @@ public static partial class ResultExtensions
         var attempt = Try(action, errorHandler);
         return attempt.IsFailed ? attempt : result;
     }
+    public static Result TapTry(this Result result, Action action, Func<Exception, IError> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(action, errorHandler);
+        return attempt.IsFailed ? attempt : result;
+    }
+    public static Result TapTry(this Result result, Action action, Func<Exception, IEnumerable<IError>> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(action, errorHandler);
+        return attempt.IsFailed ? attempt : result;
+    }
 
     /// <summary>
     /// Executes an action when the result is successful, converting exceptions to failures.
@@ -42,6 +64,28 @@ public static partial class ResultExtensions
         var attempt = Try(action, errorHandler);
         return attempt.IsFailed ? Result.Fail<TValue>(attempt.Errors) : result;
     }
+    public static Result<TValue> TapTry<TValue>(this Result<TValue> result, Action action, Func<Exception, IError> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(action, errorHandler);
+        return attempt.IsFailed ? Result.Fail<TValue>(attempt.Errors) : result;
+    }
+    public static Result<TValue> TapTry<TValue>(this Result<TValue> result, Action action, Func<Exception, IEnumerable<IError>> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(action, errorHandler);
+        return attempt.IsFailed ? Result.Fail<TValue>(attempt.Errors) : result;
+    }
 
     /// <summary>
     /// Executes an action when the result is successful, converting exceptions to failures.
@@ -55,6 +99,28 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(action);
 
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(() => action(result.Value), errorHandler);
+        return attempt.IsFailed ? Result.Fail<TValue>(attempt.Errors) : result;
+    }
+    public static Result<TValue> TapTry<TValue>(this Result<TValue> result, Action<TValue> action, Func<Exception, IError> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        var attempt = Try(() => action(result.Value), errorHandler);
+        return attempt.IsFailed ? Result.Fail<TValue>(attempt.Errors) : result;
+    }
+    public static Result<TValue> TapTry<TValue>(this Result<TValue> result, Action<TValue> action, Func<Exception, IEnumerable<IError>> errorHandler)
+    {
+        ArgumentNullException.ThrowIfNull(action);
         if (result.IsFailed)
         {
             return result;

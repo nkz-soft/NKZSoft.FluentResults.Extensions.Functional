@@ -25,6 +25,21 @@ public sealed class EnsureTests : EnsureTestsBase
     }
 
     [Test]
+    public void EnsureSourceResultIsOkBoolPredicateIsFalseAndIErrorExpectedResultFail()
+    {
+        var result = Result.OkIf(true, ErrorMessage);
+        var error = new Error(FailErrorMessage).WithMetadata("code", "E_ENSURE");
+
+        var output = result.Ensure(() => false, error);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(x =>
+            x.Message == FailErrorMessage &&
+            x.Metadata.ContainsKey("code") &&
+            Equals(x.Metadata["code"], "E_ENSURE"));
+    }
+
+    [Test]
     public void EnsureSourceResultIsFailBoolPredicateIsFalseExpectedResultFail()
     {
         var result = Result.OkIf(false, ErrorMessage);

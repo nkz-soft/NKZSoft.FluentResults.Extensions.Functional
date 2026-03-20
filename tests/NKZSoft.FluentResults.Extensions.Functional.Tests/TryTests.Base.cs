@@ -6,6 +6,8 @@ public abstract class TryTestsBase : TestBase
 {
     protected const string TryExceptionMessage = "Try Exception Message";
     protected const string CustomErrorMessage = "Custom Try Error Message";
+    protected const string MetadataKey = "code";
+    protected const string MetadataValue = "try_error";
 
     protected static void SuccessAction()
     {
@@ -34,4 +36,7 @@ public abstract class TryTestsBase : TestBase
     protected static ValueTask<TValue> FailValueTaskFunc() => ValueTask.FromException<TValue>(new InvalidOperationException(TryExceptionMessage));
 
     protected static string CustomErrorHandler(Exception _) => CustomErrorMessage;
+    protected static IError CustomIErrorHandler(Exception _) => new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue);
+    protected static IEnumerable<IError> CustomIErrorsHandler(Exception _) =>
+        [new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue)];
 }

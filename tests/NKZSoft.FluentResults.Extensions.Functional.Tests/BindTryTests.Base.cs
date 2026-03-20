@@ -6,6 +6,8 @@ public abstract class BindTryTestsBase : TestBase
 {
     protected const string TryExceptionMessage = "BindTry Exception Message";
     protected const string CustomErrorMessage = "Custom BindTry Error Message";
+    protected const string MetadataKey = "code";
+    protected const string MetadataValue = "bind_try_error";
 
     protected class TValueMapped
     {
@@ -181,6 +183,9 @@ public abstract class BindTryTestsBase : TestBase
     }
 
     protected static string CustomErrorHandler(Exception _) => CustomErrorMessage;
+    protected static IError CustomIErrorHandler(Exception _) => new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue);
+    protected static IEnumerable<IError> CustomIErrorsHandler(Exception _) =>
+        [new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue)];
 
     protected void AssertSuccess(Result output)
     {

@@ -23,6 +23,30 @@ public static partial class ResultExtensions
 
         return result.Value is null ? Result.Fail<TValue>(errorMessage) : Result.Ok(result.Value);
     }
+    public static Result<TValue> Required<TValue>(this Result<TValue?> result, IError error)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        if (result.IsFailed)
+        {
+            return Result.Fail<TValue>(result.Errors);
+        }
+
+        return result.Value is null ? Result.Fail<TValue>(error) : Result.Ok(result.Value);
+    }
+    public static Result<TValue> Required<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        if (result.IsFailed)
+        {
+            return Result.Fail<TValue>(result.Errors);
+        }
+
+        return result.Value is null ? Result.Fail<TValue>(errors) : Result.Ok(result.Value);
+    }
 
     /// <summary>
     /// Requires a successful nullable struct result value to have a value.
@@ -44,5 +68,29 @@ public static partial class ResultExtensions
         }
 
         return result.Value.HasValue ? Result.Ok(result.Value.Value) : Result.Fail<TValue>(errorMessage);
+    }
+    public static Result<TValue> Required<TValue>(this Result<TValue?> result, IError error)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        if (result.IsFailed)
+        {
+            return Result.Fail<TValue>(result.Errors);
+        }
+
+        return result.Value.HasValue ? Result.Ok(result.Value.Value) : Result.Fail<TValue>(error);
+    }
+    public static Result<TValue> Required<TValue>(this Result<TValue?> result, IEnumerable<IError> errors)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        if (result.IsFailed)
+        {
+            return Result.Fail<TValue>(result.Errors);
+        }
+
+        return result.Value.HasValue ? Result.Ok(result.Value.Value) : Result.Fail<TValue>(errors);
     }
 }

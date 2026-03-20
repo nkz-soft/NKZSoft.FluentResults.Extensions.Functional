@@ -17,6 +17,22 @@ public static partial class ResultExtensions
         var result = await resultTask.ConfigureAwait(false);
         return result.Required(errorMessage);
     }
+    public static async ValueTask<Result<TValue>> RequiredAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IError error)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.Required(error);
+    }
+    public static async ValueTask<Result<TValue>> RequiredAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.Required(errors);
+    }
 
     /// <summary>
     /// Requires a successful nullable struct ValueTask result value to have a value.
@@ -32,5 +48,21 @@ public static partial class ResultExtensions
 
         var result = await resultTask.ConfigureAwait(false);
         return result.Required(errorMessage);
+    }
+    public static async ValueTask<Result<TValue>> RequiredAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IError error)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.Required(error);
+    }
+    public static async ValueTask<Result<TValue>> RequiredAsync<TValue>(this ValueTask<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.Required(errors);
     }
 }

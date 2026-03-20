@@ -6,6 +6,8 @@ public abstract class TapTryTestsBase : TestBase
 {
     protected const string TryExceptionMessage = "TapTry Exception Message";
     protected const string CustomErrorMessage = "Custom TapTry Error Message";
+    protected const string MetadataKey = "code";
+    protected const string MetadataValue = "tap_try_error";
 
     private bool actionExecuted;
 
@@ -73,6 +75,9 @@ public abstract class TapTryTestsBase : TestBase
     }
 
     protected static string CustomErrorHandler(Exception _) => CustomErrorMessage;
+    protected static IError CustomIErrorHandler(Exception _) => new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue);
+    protected static IEnumerable<IError> CustomIErrorsHandler(Exception _) =>
+        [new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue)];
 
     protected void AssertState(Result output, bool expectedActionExecuted, bool expectedSuccess)
     {

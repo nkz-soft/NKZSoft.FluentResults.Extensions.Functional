@@ -35,6 +35,18 @@ public sealed class MapTryTests : MapTryTestsBase
     }
 
     [Test]
+    public void MapTryConvertsExceptionToFailureWithCustomIError()
+    {
+        var output = Result.Ok().MapTry(ThrowMapFunc, CustomIErrorHandler);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == CustomErrorMessage &&
+            error.Metadata.ContainsKey(MetadataKey) &&
+            Equals(error.Metadata[MetadataKey], MetadataValue));
+    }
+
+    [Test]
     public void MapTryTReturnsFailureAndDoesNotExecuteFunc()
     {
         var output = Result.Fail<TValue>(ErrorMessage).MapTry(MapFunc);

@@ -6,6 +6,8 @@ public abstract class MapTryTestsBase : TestBase
 {
     protected const string TryExceptionMessage = "MapTry Exception Message";
     protected const string CustomErrorMessage = "Custom MapTry Error Message";
+    protected const string MetadataKey = "code";
+    protected const string MetadataValue = "map_try_error";
 
     protected class TValueMapped
     {
@@ -85,6 +87,9 @@ public abstract class MapTryTestsBase : TestBase
     }
 
     protected static string CustomErrorHandler(Exception _) => CustomErrorMessage;
+    protected static IError CustomIErrorHandler(Exception _) => new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue);
+    protected static IEnumerable<IError> CustomIErrorsHandler(Exception _) =>
+        [new Error(CustomErrorMessage).WithMetadata(MetadataKey, MetadataValue)];
 
     protected void AssertSuccess(Result<TValueMapped> output)
     {

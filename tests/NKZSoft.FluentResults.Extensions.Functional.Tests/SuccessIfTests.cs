@@ -20,6 +20,18 @@ public sealed class SuccessIfTests
     }
 
     [Test]
+    public void SuccessIfBoolReturnsFailWithIErrorWhenConditionFalse()
+    {
+        var output = ResultExtensions.SuccessIf(false, new Error("error").WithMetadata("code", "E1"));
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error =>
+            error.Message == "error" &&
+            error.Metadata.ContainsKey("code") &&
+            Equals(error.Metadata["code"], "E1"));
+    }
+
+    [Test]
     public void SuccessIfBoolWithValueReturnsOkWithValueWhenConditionTrue()
     {
         var value = new object();

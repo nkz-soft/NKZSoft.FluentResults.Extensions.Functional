@@ -17,6 +17,22 @@ public static partial class ResultExtensions
         var result = await resultTask.ConfigureAwait(false);
         return result.EnsureNotNull(errorMessage);
     }
+    public static async Task<Result<TValue>> EnsureNotNullAsync<TValue>(this Task<Result<TValue?>> resultTask, IError error)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(error);
+    }
+    public static async Task<Result<TValue>> EnsureNotNullAsync<TValue>(this Task<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : class
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(errors);
+    }
 
     /// <summary>
     /// Ensures a successful task nullable struct result value has a value.
@@ -32,5 +48,21 @@ public static partial class ResultExtensions
 
         var result = await resultTask.ConfigureAwait(false);
         return result.EnsureNotNull(errorMessage);
+    }
+    public static async Task<Result<TValue>> EnsureNotNullAsync<TValue>(this Task<Result<TValue?>> resultTask, IError error)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(error);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(error);
+    }
+    public static async Task<Result<TValue>> EnsureNotNullAsync<TValue>(this Task<Result<TValue?>> resultTask, IEnumerable<IError> errors)
+        where TValue : struct
+    {
+        ArgumentNullException.ThrowIfNull(errors);
+
+        var result = await resultTask.ConfigureAwait(false);
+        return result.EnsureNotNull(errors);
     }
 }

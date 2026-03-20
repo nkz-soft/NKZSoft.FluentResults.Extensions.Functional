@@ -22,6 +22,30 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail(errorMessage) : result;
     }
+    public static Result Ensure(this Result result, Func<bool> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(error);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate() ? Result.Fail(error) : result;
+    }
+    public static Result Ensure(this Result result, Func<bool> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(errors);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate() ? Result.Fail(errors) : result;
+    }
 
     /// <summary>
     /// Ensures that a condition is met for a successful Result.
@@ -106,6 +130,30 @@ public static partial class ResultExtensions
 
         return !predicate() ? Result.Fail<TValue>(errorMessage) : result;
     }
+    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(error);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate() ? Result.Fail<TValue>(error) : result;
+    }
+    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<bool> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(errors);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate() ? Result.Fail<TValue>(errors) : result;
+    }
 
     /// <summary>
     /// Ensures that a condition based on the result value is met for a successful Result.
@@ -127,6 +175,30 @@ public static partial class ResultExtensions
         }
 
         return !predicate(result.Value) ? Result.Fail<TValue>(errorMessage) : result;
+    }
+    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(error);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate(result.Value) ? Result.Fail<TValue>(error) : result;
+    }
+    public static Result<TValue> Ensure<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        ArgumentNullException.ThrowIfNull(errors);
+
+        if (result.IsFailed)
+        {
+            return result;
+        }
+
+        return !predicate(result.Value) ? Result.Fail<TValue>(errors) : result;
     }
 
     /// <summary>

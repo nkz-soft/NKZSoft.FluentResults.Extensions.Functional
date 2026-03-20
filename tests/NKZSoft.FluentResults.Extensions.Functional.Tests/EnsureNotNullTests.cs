@@ -64,8 +64,23 @@ public sealed class EnsureNotNullTests
     {
         var result = Result.Ok<string?>("ok");
 
-        Action act = () => result.EnsureNotNull(null!);
+        Action act = () => result.EnsureNotNull((string)null!);
 
         act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Test]
+    public void EnsureNotNullReturnsFailureWithIErrorAndPreservesMetadata()
+    {
+        var result = Result.Ok<string?>(null);
+        var error = new Error("Value is required").WithMetadata("code", "E_REQUIRED");
+
+        var output = result.EnsureNotNull(error);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(x =>
+            x.Message == "Value is required" &&
+            x.Metadata.ContainsKey("code") &&
+            Equals(x.Metadata["code"], "E_REQUIRED"));
     }
 }

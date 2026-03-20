@@ -11,6 +11,10 @@ public static partial class ResultExtensions
     /// <returns>A successful Result when <paramref name="isSuccess"/> is true; otherwise a failed Result.</returns>
     public static Result SuccessIf(bool isSuccess, string error) =>
         isSuccess ? Result.Ok() : Result.Fail(error);
+    public static Result SuccessIf(bool isSuccess, IError error) =>
+        isSuccess ? Result.Ok() : Result.Fail(error);
+    public static Result SuccessIf(bool isSuccess, IEnumerable<IError> errors) =>
+        isSuccess ? Result.Ok() : Result.Fail(errors);
 
     /// <summary>
     /// Returns a Result that is successful when the predicate evaluates to true, otherwise failed.
@@ -22,6 +26,16 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(predicate);
         return SuccessIf(predicate(), error);
+    }
+    public static Result SuccessIf(Func<bool> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return SuccessIf(predicate(), error);
+    }
+    public static Result SuccessIf(Func<bool> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return SuccessIf(predicate(), errors);
     }
 
     /// <summary>
@@ -35,6 +49,10 @@ public static partial class ResultExtensions
     /// <returns>A successful Result when <paramref name="isSuccess"/> is true; otherwise a failed Result.</returns>
     public static Result<TValue> SuccessIf<TValue>(bool isSuccess, TValue value, string error) =>
         OkIf(isSuccess, error, value);
+    public static Result<TValue> SuccessIf<TValue>(bool isSuccess, TValue value, IError error) =>
+        OkIf(isSuccess, error, value);
+    public static Result<TValue> SuccessIf<TValue>(bool isSuccess, TValue value, IEnumerable<IError> errors) =>
+        OkIf(isSuccess, errors, value);
 
     /// <summary>
     /// Returns a Result that is successful when the predicate evaluates to true, otherwise failed.
@@ -49,6 +67,16 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(predicate);
         return SuccessIf(predicate(), value, error);
     }
+    public static Result<TValue> SuccessIf<TValue>(Func<bool> predicate, TValue value, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return SuccessIf(predicate(), value, error);
+    }
+    public static Result<TValue> SuccessIf<TValue>(Func<bool> predicate, TValue value, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return SuccessIf(predicate(), value, errors);
+    }
 
     /// <summary>
     /// Returns a Result that is Ok if the specified condition is true, otherwise Fail.
@@ -60,6 +88,10 @@ public static partial class ResultExtensions
     /// <returns>A Result that is Ok if isSuccess is true, otherwise Fail.</returns>
     public static Result<TValue> OkIf<TValue>(bool isSuccess, string error, TValue value) =>
         isSuccess ? Result.Ok(value) : Result.Fail<TValue>(error);
+    public static Result<TValue> OkIf<TValue>(bool isSuccess, IError error, TValue value) =>
+        isSuccess ? Result.Ok(value) : Result.Fail<TValue>(error);
+    public static Result<TValue> OkIf<TValue>(bool isSuccess, IEnumerable<IError> errors, TValue value) =>
+        isSuccess ? Result.Ok(value) : Result.Fail<TValue>(errors);
 
     /// <summary>
     /// Returns a Result that is Ok if the specified condition is true, otherwise Fail.
@@ -71,6 +103,10 @@ public static partial class ResultExtensions
     /// <returns>A Task that contains a Result that is Ok if isSuccess is true, otherwise Fail.</returns>
     public static ValueTask<Result> OkIfAsync(bool isSuccess, string error) =>
         ValueTask.FromResult(isSuccess ? Result.Ok() : Result.Fail(error));
+    public static ValueTask<Result> OkIfAsync(bool isSuccess, IError error) =>
+        ValueTask.FromResult(isSuccess ? Result.Ok() : Result.Fail(error));
+    public static ValueTask<Result> OkIfAsync(bool isSuccess, IEnumerable<IError> errors) =>
+        ValueTask.FromResult(isSuccess ? Result.Ok() : Result.Fail(errors));
 
     /// <summary>
     /// Returns a Result that is Ok if the specified condition is true, otherwise Fail.
@@ -84,6 +120,10 @@ public static partial class ResultExtensions
     /// <returns>A Task that contains a Result that is Ok if isSuccess is true, otherwise Fail.</returns>
     public static ValueTask<Result<TValue>> OkIfAsync<TValue>(bool isSuccess, string error, TValue value) =>
         ValueTask.FromResult(isSuccess ? Result.Ok(value) : Result.Fail<TValue>(error));
+    public static ValueTask<Result<TValue>> OkIfAsync<TValue>(bool isSuccess, IError error, TValue value) =>
+        ValueTask.FromResult(isSuccess ? Result.Ok(value) : Result.Fail<TValue>(error));
+    public static ValueTask<Result<TValue>> OkIfAsync<TValue>(bool isSuccess, IEnumerable<IError> errors, TValue value) =>
+        ValueTask.FromResult(isSuccess ? Result.Ok(value) : Result.Fail<TValue>(errors));
 
     /// <summary>
     /// Returns a Result that is successful if the specified condition is true, otherwise failed.
@@ -94,6 +134,10 @@ public static partial class ResultExtensions
     /// <returns>A ValueTask that contains the resulting Result.</returns>
     public static ValueTask<Result> SuccessIfAsync(bool isSuccess, string error) =>
         OkIfAsync(isSuccess, error);
+    public static ValueTask<Result> SuccessIfAsync(bool isSuccess, IError error) =>
+        OkIfAsync(isSuccess, error);
+    public static ValueTask<Result> SuccessIfAsync(bool isSuccess, IEnumerable<IError> errors) =>
+        OkIfAsync(isSuccess, errors);
 
     /// <summary>
     /// Returns a Result that is successful if the specified condition is true, otherwise failed.
@@ -106,6 +150,10 @@ public static partial class ResultExtensions
     /// <returns>A ValueTask that contains the resulting Result.</returns>
     public static ValueTask<Result<TValue>> SuccessIfAsync<TValue>(bool isSuccess, TValue value, string error) =>
         OkIfAsync(isSuccess, error, value);
+    public static ValueTask<Result<TValue>> SuccessIfAsync<TValue>(bool isSuccess, TValue value, IError error) =>
+        OkIfAsync(isSuccess, error, value);
+    public static ValueTask<Result<TValue>> SuccessIfAsync<TValue>(bool isSuccess, TValue value, IEnumerable<IError> errors) =>
+        OkIfAsync(isSuccess, errors, value);
 
     /// <summary>
     /// Returns a Result that is successful when the Task predicate evaluates to true, otherwise failed.
@@ -117,6 +165,16 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(predicate);
         return await SuccessIfAsync(await predicate(), error);
+    }
+    public static async ValueTask<Result> SuccessIfAsync(Func<Task<bool>> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), error);
+    }
+    public static async ValueTask<Result> SuccessIfAsync(Func<Task<bool>> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), errors);
     }
 
     /// <summary>
@@ -132,6 +190,16 @@ public static partial class ResultExtensions
         ArgumentNullException.ThrowIfNull(predicate);
         return await SuccessIfAsync(await predicate(), value, error);
     }
+    public static async ValueTask<Result<TValue>> SuccessIfAsync<TValue>(Func<Task<bool>> predicate, TValue value, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), value, error);
+    }
+    public static async ValueTask<Result<TValue>> SuccessIfAsync<TValue>(Func<Task<bool>> predicate, TValue value, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), value, errors);
+    }
 
     /// <summary>
     /// Returns a Result that is successful when the ValueTask predicate evaluates to true, otherwise failed.
@@ -143,6 +211,16 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(predicate);
         return await SuccessIfAsync(await predicate(), error);
+    }
+    public static async ValueTask<Result> SuccessIfAsync(Func<ValueTask<bool>> predicate, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), error);
+    }
+    public static async ValueTask<Result> SuccessIfAsync(Func<ValueTask<bool>> predicate, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), errors);
     }
 
     /// <summary>
@@ -157,5 +235,15 @@ public static partial class ResultExtensions
     {
         ArgumentNullException.ThrowIfNull(predicate);
         return await SuccessIfAsync(await predicate(), value, error);
+    }
+    public static async ValueTask<Result<TValue>> SuccessIfAsync<TValue>(Func<ValueTask<bool>> predicate, TValue value, IError error)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), value, error);
+    }
+    public static async ValueTask<Result<TValue>> SuccessIfAsync<TValue>(Func<ValueTask<bool>> predicate, TValue value, IEnumerable<IError> errors)
+    {
+        ArgumentNullException.ThrowIfNull(predicate);
+        return await SuccessIfAsync(await predicate(), value, errors);
     }
 }
