@@ -9,7 +9,7 @@ public static partial class ResultExtensions
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result> TapIfTryAsync(this Result result, bool condition, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -31,7 +31,7 @@ public static partial class ResultExtensions
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapIfTryAsync<TValue>(this Result<TValue> result, bool condition, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -53,7 +53,7 @@ public static partial class ResultExtensions
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapIfTryAsync<TValue>(this Result<TValue> result, bool condition, Func<TValue, Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -74,7 +74,7 @@ public static partial class ResultExtensions
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result> TapIfTryAsync(this Result result, Func<bool> predicate, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -104,7 +104,7 @@ public static partial class ResultExtensions
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapIfTryAsync<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -134,7 +134,7 @@ public static partial class ResultExtensions
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapIfTryAsync<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, Func<TValue, Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(predicate);

@@ -8,7 +8,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The valuetask function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static ValueTask<Result> TapErrorIfAsync(this Result result, bool condition, Func<ValueTask> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -23,7 +23,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The valuetask function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static ValueTask<Result<TValue>> TapErrorIfAsync<TValue>(this Result<TValue> result, bool condition, Func<ValueTask> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -37,7 +37,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The valuetask function to execute for each error.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static ValueTask<Result> TapErrorIfAsync(this Result result, bool condition, Func<IError, ValueTask> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -52,7 +52,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The valuetask function to execute for each error.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static ValueTask<Result<TValue>> TapErrorIfAsync<TValue>(this Result<TValue> result, bool condition, Func<IError, ValueTask> func)
     {
         ArgumentNullException.ThrowIfNull(func);

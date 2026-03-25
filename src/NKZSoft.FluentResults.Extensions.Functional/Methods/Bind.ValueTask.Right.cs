@@ -3,13 +3,11 @@
 public static partial class ResultExtensions
 {
     /// <summary>
-    /// Binds a function that returns a Task of Result to the current Result.
-    /// If the current Result is failed, returns a failed Result with the same errors.
-    /// Otherwise, executes the function and returns its result.
+    /// Chains the next asynchronous operation to a successful result.
     /// </summary>
-    /// <param name="result">The current Result.</param>
-    /// <param name="func">The function to bind to the current Result.</param>
-    /// <returns>A Task of Result.</returns>
+    /// <param name="result">The source result.</param>
+    /// <param name="func">The asynchronous operation to run when the source result is successful.</param>
+    /// <returns>A value task that returns the next result, or a failed result that preserves the original errors.</returns>
     public static ValueTask<Result> BindAsync(this Result result, Func<ValueTask<Result>> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -17,12 +15,12 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
-    /// Binds a result to a function that returns a new result asynchronously.
+    /// Chains the next asynchronous operation to a successful result value.
     /// </summary>
-    /// <typeparam name="TValue">The type of the value in the result.</typeparam>
-    /// <param name="result">The result to bind.</param>
-    /// <param name="func">The function that returns a new result.</param>
-    /// <returns>A task that returns the bound result.</returns>
+    /// <typeparam name="TValue">The type carried by the source result.</typeparam>
+    /// <param name="result">The source result.</param>
+    /// <param name="func">The asynchronous operation to run with the successful source value.</param>
+    /// <returns>A value task that returns the next result, or a failed result that preserves the original errors.</returns>
     public static ValueTask<Result<TValue>> BindAsync<TValue>(this Result<TValue> result, Func<TValue, ValueTask<Result<TValue>>> func)
     {
         ArgumentNullException.ThrowIfNull(func);

@@ -3,12 +3,12 @@ namespace NKZSoft.FluentResults.Extensions.Functional;
 public static partial class ResultExtensions
 {
     /// <summary>
-    /// Asynchronously maps a Result from a ValueTask using a synchronous function.
+    /// Awaits the source result and projects it with a synchronous mapping when it succeeds.
     /// </summary>
-    /// <typeparam name="TValue">The type of the value returned by the function.</typeparam>
-    /// <param name="resultTask">The ValueTask that produces the Result.</param>
-    /// <param name="func">The mapping function.</param>
-    /// <returns>A ValueTask containing the mapped Result.</returns>
+    /// <typeparam name="TValue">The type carried by the mapped result.</typeparam>
+    /// <param name="resultTask">The asynchronous operation that produces the source result.</param>
+    /// <param name="func">The projection to run when the awaited result is successful.</param>
+    /// <returns>A value task that returns the projected result, or the original failure from the awaited result.</returns>
     public static async ValueTask<Result<TValue>> MapAsync<TValue>(
         this ValueTask<Result> resultTask,
         Func<TValue> func)
@@ -20,13 +20,13 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
-    /// Asynchronously maps a Result from a ValueTask using a synchronous function.
+    /// Awaits the source result and projects it with a synchronous mapping when it succeeds.
     /// </summary>
-    /// <typeparam name="TValue">The type of the value in the Result.</typeparam>
-    /// <typeparam name="TValueOut">The type of the value returned by the function.</typeparam>
-    /// <param name="resultTask">The ValueTask that produces the Result.</param>
-    /// <param name="func">The mapping function.</param>
-    /// <returns>A ValueTask containing the mapped Result.</returns>
+    /// <typeparam name="TValue">The type carried by the source result.</typeparam>
+    /// <typeparam name="TValueOut">The type carried by the mapped result.</typeparam>
+    /// <param name="resultTask">The asynchronous operation that produces the source result.</param>
+    /// <param name="func">The projection to run with the successful source value.</param>
+    /// <returns>A value task that returns the projected result, or the original failure from the awaited result.</returns>
     public static async ValueTask<Result<TValueOut>> MapAsync<TValue, TValueOut>(
         this ValueTask<Result<TValue>> resultTask,
         Func<TValue, TValueOut> func)

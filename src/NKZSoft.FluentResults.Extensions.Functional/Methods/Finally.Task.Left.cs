@@ -1,4 +1,4 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional;
+namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
@@ -9,7 +9,7 @@ public static partial class ResultExtensions
     /// <typeparam name="T">The type of the value returned by the function.</typeparam>
     /// <param name="resultTask">The task that produces the Result.</param>
     /// <param name="func">The function to execute after the Result.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <returns>A task that completes with the value returned by <paramref name="func"/>.</returns>
     public static async Task<T> FinallyAsync<T>(this Task<Result> resultTask, Func<Result, T> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -26,7 +26,7 @@ public static partial class ResultExtensions
     /// <typeparam name="TValue">The type of the value in the Result.</typeparam>
     /// <param name="resultTask">The task that returns a Result.</param>
     /// <param name="func">The function to execute after the Result.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the result of the function.</returns>
+    /// <returns>A task that completes with the value returned by <paramref name="func"/>.</returns>
     public static async Task<T> FinallyAsync<T, TValue>(this Task<Result<TValue>> resultTask,
         Func<Result<TValue>, T> func)
     {

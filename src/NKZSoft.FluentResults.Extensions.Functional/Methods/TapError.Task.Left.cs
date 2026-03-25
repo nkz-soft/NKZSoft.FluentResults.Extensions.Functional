@@ -7,7 +7,7 @@ public static partial class ResultExtensions
     /// </summary>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute if the result is failed.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result> TapErrorAsync(this Task<Result> resultTask, Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -22,7 +22,7 @@ public static partial class ResultExtensions
     /// <typeparam name="TValue">The type of the value contained in the Result.</typeparam>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute if the result is failed.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result<TValue>> TapErrorAsync<TValue>(this Task<Result<TValue>> resultTask, Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -36,7 +36,7 @@ public static partial class ResultExtensions
     /// </summary>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute for each error.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result> TapErrorAsync(this Task<Result> resultTask, Action<IError> action)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -51,7 +51,7 @@ public static partial class ResultExtensions
     /// <typeparam name="TValue">The type of the value contained in the Result.</typeparam>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute for each error.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result<TValue>> TapErrorAsync<TValue>(this Task<Result<TValue>> resultTask, Action<IError> action)
     {
         ArgumentNullException.ThrowIfNull(action);

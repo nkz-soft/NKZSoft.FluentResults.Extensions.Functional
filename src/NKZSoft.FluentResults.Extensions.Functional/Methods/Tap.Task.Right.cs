@@ -1,4 +1,4 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional;
+namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
@@ -7,7 +7,7 @@ public static partial class ResultExtensions
     /// </summary>
     /// <param name="result">The result to check for success.</param>
     /// <param name="func">The function to execute if the result is successful.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result> TapAsync(this Result result, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -25,7 +25,7 @@ public static partial class ResultExtensions
     /// <typeparam name="T">The type of the value contained in the result.</typeparam>
     /// <param name="result">The result to check for success.</param>
     /// <param name="func">The function to execute if the result is successful.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result<T>> TapAsync<T>(this Result<T> result, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -43,7 +43,7 @@ public static partial class ResultExtensions
     /// <typeparam name="T">The type of the value contained in the result.</typeparam>
     /// <param name="result">The result to check for success.</param>
     /// <param name="func">The function to execute if the result is successful. The function takes the value of the result as a parameter and returns a Task.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async Task<Result<T>> TapAsync<T>(this Result<T> result, Func<T, Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);

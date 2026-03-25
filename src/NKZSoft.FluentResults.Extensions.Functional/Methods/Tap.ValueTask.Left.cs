@@ -1,4 +1,4 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional;
+namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
@@ -7,7 +7,7 @@ public static partial class ResultExtensions
     /// </summary>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute if the result is successful.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async ValueTask<Result> TapAsync(this ValueTask<Result> resultTask, Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -26,7 +26,7 @@ public static partial class ResultExtensions
     /// <typeparam name="T">The type of the value contained in the Result.</typeparam>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute if the result is successful.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async ValueTask<Result<T>> TapAsync<T>(this ValueTask<Result<T>> resultTask, Action action)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -45,7 +45,7 @@ public static partial class ResultExtensions
     /// <typeparam name="T">The type of the value contained in the Result.</typeparam>
     /// <param name="resultTask">The task that produces the result.</param>
     /// <param name="action">The action to execute on the value if the result is successful.</param>
-    /// <returns>A task representing the asynchronous operation. The task result contains the original result.</returns>
+    /// <returns>A task that completes with the original result after the callback finishes.</returns>
     public static async ValueTask<Result<T>> TapAsync<T>(this ValueTask<Result<T>> resultTask, Action<T> action)
     {
         ArgumentNullException.ThrowIfNull(action);

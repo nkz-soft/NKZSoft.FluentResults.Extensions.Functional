@@ -1,4 +1,4 @@
-﻿namespace NKZSoft.FluentResults.Extensions.Functional;
+namespace NKZSoft.FluentResults.Extensions.Functional;
 
 public static partial class ResultExtensions
 {
@@ -33,7 +33,7 @@ public static partial class ResultExtensions
     /// <param name="resultTask">The Task of Result to match.</param>
     /// <param name="onSuccess">The function to execute if the Result is successful.</param>
     /// <param name="onFailure">The function to execute if the Result is failed.</param>
-    /// <returns>A Task representing the asynchronous operation. The task result contains the value returned by the executed function.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes. The task result contains the value returned by the executed function.</returns>
     public static async ValueTask<T> MatchAsync<T>(this ValueTask<Result> resultTask,
         Func<T> onSuccess,
         Func<IReadOnlyList<IError>, T> onFailure)

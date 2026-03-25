@@ -7,11 +7,11 @@ public static partial class ResultExtensions
     private static IEnumerable<IError> DefaultErrorsHandler(Exception exception) => [DefaultErrorHandler(exception)];
 
     /// <summary>
-    /// Attempts to execute the supplied action and returns a Result indicating success or failure.
+    /// Executes the supplied action and converts thrown exceptions into a failed result.
     /// </summary>
     /// <param name="action">The action to execute.</param>
-    /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to a failure message. When omitted, the exception message is used.</param>
+    /// <returns>A successful result when the action completes without throwing; otherwise a failed result created from the thrown exception.</returns>
     public static Result Try(Action action, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -30,20 +30,20 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
-    /// Attempts to execute the supplied action and returns a Result indicating success or failure.
+    /// Executes the supplied action and converts thrown exceptions into a failed result.
     /// </summary>
     /// <param name="action">The action to execute.</param>
-    /// <param name="errorHandler">Exception-to-error mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to a single <see cref="IError"/> instance.</param>
+    /// <returns>A successful result when the action completes without throwing; otherwise a failed result created from the thrown exception.</returns>
     public static Result Try(Action action, Func<Exception, IError> errorHandler)
         => Try(action, exception => new[] { (errorHandler ?? DefaultErrorHandler)(exception) });
 
     /// <summary>
-    /// Attempts to execute the supplied action and returns a Result indicating success or failure.
+    /// Executes the supplied action and converts thrown exceptions into a failed result.
     /// </summary>
     /// <param name="action">The action to execute.</param>
-    /// <param name="errorHandler">Exception-to-errors mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to one or more <see cref="IError"/> instances.</param>
+    /// <returns>A successful result when the action completes without throwing; otherwise a failed result created from the thrown exception.</returns>
     public static Result Try(Action action, Func<Exception, IEnumerable<IError>> errorHandler)
     {
         ArgumentNullException.ThrowIfNull(action);
@@ -62,12 +62,12 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
-    /// Attempts to execute the supplied function and returns a Result indicating success or failure.
+    /// Executes the supplied function and converts thrown exceptions into a failed result.
     /// </summary>
-    /// <typeparam name="TValue">The return type of the function.</typeparam>
+    /// <typeparam name="TValue">The type produced by the function on success.</typeparam>
     /// <param name="func">The function to execute.</param>
-    /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result containing the function value when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to a failure message. When omitted, the exception message is used.</param>
+    /// <returns>A successful result containing the function value when execution succeeds; otherwise a failed result created from the thrown exception.</returns>
     public static Result<TValue> Try<TValue>(Func<TValue> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -84,22 +84,22 @@ public static partial class ResultExtensions
     }
 
     /// <summary>
-    /// Attempts to execute the supplied function and returns a Result indicating success or failure.
+    /// Executes the supplied function and converts thrown exceptions into a failed result.
     /// </summary>
-    /// <typeparam name="TValue">The return type of the function.</typeparam>
+    /// <typeparam name="TValue">The type produced by the function on success.</typeparam>
     /// <param name="func">The function to execute.</param>
-    /// <param name="errorHandler">Exception-to-error mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result containing the function value when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to a single <see cref="IError"/> instance.</param>
+    /// <returns>A successful result containing the function value when execution succeeds; otherwise a failed result created from the thrown exception.</returns>
     public static Result<TValue> Try<TValue>(Func<TValue> func, Func<Exception, IError> errorHandler)
         => Try(func, exception => new[] { (errorHandler ?? DefaultErrorHandler)(exception) });
 
     /// <summary>
-    /// Attempts to execute the supplied function and returns a Result indicating success or failure.
+    /// Executes the supplied function and converts thrown exceptions into a failed result.
     /// </summary>
-    /// <typeparam name="TValue">The return type of the function.</typeparam>
+    /// <typeparam name="TValue">The type produced by the function on success.</typeparam>
     /// <param name="func">The function to execute.</param>
-    /// <param name="errorHandler">Exception-to-errors mapper. Defaults to exception message.</param>
-    /// <returns>A successful Result containing the function value when no exception is thrown; otherwise a failed Result.</returns>
+    /// <param name="errorHandler">Maps a thrown exception to one or more <see cref="IError"/> instances.</param>
+    /// <returns>A successful result containing the function value when execution succeeds; otherwise a failed result created from the thrown exception.</returns>
     public static Result<TValue> Try<TValue>(Func<TValue> func, Func<Exception, IEnumerable<IError>> errorHandler)
     {
         ArgumentNullException.ThrowIfNull(func);

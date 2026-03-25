@@ -22,5 +22,9 @@
 
 ## Docs
 - List required `README.md` or release-note updates, or state `None`.
+- State whether public API XML documentation was updated, or confirm no public
+  API documentation changes were required.
+- Confirm this PR must be rejected if required public API XML documentation is
+  missing or inaccurate.
 
 Closes #<issue-number>
