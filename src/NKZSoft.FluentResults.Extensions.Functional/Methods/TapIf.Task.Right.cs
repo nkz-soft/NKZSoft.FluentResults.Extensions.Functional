@@ -8,7 +8,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result> TapIfAsync(this Result result, bool condition, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -23,7 +23,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result<TValue>> TapIfAsync<TValue>(this Result<TValue> result, bool condition, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -38,7 +38,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="condition">Condition that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result<TValue>> TapIfAsync<TValue>(this Result<TValue> result, bool condition, Func<TValue, Task> func)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -52,7 +52,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result> TapIfAsync(this Result result, Func<bool> predicate, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -70,7 +70,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result<TValue>> TapIfAsync<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, Func<Task> func)
     {
         ArgumentNullException.ThrowIfNull(predicate);
@@ -88,7 +88,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="predicate">Predicate that controls whether the action runs.</param>
     /// <param name="func">The task function to execute.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static Task<Result<TValue>> TapIfAsync<TValue>(this Result<TValue> result, Func<TValue, bool> predicate, Func<TValue, Task> func)
     {
         ArgumentNullException.ThrowIfNull(predicate);

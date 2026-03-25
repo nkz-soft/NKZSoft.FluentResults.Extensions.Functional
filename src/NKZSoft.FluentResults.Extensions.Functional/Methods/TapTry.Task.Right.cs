@@ -8,7 +8,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result> TapTryAsync(this Result result, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -29,7 +29,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapTryAsync<TValue>(this Result<TValue> result, Func<Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
@@ -50,7 +50,7 @@ public static partial class ResultExtensions
     /// <param name="result">The source result.</param>
     /// <param name="func">The task function to execute.</param>
     /// <param name="errorHandler">Optional exception-to-error-message mapper. Defaults to exception message.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
+    /// <returns>A task that completes with the original result after the conditional callback finishes.</returns>
     public static async Task<Result<TValue>> TapTryAsync<TValue>(this Result<TValue> result, Func<TValue, Task> func, Func<Exception, string>? errorHandler = null)
     {
         ArgumentNullException.ThrowIfNull(func);
