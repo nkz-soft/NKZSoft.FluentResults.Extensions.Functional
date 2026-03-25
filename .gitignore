@@ -389,3 +389,9 @@ FodyWeavers.xsd
 
 coverage/
 .aiassistant/
+
+.agents
+.specify
+specs 
+
+AGENTS.md 
