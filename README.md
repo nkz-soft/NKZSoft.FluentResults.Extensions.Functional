@@ -464,6 +464,57 @@ var asyncOutput = await ResultExtensions.CompleteInOrderAsync(
 </details>
 
 <details>
+<summary><strong>CombineParallel</strong></summary>
+
+`CombineParallel` combines async (`Task`/`ValueTask`) results using parallel scheduling.
+Use it when operations are independent and throughput matters more than ordered awaiting.
+Output ordering for value results remains deterministic by input position.
+If one or more operations throw, the API faults with an `AggregateException`.
+
+```csharp
+var output = await ResultExtensions.CombineParallelAsync(
+    Task.FromResult(Result.Ok()),
+    Task.FromResult(Result.Fail("Validation failed")));
+
+var outputWithValues = await ResultExtensions.CombineParallelAsync(
+    Task.FromResult(Result.Ok(1)),
+    Task.FromResult(Result.Ok(2)));
+```
+
+</details>
+
+<details>
+<summary><strong>CompleteParallel</strong></summary>
+
+`CompleteParallel` is an alias over `CombineParallel` for parallel async result completion.
+Use it when you want the naming to emphasize operation completion semantics.
+
+```csharp
+var output = await ResultExtensions.CompleteParallelAsync(
+    Task.FromResult(Result.Ok()),
+    Task.FromResult(Result.Fail("Validation failed")));
+```
+
+</details>
+
+<details>
+<summary><strong>MapParallel / TraverseParallel</strong></summary>
+
+`MapParallel` and `TraverseParallel` map/traverse input collections in parallel and return a combined `Result<IEnumerable<T>>`.
+They preserve deterministic output ordering by input position and aggregate failures from failed items.
+If mapping/traversal delegates throw, the API faults with an `AggregateException`.
+
+```csharp
+var mapped = await new[] { 1, 2, 3 }.MapParallelAsync(value =>
+    Task.FromResult(Result.Ok(value * 10)));
+
+var traversed = await new[] { "a", "b", "c" }.TraverseParallelAsync(value =>
+    Task.FromResult(Result.Ok(value.ToUpperInvariant())));
+```
+
+</details>
+
+<details>
 <summary><strong>FirstFailureOrSuccess</strong></summary>
 
 `FirstFailureOrSuccess` provides CSharpFunctionalExtensions-style short-circuit failure selection.

@@ -180,4 +180,14 @@ public sealed class CancellationTokenOverloadsTests
         outputComplete.IsSuccess.Should().BeTrue();
         outputFirst.IsSuccess.Should().BeTrue();
     }
+
+    [Test]
+    public async Task CombineAndCompleteParallelSupportCancellationToken()
+    {
+        var outputCombine = await ResultExtensions.CombineParallelAsync([Task.FromResult(Result.Ok())], cancellationToken: CancellationToken.None);
+        var outputComplete = await ResultExtensions.CompleteParallelAsync([Task.FromResult(Result.Ok())], cancellationToken: CancellationToken.None);
+
+        outputCombine.IsSuccess.Should().BeTrue();
+        outputComplete.IsSuccess.Should().BeTrue();
+    }
 }
