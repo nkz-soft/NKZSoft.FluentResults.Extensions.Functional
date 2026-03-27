@@ -854,6 +854,194 @@ public static partial class ResultExtensions
         => CombineInOrderAsync(results, cancellationToken);
 
     /// <summary>
+    /// Adds a cancellation-aware overload for <c>CombineParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result> CombineParallelAsync(
+        Task<Result>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => InternalCombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CombineParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <typeparam name="TValue">The type parameter for this overload.</typeparam>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result<IEnumerable<TValue>>> CombineParallelAsync<TValue>(
+        Task<Result<TValue>>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => InternalCombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CombineParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result> CombineParallelAsync(
+        ValueTask<Result>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => InternalCombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CombineParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <typeparam name="TValue">The type parameter for this overload.</typeparam>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result<IEnumerable<TValue>>> CombineParallelAsync<TValue>(
+        ValueTask<Result<TValue>>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => InternalCombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CompleteParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result> CompleteParallelAsync(
+        Task<Result>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => CombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CompleteParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <typeparam name="TValue">The type parameter for this overload.</typeparam>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result<IEnumerable<TValue>>> CompleteParallelAsync<TValue>(
+        Task<Result<TValue>>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => CombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CompleteParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result> CompleteParallelAsync(
+        ValueTask<Result>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => CombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>CompleteParallelAsync</c> that forwards <paramref name="cancellationToken"/> to awaited operations.
+    /// </summary>
+    /// <typeparam name="TValue">The type parameter for this overload.</typeparam>
+    /// <param name="results">The asynchronous results to process in parallel.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result<IEnumerable<TValue>>> CompleteParallelAsync<TValue>(
+        ValueTask<Result<TValue>>[] results,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+        => CombineParallelAsync(results, maxDegreeOfParallelism, cancellationToken);
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>MapParallelAsync</c> that forwards <paramref name="cancellationToken"/> to the parallel operation.
+    /// </summary>
+    /// <typeparam name="TValueIn">The source value type.</typeparam>
+    /// <typeparam name="TValueOut">The mapped value type.</typeparam>
+    /// <param name="values">Source values to map.</param>
+    /// <param name="map">Task-based mapper that receives the cancellation token.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result<IEnumerable<TValueOut>>> MapParallelAsync<TValueIn, TValueOut>(
+        this IEnumerable<TValueIn> values,
+        Func<TValueIn, CancellationToken, Task<Result<TValueOut>>> map,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(map);
+        return InternalMapParallelAsync(values, value => map(value, cancellationToken), maxDegreeOfParallelism, cancellationToken);
+    }
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>MapParallelAsync</c> that forwards <paramref name="cancellationToken"/> to the parallel operation.
+    /// </summary>
+    /// <typeparam name="TValueIn">The source value type.</typeparam>
+    /// <typeparam name="TValueOut">The mapped value type.</typeparam>
+    /// <param name="values">Source values to map.</param>
+    /// <param name="map">ValueTask-based mapper that receives the cancellation token.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result<IEnumerable<TValueOut>>> MapParallelAsync<TValueIn, TValueOut>(
+        this IEnumerable<TValueIn> values,
+        Func<TValueIn, CancellationToken, ValueTask<Result<TValueOut>>> map,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(map);
+        return InternalMapParallelAsync(values, value => map(value, cancellationToken), maxDegreeOfParallelism, cancellationToken);
+    }
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>TraverseParallelAsync</c> that forwards <paramref name="cancellationToken"/> to the parallel operation.
+    /// </summary>
+    /// <typeparam name="TValueIn">The source value type.</typeparam>
+    /// <typeparam name="TValueOut">The traversed value type.</typeparam>
+    /// <param name="values">Source values to traverse.</param>
+    /// <param name="traverse">Task-based traversal delegate that receives the cancellation token.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A task containing the operation result.</returns>
+    public static Task<Result<IEnumerable<TValueOut>>> TraverseParallelAsync<TValueIn, TValueOut>(
+        this IEnumerable<TValueIn> values,
+        Func<TValueIn, CancellationToken, Task<Result<TValueOut>>> traverse,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(traverse);
+        return MapParallelAsync(values, traverse, maxDegreeOfParallelism, cancellationToken);
+    }
+
+    /// <summary>
+    /// Adds a cancellation-aware overload for <c>TraverseParallelAsync</c> that forwards <paramref name="cancellationToken"/> to the parallel operation.
+    /// </summary>
+    /// <typeparam name="TValueIn">The source value type.</typeparam>
+    /// <typeparam name="TValueOut">The traversed value type.</typeparam>
+    /// <param name="values">Source values to traverse.</param>
+    /// <param name="traverse">ValueTask-based traversal delegate that receives the cancellation token.</param>
+    /// <param name="maxDegreeOfParallelism">Optional cap on concurrently scheduled operations.</param>
+    /// <param name="cancellationToken">The cancellation token used by the parallel operation.</param>
+    /// <returns>A value task containing the operation result.</returns>
+    public static ValueTask<Result<IEnumerable<TValueOut>>> TraverseParallelAsync<TValueIn, TValueOut>(
+        this IEnumerable<TValueIn> values,
+        Func<TValueIn, CancellationToken, ValueTask<Result<TValueOut>>> traverse,
+        int? maxDegreeOfParallelism = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(traverse);
+        return MapParallelAsync(values, traverse, maxDegreeOfParallelism, cancellationToken);
+    }
+
+    /// <summary>
     /// Adds a cancellation-aware overload for <c>FirstFailureOrSuccessAsync</c> that forwards <paramref name="cancellationToken"/> to the provided delegate.
     /// </summary>
     /// <param name="results">The asynchronous results to process in order.</param>
