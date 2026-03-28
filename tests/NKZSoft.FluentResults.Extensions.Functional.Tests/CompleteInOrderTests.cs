@@ -63,4 +63,13 @@ public sealed class CompleteInOrderTests
         output.IsFailed.Should().BeTrue();
         output.Errors.Should().ContainSingle(e => e.Message == "Failure");
     }
+
+    [Test]
+    public void CompleteInOrderTReturnsSuccessWithEmptyValuesWhenNoResultsProvided()
+    {
+        var output = ResultExtensions.CompleteInOrder<int>();
+
+        output.IsSuccess.Should().BeTrue();
+        output.Value.Should().BeEmpty();
+    }
 }

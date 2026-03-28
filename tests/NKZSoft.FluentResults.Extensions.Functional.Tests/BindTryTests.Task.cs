@@ -41,4 +41,13 @@ public sealed class BindTryTestsTask : BindTryTestsBase
 
         AssertDefaultFailure(output);
     }
+
+    [Test]
+    public async Task BindTryAsyncTaskThrowsWhenFuncIsNull()
+    {
+        Func<Task<Result>> bind = null!;
+        var action = async () => await TaskOkResultAsync().BindTryAsync(bind);
+
+        await action.Should().ThrowAsync<ArgumentNullException>();
+    }
 }

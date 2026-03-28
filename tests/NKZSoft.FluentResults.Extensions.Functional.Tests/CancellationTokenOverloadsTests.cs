@@ -190,4 +190,22 @@ public sealed class CancellationTokenOverloadsTests
         outputCombine.IsSuccess.Should().BeTrue();
         outputComplete.IsSuccess.Should().BeTrue();
     }
+
+    [Test]
+    public async Task CombineAndCompleteParallelThrowWhenCancellationIsPreRequested()
+    {
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        var combineAction = async () => await ResultExtensions.CombineParallelAsync(
+            [Task.FromResult(Result.Ok())],
+            cancellationToken: cts.Token);
+
+        var completeAction = async () => await ResultExtensions.CompleteParallelAsync(
+            [Task.FromResult(Result.Ok())],
+            cancellationToken: cts.Token);
+
+        await combineAction.Should().ThrowAsync<OperationCanceledException>();
+        await completeAction.Should().ThrowAsync<OperationCanceledException>();
+    }
 }

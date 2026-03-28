@@ -61,4 +61,18 @@ public sealed class CombineInOrderTestsValueTask
         output.IsFailed.Should().BeTrue();
         output.Errors.Should().ContainSingle(e => e.Message == "Failure");
     }
+
+    [Test]
+    public async Task CombineInOrderAsyncValueTaskHasParityWithTaskForTypedSuccess()
+    {
+        var valueTaskOutput = await ResultExtensions.CombineInOrderAsync(
+            new ValueTask<Result<int>>(Result.Ok(1)),
+            new ValueTask<Result<int>>(Result.Ok(2)));
+
+        var taskOutput = await ResultExtensions.CombineInOrderAsync(
+            Task.FromResult(Result.Ok(1)),
+            Task.FromResult(Result.Ok(2)));
+
+        Common.TestBase.AssertResultParity(valueTaskOutput, taskOutput);
+    }
 }

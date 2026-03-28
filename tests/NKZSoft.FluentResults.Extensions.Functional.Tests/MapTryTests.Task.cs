@@ -57,4 +57,13 @@ public sealed class MapTryTestsTask : MapTryTestsBase
 
         AssertCustomFailure(output);
     }
+
+    [Test]
+    public async Task MapTryAsyncTaskThrowsWhenFuncIsNull()
+    {
+        Func<Task<TValueMapped>> map = null!;
+        var action = async () => await TaskOkResultAsync().MapTryAsync(map);
+
+        await action.Should().ThrowAsync<ArgumentNullException>();
+    }
 }

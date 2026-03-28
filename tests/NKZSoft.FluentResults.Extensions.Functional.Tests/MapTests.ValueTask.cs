@@ -57,4 +57,16 @@ public sealed class MapTestsValueTask : MapTestsBase
         var output = await ValueTaskOkResultTAsync().MapAsync(TaskMapFuncAsync);
         AssertSuccess(output);
     }
+
+    [Test]
+    public async Task MapValueTaskAndTaskVariantsHaveParityForSourceFailure()
+    {
+        var taskOutput = await TaskFailResultTAsync().MapAsync(TaskMapFuncAsync);
+        var valueTaskOutput = await ValueTaskFailResultTAsync().MapAsync(ValueTaskMapFuncAsync);
+
+        taskOutput.IsFailed.Should().BeTrue();
+        valueTaskOutput.IsFailed.Should().BeTrue();
+        taskOutput.Errors.Select(static error => error.Message)
+            .Should().Equal(valueTaskOutput.Errors.Select(static error => error.Message));
+    }
 }

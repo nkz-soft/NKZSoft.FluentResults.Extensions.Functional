@@ -26,4 +26,17 @@ public sealed class CompleteParallelTestsTask
         output.IsSuccess.Should().BeTrue();
         output.Value.Should().Equal(1, 2);
     }
+
+    [Test]
+    public async Task CompleteParallelAsyncTaskThrowsWhenCancellationIsPreRequested()
+    {
+        using var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        var action = async () => await ResultExtensions.CompleteParallelAsync(
+            [Task.FromResult(Result.Ok())],
+            cancellationToken: cts.Token);
+
+        await action.Should().ThrowAsync<OperationCanceledException>();
+    }
 }
