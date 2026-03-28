@@ -32,4 +32,14 @@ public sealed class TraverseParallelTestsValueTask
         output.IsFailed.Should().BeTrue();
         output.Errors.Should().ContainSingle(error => error.Message == "boom");
     }
+
+    [Test]
+    public async Task TraverseParallelAsyncValueTaskThrowsWhenValuesIsNull()
+    {
+        IEnumerable<int>? input = null;
+        Func<int, ValueTask<Result<int>>> traverse = value => ValueTask.FromResult(Result.Ok(value));
+        var action = async () => await input!.TraverseParallelAsync(traverse);
+
+        await action.Should().ThrowAsync<ArgumentNullException>();
+    }
 }

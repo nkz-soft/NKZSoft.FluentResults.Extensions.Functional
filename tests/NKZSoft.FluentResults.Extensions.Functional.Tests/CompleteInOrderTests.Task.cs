@@ -71,4 +71,18 @@ public sealed class CompleteInOrderTestsTask
         output.IsFailed.Should().BeTrue();
         output.Errors.Should().ContainSingle(e => e.Message == "Failure");
     }
+
+    [Test]
+    public async Task CompleteInOrderAsyncTaskHasParityWithValueTaskForFailures()
+    {
+        var taskOutput = await ResultExtensions.CompleteInOrderAsync(
+            Task.FromResult(Result.Ok()),
+            Task.FromResult(Result.Fail("Failure")));
+
+        var valueTaskOutput = await ResultExtensions.CompleteInOrderAsync(
+            new ValueTask<Result>(Result.Ok()),
+            new ValueTask<Result>(Result.Fail("Failure")));
+
+        Common.TestBase.AssertResultParity(taskOutput, valueTaskOutput);
+    }
 }

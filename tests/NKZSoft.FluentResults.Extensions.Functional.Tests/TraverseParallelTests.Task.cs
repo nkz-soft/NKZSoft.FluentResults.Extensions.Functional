@@ -28,4 +28,18 @@ public sealed class TraverseParallelTestsTask
 
         await action.Should().ThrowAsync<ArgumentNullException>();
     }
+
+    [Test]
+    public async Task TraverseParallelAsyncTaskAggregatesFailures()
+    {
+        var input = new[] { 1, 2, 3 };
+
+        Func<int, Task<Result<int>>> traverse = value =>
+            Task.FromResult(value == 2 ? Result.Fail<int>("boom") : Result.Ok(value));
+
+        var output = await input.TraverseParallelAsync(traverse);
+
+        output.IsFailed.Should().BeTrue();
+        output.Errors.Should().ContainSingle(error => error.Message == "boom");
+    }
 }

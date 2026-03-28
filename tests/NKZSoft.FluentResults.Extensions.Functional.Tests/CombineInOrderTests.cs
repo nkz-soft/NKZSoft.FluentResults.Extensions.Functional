@@ -63,4 +63,13 @@ public sealed class CombineInOrderTests
         output.IsFailed.Should().BeTrue();
         output.Errors.Should().ContainSingle(e => e.Message == "Failure");
     }
+
+    [Test]
+    public void CombineInOrderTReturnsSuccessWithEmptyValuesWhenNoResultsProvided()
+    {
+        var output = ResultExtensions.CombineInOrder<int>();
+
+        output.IsSuccess.Should().BeTrue();
+        output.Value.Should().BeEmpty();
+    }
 }
