@@ -62,7 +62,7 @@ jobs:
           PY
       - name: Publish Coverage Badge
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        uses: schneegans/dynamic-badges-action@v1.8.0
         with:
           auth: ${{ secrets.COVERAGE_BADGE_GIST_TOKEN }}
           gistID: d24d45d2f634d03f790e3656b3024e44
