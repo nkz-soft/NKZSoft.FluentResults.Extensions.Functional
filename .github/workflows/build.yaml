@@ -38,7 +38,7 @@ jobs:
       - name: Test
         run: dotnet test --solution NKZSoft.FluentResults.Extensions.Functional.sln --configuration Release --no-build --verbosity normal --coverage --coverage-output-format cobertura --results-directory ./coverage
       - name: Generate coverage report
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.4
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.5.7
         with:
           reports: 'coverage/*.cobertura.xml'
           targetdir: 'coverage/result'
